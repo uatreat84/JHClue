@@ -1,0 +1,89 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Clue Less by JHClue</title>
+  </head>
+  <body>
+    <div id="gameArea">
+        <!-- This is where the templates defined below will be used -->
+   </div>
+   <table>
+   </table>
+
+    <!-- Main Title Screen that appears when the page loads for the first time -->
+    <script id="intro-screen-template" type="text/template">
+
+        <div class="titleWrapper">
+
+            <div class="title">
+                Welcome to Clue Less
+            </div>
+            <div class="info">
+                <label for="inputPlayerName">Your Name:</label>
+                <input id="inputPlayerName" type="text" />
+            </div>
+
+            <div class="buttons">
+
+                <button id="btnCreateGame" class="btn left">CREATE</button>
+                <button id="btnJoinGame" class="btn right">JOIN</button>
+                <div style="clear:both"></div>
+            </div>
+
+        </div>
+
+    </script>
+
+        <!-- This screen appears when a user clicks "CREATE" on the Title Screen -->
+    <script id="create-game-template" type="text/template">
+        <div class="createGameWrapper">
+
+            <div class="info">You Are the game leader</div>
+            <div id="gameURL" class="infoBig">Error!</div>
+
+            <div class="info">Then click <strong>JOIN</strong> and <br/> enter the following Game ID:</div>
+            <div id="spanNewGameCode" class="gameId">Error!</div>
+
+            <ul id="playersWaiting"></ul>
+          <div class="buttons">
+                <button id="btnPlayClue" class="btn left">START CLUE</button>
+                <div style="clear:both"></div>
+            </div>
+        </div>
+    </script>
+
+        <!-- This screen appears when a user clicks "Start" on the Join Screen -->
+    <script id="wait-game-template" type="text/template">
+        <div class="waitingGameWrapper">
+
+            <div class="info">You are waiting for the leader</div>
+
+            <ul id="playersWaiting"></ul>
+        </div>
+    </script>
+
+
+    <!-- This scrreen appears when a player clicks "JOIN" on the Title Screen -->
+    <script id="join-game-template" type="text/template">
+        <div class="joinGameWrapper">
+            <div class="info">
+                <label for="inputPlayerName">Your Name:</label>
+                <input id="inputPlayerName" type="text" />
+            </div>
+
+            <div class="info">
+                <label for="inputGameId">Game ID:</label>
+                <input id="inputGameId" type="text"/>
+            </div>
+
+            <div class="info buttons">
+                <button id="btnStart" class="btn">Join game</button>
+            </div>
+        </div>
+    </script>
+        <!-- jQuery! -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="app.js"></script>
+    </body>
+</html>
