@@ -1,17 +1,26 @@
 var io;
 var gameSocket;
 var player = require('./player.js');
-
+var suspect = require('./suspect.js');
 var players = [];
+var suspects = [];
+suspects.push(new suspect.Suspect("Mrs.White"));
+suspects.push(new suspect.Suspect("Mr.Green"));
+suspects.push(new suspect.Suspect("Mrs.Peacock"));
+suspects.push(new suspect.Suspect("Professor Plum"));
+suspects.push(new suspect.Suspect("Miss Scarlet"));
+suspects.push(new suspect.Suspect("Colonel Mustard"));
+
+
 var gameId;
 
 exports.initGame = function(sio,socket){
     io = sio;
     gameSocket = socket;
+
     console.log("client id:" + gameSocket.id);
     gameSocket.emit('connected', {id: gameSocket.id}); 
 
-    
     gameSocket.on('createNewGame',createNewGame);
     gameSocket.on('playerJoinGame',playerJoinGame);
 
@@ -22,8 +31,8 @@ exports.initGame = function(sio,socket){
 function createNewGame(data){
 
     gameID = (Math.random() * 100000) | 0;
-    
-    players = [];    
+
+    players = []; 
     var newPlayer = new player.Player(data.playerName,true);
     players.push(newPlayer);
  
@@ -32,8 +41,8 @@ function createNewGame(data){
     console.log('new game created '+gameID.toString());
 
     // Return the Room ID (gameId) and the socket ID (mySocketId) to the browser client
-
-    this.emit('newGameCreated', {gameId: gameID, mySocketId: this.id, players: players});
+    this.emit('needToSelectSuspect',{suspectList:suspects});
+    //this.emit('newGameCreated', {gameId: gameID, mySocketId: this.id, players: players});
 }
 
 /**

@@ -24,6 +24,7 @@ jQuery(function($){
         bindEvents : function() {
             IO.socket.on('connected', IO.onConnected );
             IO.socket.on('newGameCreated', IO.onNewGameCreated );
+            IO.socket.on('needToSelectSuspect', IO.selectSuspect );
             IO.socket.on('playerJoinedRoom', IO.playerJoinedRoom );
         },
 
@@ -42,6 +43,10 @@ jQuery(function($){
          */
         onNewGameCreated : function(data) {
             App.Player.gameInit(data);
+        },
+
+        selectSuspect : function(data) {
+            App.Player.selectSuspect(data);
         },
 
         /**
@@ -88,6 +93,7 @@ var App = {
             App.$templateJoinGame = $('#join-game-template').html();
             App.$hostGame = $('#host-game-template').html();
             App.$templateWaitGame = $('#wait-game-template').html();
+            App.$templateSelectSuspect = $('#select-suspect-template').html();
         
         },
 
@@ -97,6 +103,7 @@ var App = {
         bindEvents: function () {
             App.$doc.on('click', '#btnCreateGame', App.Player.onCreateClick);
             App.$doc.on('click', '#btnJoinGame', App.Player.onJoinClick);
+            App.$doc.on('click', '#btnSelectSuspect',App.Player.onSuspectSelectClick);
             App.$doc.on('click', '#btnStart',App.Player.onPlayerStartClick);
         },
 
@@ -126,14 +133,6 @@ var App = {
              * A reference to the socket ID of the Host
              */
             hostSocketId: '',
-
-            /**
-             * The player's name entered on the 'Join' screen.
-             */
-            myName: '',
-
-            gameLeader: false,
-
   
             /**
              * Handler for the "Start" button on the Title Screen.
@@ -180,6 +179,24 @@ var App = {
  
              },
  
+            selectSuspect: function(data) {
+                App.$gameArea.html(App.$templateSelectSuspect);
+
+                var suspects = data.suspectList;
+                for(var i = 0; i < suspects.length; i++){
+                        // Update host screen
+                    $('#availableSuspects')
+                        .append('<li>' + suspects[i].name );
+                    console.log(suspects[i].name + " is available");
+       
+                }
+
+
+            },
+            onSuspectSelectClick : function () {
+            },
+
+
 
             /**
              * Click handler for the 'JOIN' button
