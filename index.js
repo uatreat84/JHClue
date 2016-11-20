@@ -5,7 +5,7 @@ var http = require('http').Server(app);
 
 var io = require('socket.io')(http);
 
-var game = require('./game');
+var env = require('./env');
 
 /*app.get('/', function(req, res){
   res.sendFile(__dirname + '/public/index.html');
@@ -16,10 +16,11 @@ app.use(express.static('public'));
 io.on('connection',function(socket){
     console.log('a user is connected');
     
-    game.initGame(io,socket);
+    env.initGame(io,socket);
 
     socket.on('disconnect',function(){
-        console.log('user disconnected');
+        //@TODO
+        console.log(socket.id + ' disconnected');
     });
 });
 

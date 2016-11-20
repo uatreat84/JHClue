@@ -25,6 +25,7 @@ jQuery(function($){
             IO.socket.on('connected', IO.onConnected );
             IO.socket.on('newGameCreated', IO.onNewGameCreated );
             IO.socket.on('needToSelectSuspect', IO.selectSuspect );
+            IO.socket.on('suspectSelected',IO.suspectSelected);
             IO.socket.on('playerJoinedRoom', IO.playerJoinedRoom );
         },
 
@@ -49,14 +50,11 @@ jQuery(function($){
             App.Player.selectSuspect(data);
         },
 
-        /**
-         * A player has successfully joined the game.
-         * @param data {{players}
-         */
-        playerJoinedRoom : function(data) {
-            App.Player.updateWaitingList(data.players);
+        suspectSelected: function(data){
+            App.Player.updateWaitingList(data);
         }
-     };
+     
+    };
 var App = {
 
         /**
@@ -88,10 +86,6 @@ var App = {
 
             // Templates
             App.$gameArea = $('#gameArea');
-            App.$templateIntroScreen = $('#intro-screen-template').html();
-            App.$templateNewGame = $('#create-game-template').html();
-            App.$templateJoinGame = $('#join-game-template').html();
-            App.$hostGame = $('#host-game-template').html();
             App.$templateWaitGame = $('#wait-game-template').html();
             App.$templateSelectSuspect = $('#select-suspect-template').html();
         
@@ -101,10 +95,8 @@ var App = {
          * Create some click handlers for the various buttons that appear on-screen.
          */
         bindEvents: function () {
-            App.$doc.on('click', '#btnCreateGame', App.Player.onCreateClick);
-            App.$doc.on('click', '#btnJoinGame', App.Player.onJoinClick);
             App.$doc.on('click', '#btnSelectSuspect',App.Player.onSuspectSelectClick);
-            App.$doc.on('click', '#btnStart',App.Player.onPlayerStartClick);
+            App.$doc.on('click', '#btnPlayClueJoin',App.Player.onStartGame);
         },
 
         /* *************************************
@@ -116,7 +108,9 @@ var App = {
          * (with Start and Join buttons)
          */
         showInitScreen: function() {
-            App.$gameArea.html(App.$templateIntroScreen);
+            IO.socket.emit('initGame');
+
+            //App.$gameArea.html(App.$templateSelectSuspect);
         },
 
 
@@ -133,46 +127,16 @@ var App = {
              * A reference to the socket ID of the Host
              */
             hostSocketId: '',
-  
-            /**
-             * Handler for the "Start" button on the Title Screen.
-             */
-            onCreateClick: function () {
-                console.log('Clicked "Create A Game"');
-                // collect data to send to the server
-                var data = {
-                    playerName : $('#inputPlayerName').val() || 'anon',
-                };
-                IO.socket.emit('createNewGame',data);
 
-            },
 
-            /**
-             * The Host screen is displayed for the first time.
-             * @param data{{ gameId: int, mySocketId: * }}
-             */
-            gameInit: function (data) {
-                              // Fill the game screen with the appropriate HTML
-                App.$gameArea.html(App.$templateNewGame);
-
-                // Display the URL on screen
-                $('#gameURL').text(window.location.href);
-         
-                // Show the gameId / room id on screen
-                $('#spanNewGameCode').text(data.gameId);
-
-                App.Player.updateWaitingList(data.players);
-                console.log("Game started from server with ID: " + data.gameId + ' by host: ' + data.mySocketId);
-            },
-
-            updateWaitingList : function(players){
-                console.log(players.length);
+            updateWaitingList : function(data){
                 $('#playersWaiting  li').remove();
-                
-                for(var i = 0; i < players.length; i++){
+                var players = data.game.players;
+                console.log('players: '+ players);
+                    for(var i = 0; i < players.length; i++){
                         // Update host screen
                     $('#playersWaiting')
-                        .append('<li>Player ' + players[i].name + ' is in the game.</li>');
+                        .append('<li>Player ' + players[i].name + ' is in the game as '+players[i].suspect.name+'. (socket ID: '+players[i].clientID+')</li>');
                     console.log(players[i].name + " Joined");
        
                 }
@@ -194,42 +158,17 @@ var App = {
 
             },
             onSuspectSelectClick : function () {
-            },
-
-
-
-            /**
-             * Click handler for the 'JOIN' button
-             */
-            onJoinClick: function () {
-                // console.log('Clicked "Join A Game"');
-
-                // Display the Join Game HTML on the player's screen.
-                App.$gameArea.html(App.$templateJoinGame);
-            },
-
-            /**
-             * The player entered their name and gameId (hopefully)
-             * and clicked Start.
-             */
-            onPlayerStartClick: function() {
-                console.log('Player clicked "Start"');
-
-                // collect data to send to the server
                 var data = {
-                    gameId : +($('#inputGameId').val()),
-                    playerName : $('#inputPlayerName').val() || 'anon'
+                    selectedSuspect : +($('#suspectNumber').val()),
+                    playerName : $('#inputPlayerName').val() || 'anon',
                 };
-
-                // Send the gameId and playerName to the server
-                IO.socket.emit('playerJoinGame', data);
-
+                console.log('Player selected ' + data.selectedSuspect);
                 App.$gameArea.html(App.$templateWaitGame);
+                IO.socket.emit('playerSelectSuspect',data);
+
             },
 
         },
-
-
 
     };
 
