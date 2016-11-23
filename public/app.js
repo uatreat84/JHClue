@@ -23,10 +23,9 @@ jQuery(function($){
          */
         bindEvents : function() {
             IO.socket.on('connected', IO.onConnected );
-            IO.socket.on('newGameCreated', IO.onNewGameCreated );
-            IO.socket.on('needToSelectSuspect', IO.selectSuspect );
+            IO.socket.on('needToSelectSuspect', IO.selectSuspect);
             IO.socket.on('suspectSelected',IO.suspectSelected);
-            IO.socket.on('playerJoinedRoom', IO.playerJoinedRoom );
+            IO.socket.on('gameInitialized',IO.gameInitialized);
         },
 
         /**
@@ -38,20 +37,16 @@ jQuery(function($){
              console.log("Socket ID: "+App.mySocketId);
         },
 
-        /**
-         * A new game has been created and a random game ID has been generated.
-         * @param data {{ gameId: int, mySocketId: * }}
-         */
-        onNewGameCreated : function(data) {
-            App.Player.gameInit(data);
-        },
-
         selectSuspect : function(data) {
             App.Player.selectSuspect(data);
         },
 
         suspectSelected: function(data){
             App.Player.updateWaitingList(data);
+        },
+
+        gameInitialized: function(data){
+            App.Player.gameInitialized(data);
         }
      
     };
@@ -88,6 +83,7 @@ var App = {
             App.$gameArea = $('#gameArea');
             App.$templateWaitGame = $('#wait-game-template').html();
             App.$templateSelectSuspect = $('#select-suspect-template').html();
+            App.$templatePlayGame = $('#play-game-template').html();
         
         },
 
@@ -96,7 +92,7 @@ var App = {
          */
         bindEvents: function () {
             App.$doc.on('click', '#btnSelectSuspect',App.Player.onSuspectSelectClick);
-            App.$doc.on('click', '#btnPlayClueJoin',App.Player.onStartGame);
+            App.$doc.on('click', '#btnPlayClue',App.Player.onStartGameClick);
         },
 
         /* *************************************
@@ -167,6 +163,21 @@ var App = {
                 IO.socket.emit('playerSelectSuspect',data);
 
             },
+
+            onStartGameClick : function (){
+                console.log('Starting game');
+                App.$gameArea.html(App.$templatePlayGame);
+                IO.socket.emit('startGame');
+            },
+
+            gameInitialized : function(data){
+                var game = data.game;
+                JSON.parse(game);
+                $('#study #suspects').append('<li> Plum</li>');
+                console.log(data.game);
+             }
+
+
 
         },
 

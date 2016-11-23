@@ -3,11 +3,7 @@
   "version": "0.0.1",
   "description": "my first socket.io app",
   "dependencies": {
-    "connect": "^3.5.0",
-    "connect-rid": "0.0.1",
-    "cookie-parser": "^1.4.3",
     "express": "^4.10.2",
-    "mongodb": "^2.2.11",
     "socket.io": "^1.5.1"
   }
 }

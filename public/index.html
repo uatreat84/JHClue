@@ -7,8 +7,7 @@
     <div id="gameArea">
         <!-- This is where the templates defined below will be used -->
    </div>
-   <table>
-   </table>
+
 
         <!-- This screen appears when a user clicks "Start" on the Join Screen -->
     <script id="wait-game-template" type="text/template">
@@ -43,9 +42,22 @@
         </div>
     </script>
 
+     <script id="play-game-template" type="text/template">
+        <div class="playingingGameWrapper">
+
+            <div id="playerStatus"></div>
+            <div class="board" id="board">
+                <div class="room" id="study">
+                     <ul id="suspects"></ul>
+                </div>
+            </div>
+        </div>
+    </script>
+
+
 
         <!-- jQuery! -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script src="app.js"></script>
     </body>
