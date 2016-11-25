@@ -1,7 +1,21 @@
-body {
-	overflow: hidden;
+
+div.col-md-3{
+  background-color: rgba(86,61,124,.15);
+      padding-top: 15px;
+    padding-bottom: 15px;
+    border: 1px solid #ddd;
+    border: 1px solid rgba(86,61,124,.2);
+
+}
+div.col-md-1{
+	background-color: rgba(86,61,124,.15);
+	    padding-top: 15px;
+    padding-bottom: 15px;
+    border: 1px solid #ddd;
+    border: 1px solid rgba(86,61,124,.2);
+}
+ul#suspects{
+	width: 100px;
+	height:100px;
 }
 
-canvas {
-	display: block;
-}

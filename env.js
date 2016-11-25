@@ -57,8 +57,7 @@ function playerSelectSuspect(data){
 function playerStartGame(data){
     console.log('Game started by ID: '+this.id);
     currentGame.initGame();
-    
-    io.sockets.in(currentGame.gameID).emit('gameInitialized',{game: JSON.stringify(currentGame)});
+    io.sockets.in(currentGame.gameID).emit('gameInitialized',{game: currentGame, currentPlayer: currentGame.currentPlayer});
 
 
 }

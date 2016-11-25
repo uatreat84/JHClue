@@ -3,7 +3,7 @@ var suspect = require('./suspect.js');
 
 module.exports = {
  GameBoard: function(){
-        this.rooms = {}       
+        this.rooms = [];  
         this.suspectLocations = {};
 
         this.createBoard = function() {
@@ -13,7 +13,7 @@ module.exports = {
             var lounge = new room.Room("Lounge",false,[]);
             var library = new room.Room("Library",false,[]);
             var billiard = new room.Room("Billiard",false,[]);
-            var dinning = new room.Room("Dinning Room",false,[]);
+            var dinning = new room.Room("Dinning",false,[]);
             var conservatory = new room.Room("Conservatory",false,[]);
             var ball = new room.Room("Ballroom",false,[]);
             var kitchen = new room.Room("Kitchen",false,[]);
@@ -55,13 +55,29 @@ module.exports = {
             conservToBall.adjRooms = ["Conservatory","Ball"];
             ballToKitchen.adjRooms = ["Ball","Kitchen"];
 
-            this.rooms = {
-                "Study": study, "StudyToHall":studyToHall,"Hall": hall,"HallToLounge":hallToLounge,"Lounge":lounge,
-                "StudyToLibrary":studyToLibrary,"HallToBilliard":hallToBilliard,"LoungeToDinning":loungeToDinning,
-                "Library":library,"LibraryToBilliard":libToBilliard,"Billiard":billiard,"BilliardToDinning":billiardToDinning,
-                "LibraryToConservatory":libToConserv,"BilliardToBall":billiardToBall,"DinningToKitchen":dinningToKitchen,
-                "Conservatory":conservatory,"ConservatoryToBall":conservToBall,"Ball":ball,"BallToKitchen":ballToKitchen,"Kitchen":kitchen};
+            this.rooms.push(study);
+            this.rooms.push(studyToHall);
+            this.rooms.push(hall);
+            this.rooms.push(hallToLounge);
+            this.rooms.push(lounge);
+            this.rooms.push(studyToLibrary);
+            this.rooms.push(hallToBilliard);
+            this.rooms.push(loungeToDinning);
+            this.rooms.push(library);
+            this.rooms.push(libToBilliard);
+            this.rooms.push(billiard);
+            this.rooms.push(billiardToDinning);
+            this.rooms.push(dinning);
+            this.rooms.push(libToConserv);
+            this.rooms.push(billiardToBall);
+            this.rooms.push(dinningToKitchen);
+            this.rooms.push(conservatory);
+            this.rooms.push(conservToBall);
+            this.rooms.push(ball);
+            this.rooms.push(ballToKitchen);
+            this.rooms.push(kitchen);
 
+            
             this.suspectLocations = {
                 "Miss Scarlett":"HallToLounge",
                 "Professor Plum":"StudyToLibrary",

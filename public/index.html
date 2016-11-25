@@ -2,6 +2,18 @@
 <html>
   <head>
     <title>Clue Less by JHClue</title>
+            <!-- jQuery! -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  
+    <link rel="stylesheet" href="style/game.css">
   </head>
   <body>
     <div id="gameArea">
@@ -44,20 +56,106 @@
 
      <script id="play-game-template" type="text/template">
         <div class="playingingGameWrapper">
-
             <div id="playerStatus"></div>
+            <div class="info">
+                <label for="inputMoveNumber">Move option number:</label>
+                <input id="moveOptionNumber" type="text" />
+            </div>
+
+            <div class="info buttons">
+                <button id="btnMoveOptionSelect" class="btn left">Select</button>
+            </div>
+            <ol id="moveOptions"></ol>
             <div class="board" id="board">
-                <div class="room" id="study">
-                     <ul id="suspects"></ul>
+                <div class="row">           
+                    <div class="col-md-3" id="Study">
+                         <ul id="suspects"></ul>
+                    </div>
+                    <div class="col-md-1" id="StudyToHall">
+                         <ul id="suspects"></ul>
+                    </div>
+                    <div class="col-md-3" id="Hall">
+                         <ul id="suspects"></ul>
+                    </div>
+                    <div class="col-md-1" id="HallToLounge">
+                         <ul id="suspects"></ul>
+                    </div>
+                    <div class="col-md-3" id="Lounge">
+                         <ul id="suspects"></ul>
+                    </div>
+                </div>
+                <div class="row">           
+                    <div class="col-md-1" id="StudyToLibrary">
+                         <ul id="suspects"></ul>
+                    </div>
+                    <div class="col-md-4" id="space">
+                     </div>
+                    <div class="col-md-1" id="HallToBilliard">
+                         <ul id="suspects"></ul>
+                    </div>
+                    <div class="col-md-4" id="space">
+                    </div>
+                    <div class="col-md-1" id="LoungeToDinning">
+                         <ul id="suspects"></ul>
+                    </div>
+                </div>
+                <div class="row">           
+                    <div class="col-md-3" id="Library">
+                         <ul id="suspects"></ul>
+                    </div>
+                    <div class="col-md-1" id="LibraryToBilliard">
+                         <ul id="suspects"></ul>
+                    </div>
+                    <div class="col-md-3" id="Billiard">
+                         <ul id="suspects"></ul>
+                    </div>
+                    <div class="col-md-1" id="BilliardToDinning">
+                         <ul id="suspects"></ul>
+                    </div>
+                    <div class="col-md-3" id="Dinning">
+                         <ul id="suspects"></ul>
+                    </div>
+                </div>
+                <div class="row">           
+                    <div class="col-md-1" id="LibraryToConservatory">
+                         <ul id="suspects"></ul>
+                    </div>
+                    <div class="col-md-4" id="space">
+                    </div>
+                    <div class="col-md-1" id="BilliardToBall">
+                         <ul id="suspects"></ul>
+                    </div>
+                    <div class="col-md-4" id="space">
+                    </div>
+                    <div class="col-md-1" id="DinningToKitchen">
+                         <ul id="suspects"></ul>
+                    </div>
+                </div>
+                <div class="row">           
+                    <div class="col-md-3" id="Conservatory">
+                         <ul id="suspects"></ul>
+                    </div>
+                    <div class="col-md-1" id="ConservatoryToBall">
+                         <ul id="suspects"></ul>
+                    </div>
+                    <div class="col-md-3" id="Ball">
+                         <ul id="suspects"></ul>
+                    </div>
+                    <div class="col-md-1" id="BallToKitchen">
+                         <ul id="suspects"></ul>
+                    </div>
+                    <div class="col-md-3" id="Kitchen">
+                         <ul id="suspects"></ul>
+                    </div>
                 </div>
             </div>
+
         </div>
     </script>
 
 
 
-        <!-- jQuery! -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
     <script src="/socket.io/socket.io.js"></script>
     <script src="app.js"></script>
     </body>

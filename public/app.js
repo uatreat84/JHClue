@@ -171,10 +171,28 @@ var App = {
             },
 
             gameInitialized : function(data){
-                var game = data.game;
-                JSON.parse(game);
-                $('#study #suspects').append('<li> Plum</li>');
-                console.log(data.game);
+                App.Player.updateGameBoard(data.game)
+                if(App.mySocketId === data.currentPlayer.clientID){
+                    $('#playerStatus').text("Current Player");
+                }else{
+                    $('#playerStatus').text("Waiting for "+data.currentPlayer.name);
+                }
+                console.log("My ID: "+App.mySocketId);
+                console.log("Current Player: "+data.currentPlayer.clientID);
+            },
+
+
+            updateGameBoard : function(data){            
+                var rooms = data.gameBoard.rooms;
+                App.$gameArea.html(App.$templatePlayGame);
+                //Loop over rooms and place suspects in correct rooms
+                for(var i = 0; i < rooms.length; i++){
+                    $('#'+rooms[i].name+' #suspects li').remove();
+                    for(var j = 0;j<rooms[i].suspects.length; j++){
+                        $('#'+rooms[i].name+' #suspects').append('<li>'+rooms[i].suspects[j].name+'</li>');
+                    }
+                    
+                };
              }
 
 

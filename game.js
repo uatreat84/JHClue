@@ -14,10 +14,18 @@ module.exports = {
             new suspect.Suspect("Mr.Green")];
         this.players = [];
         this.gameID = gameID;
+        this.currentPlayer = [];
         this.gameBoard = new board.GameBoard();
 
         this.initGame = function () {
             this.gameBoard.createBoard();
+            for(var i = 0; i < this.players.length; i++){
+                console.log(this.players[i].suspect.name);
+                if(this.players[i].suspect.name === "Miss Scarlet"){
+                    this.currentPlayer = this.players[i];
+                }
+            }
+
        }
    
     }
