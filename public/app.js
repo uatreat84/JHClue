@@ -25,7 +25,7 @@ jQuery(function($){
             IO.socket.on('connected', IO.onConnected );
             IO.socket.on('needToSelectSuspect', IO.selectSuspect);
             IO.socket.on('suspectSelected',IO.suspectSelected);
-            IO.socket.on('gameInitialized',IO.gameInitialized);
+            IO.socket.on('displayGame',IO.displayGame);
         },
 
         /**
@@ -45,11 +45,35 @@ jQuery(function($){
             App.Player.updateWaitingList(data);
         },
 
-        gameInitialized: function(data){
-            App.Player.gameInitialized(data);
+        displayGame: function(data){
+            App.Player.displayGame(data);
         }
      
     };
+    var gameRooms = [
+    "Study",
+    "Hall",
+    "Lounge",
+    "Library",
+    "Billiard",
+    "Dinning",
+    "Conservatory",
+    "Ball",
+    "Kitchen",
+    "StudyToHall",
+    "HallToLounge",
+    "StudyToLibrary",
+    "HallToBilliard",
+    "LoungeToDinning",
+    "LibraryToBilliard",
+    "BilliardToDinning",
+    "LibraryToConservatory",
+    "BilliardToBall",
+    "DinningToKitchen",
+    "ConservatoryToBall",
+    "BallToKitchen"
+    ];
+
 var App = {
 
         /**
@@ -58,6 +82,8 @@ var App = {
          * connects to the server when the page loads for the first time.
          */
         mySocketId: '',
+
+        
 
         /* *************************************
          *                Setup                *
@@ -170,7 +196,7 @@ var App = {
                 IO.socket.emit('startGame');
             },
 
-            gameInitialized : function(data){
+            displayGame : function(data){
                 App.Player.updateGameBoard(data.game)
                 if(App.mySocketId === data.currentPlayer.clientID){
                     $('#playerStatus').text("Current Player");
@@ -186,10 +212,11 @@ var App = {
                 var rooms = data.gameBoard.rooms;
                 App.$gameArea.html(App.$templatePlayGame);
                 //Loop over rooms and place suspects in correct rooms
-                for(var i = 0; i < rooms.length; i++){
-                    $('#'+rooms[i].name+' #suspects li').remove();
-                    for(var j = 0;j<rooms[i].suspects.length; j++){
-                        $('#'+rooms[i].name+' #suspects').append('<li>'+rooms[i].suspects[j].name+'</li>');
+                for(var i = 0; i < gameRooms.length; i++){
+                    console.log(rooms[gameRooms[i]]);
+                    $('#'+rooms[gameRooms[i]].name+' #suspects li').remove();
+                    for(var j = 0;j< rooms[gameRooms[i]].suspects.length; j++){
+                        $('#'+rooms[gameRooms[i]].name+' #suspects').append('<li>'+rooms[gameRooms[i]].suspects[j].name+'</li>');
                     }
                     
                 };

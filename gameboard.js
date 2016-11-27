@@ -3,7 +3,7 @@ var suspect = require('./suspect.js');
 
 module.exports = {
  GameBoard: function(){
-        this.rooms = [];  
+        this.rooms = {};  
         this.suspectLocations = {};
 
         this.createBoard = function() {
@@ -15,7 +15,7 @@ module.exports = {
             var billiard = new room.Room("Billiard",false,[]);
             var dinning = new room.Room("Dinning",false,[]);
             var conservatory = new room.Room("Conservatory",false,[]);
-            var ball = new room.Room("Ballroom",false,[]);
+            var ball = new room.Room("Ball",false,[]);
             var kitchen = new room.Room("Kitchen",false,[]);
 
             //Hallways
@@ -55,7 +55,14 @@ module.exports = {
             conservToBall.adjRooms = ["Conservatory","Ball"];
             ballToKitchen.adjRooms = ["Ball","Kitchen"];
 
-            this.rooms.push(study);
+            this.rooms = {
+                "Study": study, "StudyToHall":studyToHall,"Hall": hall,"HallToLounge":hallToLounge,"Lounge":lounge,
+                "StudyToLibrary":studyToLibrary,"HallToBilliard":hallToBilliard,"LoungeToDinning":loungeToDinning,
+                "Library":library,"LibraryToBilliard":libToBilliard,"Billiard":billiard,"BilliardToDinning":billiardToDinning, "Dinning":dinning,
+                "LibraryToConservatory":libToConserv,"BilliardToBall":billiardToBall,"DinningToKitchen":dinningToKitchen,
+                "Conservatory":conservatory,"ConservatoryToBall":conservToBall,"Ball":ball,"BallToKitchen":ballToKitchen,"Kitchen":kitchen};
+
+            /*this.rooms.push(study);
             this.rooms.push(studyToHall);
             this.rooms.push(hall);
             this.rooms.push(hallToLounge);
@@ -75,7 +82,7 @@ module.exports = {
             this.rooms.push(conservToBall);
             this.rooms.push(ball);
             this.rooms.push(ballToKitchen);
-            this.rooms.push(kitchen);
+            this.rooms.push(kitchen);*/
 
             
             this.suspectLocations = {
@@ -86,6 +93,10 @@ module.exports = {
                 "Mr. Green":"ConservatoryToBall",
                 "Mrs. White":"BallToKitchen"};
 
+        },
+
+        this.getSuspectLocation = function(suspect){
+            return this.suspectLocations[suspect.name];
         }
 
      }
