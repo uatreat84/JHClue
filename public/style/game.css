@@ -1,7 +1,157 @@
 body {
 	overflow: hidden;
+	overflow: scroll;
 }
 
 canvas {
 	display: block;
 }
+
+#board{
+	width: 500px;
+	height: 500px;
+	overflow: auto;
+	border: 1px solid black;
+	position: relative;
+	margin: 0 auto
+}
+.room{
+	width: 25%;
+	height: 25%;
+	outline: 1px solid black;
+}
+.hallway{
+	width: 12.5%;
+	height: 12.5%;
+	outline: 1px solid black;
+}
+#study{
+	position: absolute;
+	top: 0%;
+	left: 0%;
+}
+#hall{
+	position: absolute;
+	top: 0%;
+	left: 37.5%;
+}
+#lounge{
+	position: absolute;
+	top: 0%;
+	right: 0%;
+}
+#library{
+	position: absolute;
+	top: 37.5%;
+	left: 0%;
+}
+#billiard{
+	position: absolute;
+	top: 37.5%;
+	left: 37.5%;}
+#dining{
+	position: absolute;
+	top: 37.5%;
+	right: 0;
+}
+#conservatory{
+	position: absolute;
+	bottom: 0%;
+	left: 0%;}
+#ball{
+	position: absolute;
+	bottom: 0%;
+	left: 37.5%;
+}
+#kitchen{
+	position: absolute;
+	bottom: 0%;
+	right: 0%;
+}
+#studyToHall{
+	position: absolute;
+	top: 6.25%;
+	left: 25%;
+}
+#studyToLib{
+	position: absolute;
+	top: 25%;
+	left: 6.25%;
+}
+#hallToLounge{
+	position: absolute;
+	top: 6.25%;
+	right: 25%;
+}
+#hallToBilliard{
+	position: absolute;
+	top: 25%;
+	left: 43.75%;
+}
+#loungeToDining{
+	position: absolute;
+	top: 25%;
+	right: 6.25%;
+}
+#libToBilliard{
+	position: absolute;
+	top: 43.75%;
+	left: 25%;
+}
+#libToConserv{
+	position: absolute;
+	bottom: 25%;
+	left: 6.25%;
+}
+#billiardToDining{
+	position: absolute;
+	top: 43.75%;
+	right: 25%;
+}
+#billiardToBall{
+	position: absolute;
+	bottom: 25%;
+	left: 43.75%;
+}
+#diningToKitchen{
+	position: absolute;
+	bottom: 25%;
+	right: 6.25%;
+}
+#conservToBall{
+	position: absolute;
+	bottom: 6.25%;
+	left: 25%;
+}
+#ballToKitchen{
+	position: absolute;
+	bottom: 6.25%;
+	right: 25%;
+}
+
+
+#gameLogContainer{   
+    width:800px;   
+    margin:0px auto;   
+    padding:40px 0;   
+}
+#gameLogTitle{
+	text-align: center;
+	background: darkgray;
+	border-left: 1px solid black;
+	border-right: 1px solid black;
+	border-top: 1px solid black;
+}  
+#scrollBox{   
+    height:100px;
+    border: 1px solid black;
+    overflow:auto; overflow-x:hidden;
+    background: lightgray;
+} 
+#gameLogContent > p{
+	margin: 0
+}
+
+
+
+
