@@ -83,6 +83,8 @@ var App = {
          */
         mySocketId: '',
 
+        currentPlayerSocket: '',
+
         
 
         /* *************************************
@@ -107,9 +109,11 @@ var App = {
 
             // Templates
             App.$gameArea = $('#gameArea');
+            App.$currentPlayer = $('#currentPlayer');
             App.$templateWaitGame = $('#wait-game-template').html();
             App.$templateSelectSuspect = $('#select-suspect-template').html();
             App.$templatePlayGame = $('#play-game-template').html();
+            App.$templateCurrentPlayer = $("#current-player-template").html();
         
         },
 
@@ -119,6 +123,7 @@ var App = {
         bindEvents: function () {
             App.$doc.on('click', '#btnSelectSuspect',App.Player.onSuspectSelectClick);
             App.$doc.on('click', '#btnPlayClue',App.Player.onStartGameClick);
+            App.$doc.on('click', '#btnMoveOptionSelect', App.Player.onOptionSelectClick);
         },
 
         /* *************************************
@@ -145,12 +150,7 @@ var App = {
         Player : {
 
 
-           /**
-             * A reference to the socket ID of the Host
-             */
-            hostSocketId: '',
-
-
+            //Update the list of players about to join
             updateWaitingList : function(data){
                 $('#playersWaiting  li').remove();
                 var players = data.game.players;
@@ -198,8 +198,12 @@ var App = {
 
             displayGame : function(data){
                 App.Player.updateGameBoard(data.game)
+                App.currentPlayerSocket = data.currentPlayer.clientID;
                 if(App.mySocketId === data.currentPlayer.clientID){
-                    $('#playerStatus').text("Current Player");
+                    $('#playerStatus').text("You are the Current Player");
+                    //@TODO this needs to be done or else other players can input move numbers.
+                    //App.$currentPlayer.html(App.$templateCurrentPlayer);
+                    App.Player.updateMoveOptions(data.moveOptions);
                 }else{
                     $('#playerStatus').text("Waiting for "+data.currentPlayer.name);
                 }
@@ -207,20 +211,54 @@ var App = {
                 console.log("Current Player: "+data.currentPlayer.clientID);
             },
 
+            updateMoveOptions: function(options){
+                var select = document.getElementById("moveOptions");
+                select.options.length = 0;
+                if(options.length ===0){
+                    //GO TO THE NEXT PLAYER
+                }
+                //$('#moveOptions  li').remove();
+                for(var i = 0;i< options.length; i++){
+                    //$('#moveOptions')
+                    //        .append('<li>' + options[i] );
+                    select.options[select.options.length] = new Option(options[i],options[i]);
+                }
+
+            },
 
             updateGameBoard : function(data){            
                 var rooms = data.gameBoard.rooms;
                 App.$gameArea.html(App.$templatePlayGame);
                 //Loop over rooms and place suspects in correct rooms
                 for(var i = 0; i < gameRooms.length; i++){
-                    console.log(rooms[gameRooms[i]]);
-                    console.log('#'+rooms[gameRooms[i]].name+' #suspects li');
                     $('#'+rooms[gameRooms[i]].name+' #suspects li').remove();
                     for(var j = 0;j< rooms[gameRooms[i]].suspects.length; j++){
                         $('#'+rooms[gameRooms[i]].name+' #suspects').append('<li>'+rooms[gameRooms[i]].suspects[j].name+'</li>');
                     }
                     
                 };
+             },
+
+             onOptionSelectClick : function(data){
+
+                var select = document.getElementById("moveOptions");         
+                //Parse selection to figure out type
+                var selection = select.options[select.selectedIndex].value;
+                var splitString = selection.split(" ");
+                if(splitString[0] === 'Move'){
+                    var destination = splitString[2];
+                    console.log("Player wants to move to "+ destination);
+                    IO.socket.emit('moveCurrentPlayer',{destination:destination});
+                }else{
+                    console.log("Player wants to make a " + splitString[1]);
+                    var choice = splitString[1];
+                    if(choice === "Accusation"){
+                        //Make Accusation
+                    }else if(choice ==="Suggestion"){
+                        //Make Suggestion
+                    }
+                }
+
              }
 
 

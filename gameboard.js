@@ -23,7 +23,7 @@ module.exports = {
             var hallToLounge = new room.Room("HallToLounge",true,[new suspect.Suspect("Miss Scarlett")]);
             var studyToLibrary = new room.Room("StudyToLibrary",true,[new suspect.Suspect("Professor Plum")]);
             var hallToBilliard = new room.Room("HallToBilliard",true,[]);
-            var loungeToDining = new room.Room("LoungeToDining",true,[new suspect.Suspect("Colonel Mistard")]);
+            var loungeToDining = new room.Room("LoungeToDining",true,[new suspect.Suspect("Colonel Mustard")]);
             var libToBilliard = new room.Room("LibraryToBilliard",true,[]);
             var billiardToDining = new room.Room("BilliardToDining",true,[]);
             var libToConserv = new room.Room("LibraryToConservatory",true,[new suspect.Suspect("Mrs. Peacock")]);
@@ -86,17 +86,44 @@ module.exports = {
 
             
             this.suspectLocations = {
-                "Miss Scarlett":"HallToLounge",
-                "Professor Plum":"StudyToLibrary",
-                "Colonal Mustard":"LoungeToDining",
-                "Mrs. Peacock":"LibraryToConservatory",
-                "Mr. Green":"ConservatoryToBall",
-                "Mrs. White":"BallToKitchen"};
+                "Miss Scarlett":hallToLounge,
+                "Professor Plum":studyToLibrary,
+                "Colonel Mustard":loungeToDining,
+                "Mrs. Peacock":libToConserv,
+                "Mr. Green":conservToBall,
+                "Mrs. White":ballToKitchen};
 
         },
 
         this.getSuspectLocation = function(suspect){
             return this.suspectLocations[suspect.name];
+        }
+
+        this.isOccupiedHallway = function(room){
+            var roomToCheck = this.rooms[room];
+            if(roomToCheck.isHallway && roomToCheck.suspects.length > 0){
+                return true;
+            }else{
+                return false;
+            }
+        },
+
+        this.moveSuspect = function(data){
+            var suspect = data.suspect;
+            var destination = data.destination;
+            var currentRoom = this.suspectLocations[suspect.name];
+            console.log("Suspect was in " + currentRoom.name);
+            //Remove suspect from current Room
+            var index = currentRoom.suspects.indexOf(suspect)
+            currentRoom.suspects.splice(index,1);
+            //Add suspect to new room
+            var destinationRoom = this.rooms[destination]
+            destinationRoom.suspects.push(suspect);
+
+            //Update Map
+            this.suspectLocations[suspect.name] = destinationRoom;
+
+            console.log("Suspect is now in " + this.suspectLocations[suspect.name].name);
         }
 
      }

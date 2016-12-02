@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="style/game.css">
   </head>
   <body>
+
     <div id="gameArea">
         <!-- This is where the templates defined below will be used -->
    </div>
@@ -59,15 +60,21 @@
             <div id="title">Clue-Less by</div>
             <img id="JHClueLogo" src="./images/JHClueLogo.png">
             <div id="playerStatus"></div>
-            <div class="info">
-                <label for="inputMoveNumber">Move option number:</label>
-                <input id="moveOptionNumber" type="text" />
+            <div id="currentPlayer">
+                <!-- This wrapper needs to be moved into the template below and only be loaded for the current player
+                        There is a similar comment in the APP.js file. I couldnt figure it out right so I moved on- Matt -->
+                 <div class="currentPlayerWrapper">
+                    <div class="info">
+                        <select id="moveOptions"></select>
+                    </div>
+                    <div class="info buttons">
+                        <button id="btnMoveOptionSelect" class="btn left">Select</button>
+                    </div>
+                </div>
+                      <!-- This is where the templates defined below should be used -->
             </div>
 
-            <div class="info buttons">
-                <button id="btnMoveOptionSelect" class="btn left">Select</button>
-            </div>
-            <ol id="moveOptions"></ol>
+           
             <div class="board" id="board">
                 <div class="room" id="Study"><div>Study</div><ul id="suspects"></ul></div>
                 <div class="room" id="Hall"><div>Hall</div><ul id="suspects"></ul></div>
@@ -194,7 +201,9 @@
 
         </div>
     </script>
+    <script id="current-player-template" type="text/template">
 
+    </script>
 
 
 
