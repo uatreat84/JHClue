@@ -41,105 +41,105 @@ canvas {
 	height: 12.5%;
 	outline: 1px solid black;
 }
-#study{
+#Study{
 	position: absolute;
 	top: 0%;
 	left: 0%;
 }
-#hall{
+#Hall{
 	position: absolute;
 	top: 0%;
 	left: 37.5%;
 }
-#lounge{
+#Lounge{
 	position: absolute;
 	top: 0%;
 	right: 0%;
 }
-#library{
+#Library{
 	position: absolute;
 	top: 37.5%;
 	left: 0%;
 }
-#billiard{
+#Billiard{
 	position: absolute;
 	top: 37.5%;
 	left: 37.5%;}
-#dining{
+#Dining{
 	position: absolute;
 	top: 37.5%;
 	right: 0;
 }
-#conservatory{
+#Conservatory{
 	position: absolute;
 	bottom: 0%;
 	left: 0%;}
-#ball{
+#Ball{
 	position: absolute;
 	bottom: 0%;
 	left: 37.5%;
 }
-#kitchen{
+#Kitchen{
 	position: absolute;
 	bottom: 0%;
 	right: 0%;
 }
-#studyToHall{
+#StudyToHall{
 	position: absolute;
 	top: 6.25%;
 	left: 25%;
 }
-#studyToLib{
+#StudyToLibrary{
 	position: absolute;
 	top: 25%;
 	left: 6.25%;
 }
-#hallToLounge{
+#HallToLounge{
 	position: absolute;
 	top: 6.25%;
 	right: 25%;
 }
-#hallToBilliard{
+#HallToBilliard{
 	position: absolute;
 	top: 25%;
 	left: 43.75%;
 }
-#loungeToDining{
+#LoungeToDining{
 	position: absolute;
 	top: 25%;
 	right: 6.25%;
 }
-#libToBilliard{
+#LibraryToBilliard{
 	position: absolute;
 	top: 43.75%;
 	left: 25%;
 }
-#libToConserv{
+#LibraryToConservatory{
 	position: absolute;
 	bottom: 25%;
 	left: 6.25%;
 }
-#billiardToDining{
+#BilliardToDining{
 	position: absolute;
 	top: 43.75%;
 	right: 25%;
 }
-#billiardToBall{
+#BilliardToBall{
 	position: absolute;
 	bottom: 25%;
 	left: 43.75%;
 }
-#diningToKitchen{
+#DiningToKitchen{
 	position: absolute;
 	bottom: 25%;
 	right: 6.25%;
 }
-#conservToBall{
+#ConservatoryToBall{
 	position: absolute;
 	bottom: 6.25%;
 	left: 25%;
 }
-#ballToKitchen{
+#BallToKitchen{
 	position: absolute;
 	bottom: 6.25%;
 	right: 25%;
