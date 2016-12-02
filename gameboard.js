@@ -13,7 +13,7 @@ module.exports = {
             var lounge = new room.Room("Lounge",false,[]);
             var library = new room.Room("Library",false,[]);
             var billiard = new room.Room("Billiard",false,[]);
-            var dinning = new room.Room("Dinning",false,[]);
+            var dining = new room.Room("Dining",false,[]);
             var conservatory = new room.Room("Conservatory",false,[]);
             var ball = new room.Room("Ball",false,[]);
             var kitchen = new room.Room("Kitchen",false,[]);
@@ -23,43 +23,43 @@ module.exports = {
             var hallToLounge = new room.Room("HallToLounge",true,[new suspect.Suspect("Miss Scarlett")]);
             var studyToLibrary = new room.Room("StudyToLibrary",true,[new suspect.Suspect("Professor Plum")]);
             var hallToBilliard = new room.Room("HallToBilliard",true,[]);
-            var loungeTodining = new room.Room("LoungeTodining",true,[new suspect.Suspect("Colonel Mistard")]);
+            var loungeToDining = new room.Room("LoungeToDining",true,[new suspect.Suspect("Colonel Mistard")]);
             var libToBilliard = new room.Room("LibraryToBilliard",true,[]);
-            var billiardTodining = new room.Room("BilliardTodining",true,[]);
+            var billiardToDining = new room.Room("BilliardToDining",true,[]);
             var libToConserv = new room.Room("LibraryToConservatory",true,[new suspect.Suspect("Mrs. Peacock")]);
             var billiardToBall = new room.Room("BilliardToBall",true,[]);
-            var diningToKitchen = new room.Room("diningToKitchen",true,[]);
+            var diningToKitchen = new room.Room("DiningToKitchen",true,[]);
             var conservToBall = new room.Room("ConservatoryToBall",true,[new suspect.Suspect("Mr.Green")]);
             var ballToKitchen = new room.Room("BallToKitchen",true,[new suspect.Suspect("Mrs. White")]);
 
             study.adjRooms  = ["StudyToHall","StudyToLibrary","Kitchen"] 
             hall.adjRooms = ["StudyToHall","HallToLounge"];
-            lounge.adjRooms = ["HallToLounge","LoungeTodining","Conservatory"];
+            lounge.adjRooms = ["HallToLounge","LoungeToDining","Conservatory"];
             library.adjRooms = ["StudyToLibrary","LibraryToBilliard","LibraryToConservatory"];
-            billiard.adjRooms = ["LibraryToBilliard","HallToBilliard","BilliardTodining","BilliardToBall"];
-            dining.adjRooms = ["LoungeTodining","BilliardTodining","diningToKitchen"];
+            billiard.adjRooms = ["LibraryToBilliard","HallToBilliard","BilliardToDining","BilliardToBall"];
+            dining.adjRooms = ["LoungeToDining","BilliardToDining","DiningToKitchen"];
             conservatory.adjRooms = ["LibraryToConservatory","ConservatoryToBall","Lounge"];
             ball.adjRooms = ["ConservatoryToBall","BilliardToBall","BallToKitchen"];
-            kitchen.adjRooms = ["BallToKitchen","diningToKitchen","Study"];
+            kitchen.adjRooms = ["BallToKitchen","DiningToKitchen","Study"];
 
             studyToHall.adjRooms = ["Study","Hall"];
             hallToLounge.adjRooms = ["Hall","Lounge"];
             studyToLibrary.adjRooms = ["Study","Library"];
             hallToBilliard.adjRooms = ["Hall","Billiard"];
-            loungeTodining.adjRooms = ["Lounge","dining"];
+            loungeToDining.adjRooms = ["Lounge","Dining"];
             libToBilliard.adjRooms = ["Library","Billiard"];
-            billiardTodining.adjRooms = ["Billiard","dining"];
+            billiardToDining.adjRooms = ["Billiard","Dining"];
             libToConserv.adjRooms = ["Library","Conservatory"];
             billiardToBall.adjRooms = ["Billiard","Ball"];
-            diningToKitchen.adjRooms = ["dining","Kitchen"];
+            diningToKitchen.adjRooms = ["Dining","Kitchen"];
             conservToBall.adjRooms = ["Conservatory","Ball"];
             ballToKitchen.adjRooms = ["Ball","Kitchen"];
 
             this.rooms = {
                 "Study": study, "StudyToHall":studyToHall,"Hall": hall,"HallToLounge":hallToLounge,"Lounge":lounge,
-                "StudyToLibrary":studyToLibrary,"HallToBilliard":hallToBilliard,"LoungeToDinning":loungeToDinning,
-                "Library":library,"LibraryToBilliard":libToBilliard,"Billiard":billiard,"BilliardToDinning":billiardToDinning, "Dinning":dinning,
-                "LibraryToConservatory":libToConserv,"BilliardToBall":billiardToBall,"DinningToKitchen":dinningToKitchen,
+                "StudyToLibrary":studyToLibrary,"HallToBilliard":hallToBilliard,"LoungeToDining":loungeToDining,
+                "Library":library,"LibraryToBilliard":libToBilliard,"Billiard":billiard,"BilliardToDining":billiardToDining, "Dining":dining,
+                "LibraryToConservatory":libToConserv,"BilliardToBall":billiardToBall,"DiningToKitchen":diningToKitchen,
                 "Conservatory":conservatory,"ConservatoryToBall":conservToBall,"Ball":ball,"BallToKitchen":ballToKitchen,"Kitchen":kitchen};
 
             /*this.rooms.push(study);
@@ -69,15 +69,15 @@ module.exports = {
             this.rooms.push(lounge);
             this.rooms.push(studyToLibrary);
             this.rooms.push(hallToBilliard);
-            this.rooms.push(loungeToDinning);
+            this.rooms.push(loungeToDining);
             this.rooms.push(library);
             this.rooms.push(libToBilliard);
             this.rooms.push(billiard);
-            this.rooms.push(billiardToDinning);
-            this.rooms.push(dinning);
+            this.rooms.push(billiardToDining);
+            this.rooms.push(dining);
             this.rooms.push(libToConserv);
             this.rooms.push(billiardToBall);
-            this.rooms.push(dinningToKitchen);
+            this.rooms.push(diningToKitchen);
             this.rooms.push(conservatory);
             this.rooms.push(conservToBall);
             this.rooms.push(ball);
@@ -88,7 +88,7 @@ module.exports = {
             this.suspectLocations = {
                 "Miss Scarlett":"HallToLounge",
                 "Professor Plum":"StudyToLibrary",
-                "Colonal Mustard":"LoungeTodining",
+                "Colonal Mustard":"LoungeToDining",
                 "Mrs. Peacock":"LibraryToConservatory",
                 "Mr. Green":"ConservatoryToBall",
                 "Mrs. White":"BallToKitchen"};

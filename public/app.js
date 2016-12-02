@@ -56,7 +56,7 @@ jQuery(function($){
     "Lounge",
     "Library",
     "Billiard",
-    "Dinning",
+    "Dining",
     "Conservatory",
     "Ball",
     "Kitchen",
@@ -64,12 +64,12 @@ jQuery(function($){
     "HallToLounge",
     "StudyToLibrary",
     "HallToBilliard",
-    "LoungeToDinning",
+    "LoungeToDining",
     "LibraryToBilliard",
-    "BilliardToDinning",
+    "BilliardToDining",
     "LibraryToConservatory",
     "BilliardToBall",
-    "DinningToKitchen",
+    "DiningToKitchen",
     "ConservatoryToBall",
     "BallToKitchen"
     ];
@@ -214,6 +214,7 @@ var App = {
                 //Loop over rooms and place suspects in correct rooms
                 for(var i = 0; i < gameRooms.length; i++){
                     console.log(rooms[gameRooms[i]]);
+                    console.log('#'+rooms[gameRooms[i]].name+' #suspects li');
                     $('#'+rooms[gameRooms[i]].name+' #suspects li').remove();
                     for(var j = 0;j< rooms[gameRooms[i]].suspects.length; j++){
                         $('#'+rooms[gameRooms[i]].name+' #suspects').append('<li>'+rooms[gameRooms[i]].suspects[j].name+'</li>');

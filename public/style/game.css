@@ -8,6 +8,21 @@ canvas {
 	display: block;
 }
 
+
+#title{
+	font-size: 24px;
+}
+
+#JHClueLogo{
+	height: 150px;
+	width: auto;
+}
+
+
+/***************************
+** Styles for the Game Board
+***************************/
+
 #board{
 	width: 500px;
 	height: 500px;
@@ -130,6 +145,10 @@ canvas {
 	right: 25%;
 }
 
+
+/***************************
+** Styles for the Game Log
+***************************/
 
 #gameLogContainer{   
     width:800px;   
