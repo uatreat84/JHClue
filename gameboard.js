@@ -29,7 +29,7 @@ module.exports = {
             var libToConserv = new room.Room("LibraryToConservatory",true,[new suspect.Suspect("Mrs. Peacock")]);
             var billiardToBall = new room.Room("BilliardToBall",true,[]);
             var diningToKitchen = new room.Room("DiningToKitchen",true,[]);
-            var conservToBall = new room.Room("ConservatoryToBall",true,[new suspect.Suspect("Mr.Green")]);
+            var conservToBall = new room.Room("ConservatoryToBall",true,[new suspect.Suspect("Mr. Green")]);
             var ballToKitchen = new room.Room("BallToKitchen",true,[new suspect.Suspect("Mrs. White")]);
 
             study.adjRooms  = ["StudyToHall","StudyToLibrary","Kitchen"] 
