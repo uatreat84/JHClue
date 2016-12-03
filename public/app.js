@@ -74,6 +74,15 @@ jQuery(function($){
     "BallToKitchen"
     ];
 
+    var suspectMap = {
+        "Mrs. White": "white",
+        "Mrs. Peacock": "peacock",
+        "Professor Plum": "plum",
+        "Miss Scarlett": "scarlett",
+        "Colonel Mustard": "mustard",
+        "Mr. Green": "green"
+    };
+
 var App = {
 
         /**
@@ -231,9 +240,14 @@ var App = {
                 App.$gameArea.html(App.$templatePlayGame);
                 //Loop over rooms and place suspects in correct rooms
                 for(var i = 0; i < gameRooms.length; i++){
-                    $('#'+rooms[gameRooms[i]].name+' #suspects li').remove();
+                    //$('#'+rooms[gameRooms[i]].name+' #suspects li').remove();
+                    $('#'+rooms[gameRooms[i]].name+' #suspects div').remove();
                     for(var j = 0;j< rooms[gameRooms[i]].suspects.length; j++){
-                        $('#'+rooms[gameRooms[i]].name+' #suspects').append('<li>'+rooms[gameRooms[i]].suspects[j].name+'</li>');
+                        // change the name of the suspect to one that can be used as an html ID
+                        var suspectID = suspectMap[rooms[gameRooms[i]].suspects[j].name];
+                        console.log("Suspect Proper Name: " + rooms[gameRooms[i]].suspects[j].name)
+                        console.log("Suspect ID: " + suspectID);
+                        $('#'+rooms[gameRooms[i]].name+' #suspects').append('<div class="player" id="' + suspectID + '"></div>');
                     }
                     
                 };
