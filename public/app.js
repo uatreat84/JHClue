@@ -238,6 +238,19 @@ var App = {
             updateGameBoard : function(data){            
                 var rooms = data.gameBoard.rooms;
                 App.$gameArea.html(App.$templatePlayGame);
+                var players = data.players;
+                console.log("Players: "+ players);
+                //Loop over players to find player that matches this socket ID
+                for(var j = 0; j < players.length; j++){
+                    if(players[j].clientID === App.mySocketId){
+                        //Display cards dealt to player
+                        for(var k = 0; k< players[j].cards.length; k++){
+                            var paragraph = document.createElement('p');
+                            paragraph.textContent = players[j].cards[k];
+                            document.getElementById("gameCards").append(paragraph);
+                        }
+                    }
+                }
                 //Loop over rooms and place suspects in correct rooms
                 for(var i = 0; i < gameRooms.length; i++){
                     //$('#'+rooms[gameRooms[i]].name+' #suspects li').remove();
