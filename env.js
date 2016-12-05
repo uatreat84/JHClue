@@ -42,15 +42,16 @@ function playerSelectSuspect(data){
     var sock = this;
 
     console.log('Player selected ' + data.selectedSuspect);
-    if(data.selectedSuspect >= 1){
+    if(data.selectedSuspect >= 1 && data.selectedSuspect <=currentGame.suspects.length){
         var newPlayer = new player.Player(data.playerName,this.id,true);
         newPlayer.suspect = currentGame.suspects[data.selectedSuspect- 1];
         currentGame.suspects.splice(data.selectedSuspect - 1,1);
         currentGame.players.push(newPlayer);
         io.sockets.in(currentGame.gameID).emit('suspectSelected', {gameId: gameID, mySocketId: this.id, game: currentGame});
     }else{
-        //TODO make error handling better
-        this.emit('needToSelectSuspect',{suspectList: currentGame.suspects});
+        //TODO find way to retain username even when suspect number has to be reentered
+        
+        this.emit('invalidSuspect',{suspectList: currentGame.suspects});
     }
 
 }

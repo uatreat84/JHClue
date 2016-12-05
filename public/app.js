@@ -24,6 +24,7 @@ jQuery(function($){
         bindEvents : function() {
             IO.socket.on('connected', IO.onConnected );
             IO.socket.on('needToSelectSuspect', IO.selectSuspect);
+            IO.socket.on('invalidSuspect', IO.selectSuspectAgain);
             IO.socket.on('suspectSelected',IO.suspectSelected);
             IO.socket.on('displayGame',IO.displayGame);
         },
@@ -39,6 +40,11 @@ jQuery(function($){
 
         selectSuspect : function(data) {
             App.Player.selectSuspect(data);
+        },
+        
+        
+        selectSuspectAgain : function(data) {
+            App.Player.selectSuspectAgain(data);
         },
 
         suspectSelected: function(data){
@@ -121,6 +127,7 @@ var App = {
             App.$currentPlayer = $('#currentPlayer');
             App.$templateWaitGame = $('#wait-game-template').html();
             App.$templateSelectSuspect = $('#select-suspect-template').html();
+            App.$templateSelectSuspectAgain = $('#select-suspect-again-template').html();
             App.$templatePlayGame = $('#play-game-template').html();
             App.$templateCurrentPlayer = $("#current-player-template").html();
         
@@ -188,6 +195,22 @@ var App = {
 
 
             },
+            
+            selectSuspectAgain: function(data) {
+                App.$gameArea.html(App.$templateSelectSuspectAgain);
+
+                var suspects = data.suspectList;
+                for(var i = 0; i < suspects.length; i++){
+                        // Update host screen
+                    $('#availableSuspects')
+                        .append('<li>' + suspects[i].name );
+                    console.log(suspects[i].name + " is available");
+       
+                }
+
+
+            },
+            
             onSuspectSelectClick : function () {
                 var data = {
                     selectedSuspect : +($('#suspectNumber').val()),
