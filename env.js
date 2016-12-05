@@ -15,6 +15,7 @@ exports.initGame = function(sio,socket){
     gameSocket.on('playerSelectSuspect',playerSelectSuspect);
     gameSocket.on('startGame',playerStartGame);
     gameSocket.on('moveCurrentPlayer',moveCurrentPlayer);
+    gameSocket.on('makeGuess',playerMakeGuess);
 
 }
 
@@ -59,7 +60,11 @@ function playerStartGame(data){
     console.log('Game started by ID: '+this.id);
     currentGame.initGame();
     var options = currentGame.getMoveOptions();
-    io.sockets.in(currentGame.gameID).emit('displayGame',{game: currentGame, currentPlayer: currentGame.currentPlayer, moveOptions: options});
+    io.sockets.in(currentGame.gameID).emit('displayGame',{
+        game: currentGame, 
+        currentPlayer: currentGame.currentPlayer, 
+        currentLocation: currentGame.currentPlayerLocation(),
+        moveOptions: options});
 
 
 }
@@ -68,8 +73,29 @@ function moveCurrentPlayer(data){
     var destination = data.destination;
     console.log("Current Player wants to move to " + destination);
     var options = currentGame.moveCurrentPlayer(destination);
-    io.sockets.in(currentGame.gameID).emit('displayGame',{game: currentGame, currentPlayer: currentGame.currentPlayer, moveOptions: options});
+    io.sockets.in(currentGame.gameID).emit('displayGame',{
+        game: currentGame,
+        currentPlayer: currentGame.currentPlayer, 
+        currentLocation: currentGame.currentPlayerLocation(),
+        moveOptions: options});
 
+}
+
+function playerMakeGuess(data){
+    console.log("Player Made Guess: "+data.type);
+    if(data.type ==="Accusation"){
+        accusation = {
+            room:data.room,
+            suspect:data.suspect,
+            weapon:data.weapon
+        }
+        console.log(accusation.weapon)
+        if(currentGame.verifyAccusation(accusation)){
+            console.log("Player win");
+        }else{
+            console.log("Player loses");
+        }
+    }
 }
 
 

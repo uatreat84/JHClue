@@ -94,6 +94,8 @@ var App = {
 
         currentPlayerSocket: '',
 
+        currentPlayerLocation: [],
+
         
 
         /* *************************************
@@ -123,6 +125,7 @@ var App = {
             App.$templateSelectSuspect = $('#select-suspect-template').html();
             App.$templatePlayGame = $('#play-game-template').html();
             App.$templateCurrentPlayer = $("#current-player-template").html();
+            App.$templateMakeSuggestion = $("#make-suggestion-template").html();
         
         },
 
@@ -133,6 +136,7 @@ var App = {
             App.$doc.on('click', '#btnSelectSuspect',App.Player.onSuspectSelectClick);
             App.$doc.on('click', '#btnPlayClue',App.Player.onStartGameClick);
             App.$doc.on('click', '#btnMoveOptionSelect', App.Player.onOptionSelectClick);
+            App.$doc.on('click', '#btnMakeSuggestion', App.Player.onMakeSuggestionClick);
         },
 
         /* *************************************
@@ -208,6 +212,8 @@ var App = {
             displayGame : function(data){
                 App.Player.updateGameBoard(data.game)
                 App.currentPlayerSocket = data.currentPlayer.clientID;
+                App.currentPlayerLocation=data.currentLocation
+                console.log("Current location: "+App.currentPlayerLocation.name);
                 if(App.mySocketId === data.currentPlayer.clientID){
                     $('#playerStatus').text("You are the Current Player");
                     //@TODO this needs to be done or else other players can input move numbers.
@@ -280,11 +286,53 @@ var App = {
                     console.log("Player wants to make a " + splitString[1]);
                     var choice = splitString[1];
                     if(choice === "Accusation"){
-                        //Make Accusation
+                        App.Player.makeAccusation();
                     }else if(choice ==="Suggestion"){
-                        //Make Suggestion
+                        App.Player.makeSuggestion();
                     }
                 }
+
+             },
+
+             makeSuggestion : function(data){
+                App.$gameArea.html(App.$templateMakeSuggestion);
+                $('#typeOfGuess').text("Suggestion");
+                var roomSelect = document.getElementById("roomSuggestion");
+                roomSelect.options.length = 0;
+                roomSelect.options[roomSelect.options.length] = new Option(App.currentPlayerLocation.name,App.currentPlayerLocation.name);
+
+             },
+
+             makeAccusation : function(data){
+                App.$gameArea.html(App.$templateMakeSuggestion);
+                $('#typeOfGuess').text("Accusation");
+                var roomSelect = document.getElementById("roomSuggestion");
+                roomSelect.options.length = 0;
+                for(var i = 0;i < 9; i++){
+                    roomSelect.options[i] = new Option(gameRooms[i],gameRooms[i]);
+                }
+              
+             },
+
+             onMakeSuggestionClick : function(){
+                var roomSelect = document.getElementById("roomSuggestion");
+                var weaponSelect = document.getElementById("weaponSuggestion");
+                var suspectSelect = document.getElementById("suspectSuggestion");         
+                //Parse selection to figure out type
+                var roomSelection = roomSelect.options[roomSelect.selectedIndex].value;
+                var weaponSelection = weaponSelect.options[weaponSelect.selectedIndex].value;
+                var suspectSelection = suspectSelect.options[suspectSelect.selectedIndex].value;
+
+                console.log("Room: "+roomSelection);
+                console.log("Weapon: "+weaponSelection);
+                console.log("Suspect: "+suspectSelection);
+                var type = $('#typeOfGuess').text();
+
+                IO.socket.emit('makeGuess',{
+                    type:type,
+                    room:roomSelection,
+                    weapon:weaponSelection,
+                    suspect:suspectSelection});
 
              }
 

@@ -50,7 +50,7 @@ module.exports = {
                     "Wrench"];
             
             var roomCards = [
-                    "Game",
+                    "Study",
                     "Hall",
                     "Lounge",
                     "Library",
@@ -71,6 +71,9 @@ module.exports = {
                 weaponCards.splice(randomWeapon,1);
                 this.caseFile["Room"] = roomCards[randomRoom];
                 roomCards.splice(roomCards,1);
+                console.log("CaseFile Suspect: " +this.caseFile["Suspect"]);
+                console.log("CaseFile Weapon: " +this.caseFile["Weapon"]);
+                console.log("CaseFile Room: " +this.caseFile["Room"]);
 
                 var allCards = suspectCards.concat(weaponCards, roomCards);
 
@@ -126,6 +129,10 @@ module.exports = {
             //console.log("Options: " + options);
             return options;
         },
+
+        this.currentPlayerLocation = function(){
+            return this.gameBoard.getSuspectLocation(this.currentPlayer.suspect);
+        }
    
        this.moveCurrentPlayer = function(destination){
             if(this.currentPlayer === undefined ){
@@ -143,6 +150,19 @@ module.exports = {
             options.push("Make Accusation");
             
             return options;
+        },
+
+        this.verifyAccusation = function(accusation){
+            if(this.caseFile["Room"] === accusation.room && 
+                this.caseFile["Suspect"] === accusation.suspect &&
+                 this.caseFile["Weapon"] === accusation.weapon)
+            {
+                return true;
+
+            }else{
+                return false;
+            }
+
         }
     }
 
