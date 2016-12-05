@@ -49,7 +49,7 @@ function playerSelectSuspect(data){
         currentGame.players.push(newPlayer);
         io.sockets.in(currentGame.gameID).emit('suspectSelected', {gameId: gameID, mySocketId: this.id, game: currentGame});
     }else{
-        //TODO make error handling better
+        //TODO find way to retain username even when suspect number has to be reentered
         
         this.emit('invalidSuspect',{suspectList: currentGame.suspects});
     }
