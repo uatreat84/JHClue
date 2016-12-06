@@ -43,37 +43,43 @@
             </div>
             <div class="info">
                 <label for="inputSuspectNumber">Suspect number:</label>
-                <input id="suspectNumber" type="text" />
+                <select id="availableSuspects"></select>
             </div>
 
             <div class="info buttons">
                 <button id="btnSelectSuspect" class="btn left">Select</button>
             </div>
-            <ol id="availableSuspects"></ol>
 
         </div>
     </script>
-    
-        <script id="select-suspect-again-template" type="text/template">
-        <div class="suspectWrapper">
-        	<p>Please select one of the numbers listed below when choosing a suspect.</p>
+    <script id="make-suggestion-template" type="text/template">
+        <div class="suggestionWrapper">
             <div class="info">
-                <label for="inputPlayerName">Your Name:</label>
-                <input id="inputPlayerName" type="text" />
-            </div>
-            <div class="info">
-                <label for="inputSuspectNumber">Suspect number:</label>
-                <input id="suspectNumber" type="text" />
-            </div>
+                <div id="typeOfGuess"></div>
+                <select id="suspectSuggestion">
+                <option value="Mr. Green">Mr. Green</option>
+                <option value="Mrs. White">Mrs. White</option>
+                <option value="Mrs. Peacock">Mrs. Peacock</option>
+                <option value="Colonel Mustard">Colonel Mustard</option>
+                <option value="Professor Plum">Professor Plum</option>
+                <option value="Miss Scarlett">Miss Scarlett</option>
+                </select>
 
+                <select id="weaponSuggestion">
+                    <option value="Knife">Knife</option>
+                    <option value="Rope">Rope</option>
+                    <option value="Gun">Gun</option>
+                    <option value="Candle Stick">Candle Stick</option>
+                    <option value="Lead Pipe">Lead Pipe</option>
+                    <option value="Wrench">Wrench</option>
+                </select>
+                <select id="roomSuggestion"></select>
+            </div>
             <div class="info buttons">
-                <button id="btnSelectSuspect" class="btn left">Select</button>
+               <button id="btnMakeSuggestion" class="btn left">Select</button>
             </div>
-            <ol id="availableSuspects"></ol>
-
         </div>
     </script>
-
      <script id="play-game-template" type="text/template">
         <div class="playingingGameWrapper">
             <div id="title">Clue-Less by</div>
@@ -116,26 +122,12 @@
                 <div class="hallway" id="DiningToKitchen"><div><img class="hall" src="http://localhost:3000/HallwayVer.png"></div><ul id="suspects"></ul></div>
                 <div class="hallway" id="ConservatoryToBall"><div><img class="hall" src="http://localhost:3000/HallwayHor.png"></div><ul id="suspects"></ul></div>
                 <div class="hallway" id="BallToKitchen"><div><img class="hall" src="http://localhost:3000/HallwayHor.png"></div><ul id="suspects"></ul></div>
-                <div class="room" id="Hall"><div>Hall</div><div id="suspects"></div></div>
-                <div class="room" id="Lounge"><div>Lounge</div><div id="suspects"></div></div>
-                <div class="room" id="Library"><div>Library</div><div id="suspects"></div></div>
-                <div class="room" id="Billiard"><div>Billiard Room</div><div id="suspects"></div></div>
-                <div class="room" id="Dining"><div>Dining Room</div><div id="suspects"></div></div>
-                <div class="room" id="Conservatory"><div>Conservatory</div><div id="suspects"></div></div>
-                <div class="room" id="Ball"><div>Ballroom</div><div id="suspects"></div></div>
-                <div class="room" id="Kitchen"><div>Kitchen</div><div id="suspects"></div></div>
-                <div class="hallway" id="StudyToHall"><div id="suspects"></div></div>
-                <div class="hallway" id="StudyToLibrary"><div id="suspects"></div></div>
-                <div class="hallway" id="HallToLounge"><div id="suspects"></div></div>
-                <div class="hallway" id="HallToBilliard"><div id="suspects"></div></div>
-                <div class="hallway" id="LoungeToDining"><div id="suspects"></div></div>
-                <div class="hallway" id="LibraryToBilliard"><div id="suspects"></div></div>
-                <div class="hallway" id="LibraryToConservatory"><div id="suspects"></div></div>
-                <div class="hallway" id="BilliardToDining"><div id="suspects"></div></div>
-                <div class="hallway" id="BilliardToBall"><div id="suspects"></div></div>
-                <div class="hallway" id="DiningToKitchen"><div id="suspects"></div></div>
-                <div class="hallway" id="ConservatoryToBall"><div id="suspects"></div></div>
-                <div class="hallway" id="BallToKitchen"><div id="suspects"></div></div>
+            </div>
+
+            <div id="cardWrapper">
+                <h>Your Cards</h>
+                <div id="gameCards">
+                </div>
             </div>
             
             <div id="gameLogContainer">

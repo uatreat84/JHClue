@@ -24,7 +24,6 @@ jQuery(function($){
         bindEvents : function() {
             IO.socket.on('connected', IO.onConnected );
             IO.socket.on('needToSelectSuspect', IO.selectSuspect);
-            IO.socket.on('invalidSuspect', IO.selectSuspectAgain);
             IO.socket.on('suspectSelected',IO.suspectSelected);
             IO.socket.on('displayGame',IO.displayGame);
         },
@@ -40,11 +39,6 @@ jQuery(function($){
 
         selectSuspect : function(data) {
             App.Player.selectSuspect(data);
-        },
-        
-        
-        selectSuspectAgain : function(data) {
-            App.Player.selectSuspectAgain(data);
         },
 
         suspectSelected: function(data){
@@ -100,6 +94,8 @@ var App = {
 
         currentPlayerSocket: '',
 
+        currentPlayerLocation: [],
+
         
 
         /* *************************************
@@ -127,9 +123,9 @@ var App = {
             App.$currentPlayer = $('#currentPlayer');
             App.$templateWaitGame = $('#wait-game-template').html();
             App.$templateSelectSuspect = $('#select-suspect-template').html();
-            App.$templateSelectSuspectAgain = $('#select-suspect-again-template').html();
             App.$templatePlayGame = $('#play-game-template').html();
             App.$templateCurrentPlayer = $("#current-player-template").html();
+            App.$templateMakeSuggestion = $("#make-suggestion-template").html();
         
         },
 
@@ -140,6 +136,7 @@ var App = {
             App.$doc.on('click', '#btnSelectSuspect',App.Player.onSuspectSelectClick);
             App.$doc.on('click', '#btnPlayClue',App.Player.onStartGameClick);
             App.$doc.on('click', '#btnMoveOptionSelect', App.Player.onOptionSelectClick);
+            App.$doc.on('click', '#btnMakeSuggestion', App.Player.onMakeSuggestionClick);
         },
 
         /* *************************************
@@ -187,38 +184,24 @@ var App = {
                 var suspects = data.suspectList;
                 for(var i = 0; i < suspects.length; i++){
                         // Update host screen
-                    $('#availableSuspects')
-                        .append('<li>' + suspects[i].name );
-                    console.log(suspects[i].name + " is available");
-       
+						var sus = suspects[i];
+						var op = document.createElement("option");
+						op.textContent = sus.name;
+						op.value = i;
+						availableSuspects.appendChild(op); 
+                    console.log(sus.name + " is available");
                 }
 
 
             },
-            
-            selectSuspectAgain: function(data) {
-                App.$gameArea.html(App.$templateSelectSuspectAgain);
-
-                var suspects = data.suspectList;
-                for(var i = 0; i < suspects.length; i++){
-                        // Update host screen
-                    $('#availableSuspects')
-                        .append('<li>' + suspects[i].name );
-                    console.log(suspects[i].name + " is available");
-       
-                }
-
-
-            },
-            
             onSuspectSelectClick : function () {
                 var data = {
-                    selectedSuspect : +($('#suspectNumber').val()),
+                    selectedSuspect : +$('#availableSuspects').val(),
                     playerName : $('#inputPlayerName').val() || 'anon',
                 };
-                console.log('Player selected ' + data.selectedSuspect);
+                console.log('Player selected suspect number ' + data.selectedSuspect);
                 App.$gameArea.html(App.$templateWaitGame);
-                IO.socket.emit('playerSelectSuspect',data);
+                IO.socket.emit('playerSelectSuspect',data); 
 
             },
 
@@ -231,6 +214,8 @@ var App = {
             displayGame : function(data){
                 App.Player.updateGameBoard(data.game)
                 App.currentPlayerSocket = data.currentPlayer.clientID;
+                App.currentPlayerLocation=data.currentLocation
+                console.log("Current location: "+App.currentPlayerLocation.name);
                 if(App.mySocketId === data.currentPlayer.clientID){
                     $('#playerStatus').text("You are the Current Player");
                     //@TODO this needs to be done or else other players can input move numbers.
@@ -261,6 +246,19 @@ var App = {
             updateGameBoard : function(data){            
                 var rooms = data.gameBoard.rooms;
                 App.$gameArea.html(App.$templatePlayGame);
+                var players = data.players;
+                console.log("Players: "+ players);
+                //Loop over players to find player that matches this socket ID
+                for(var j = 0; j < players.length; j++){
+                    if(players[j].clientID === App.mySocketId){
+                        //Display cards dealt to player
+                        for(var k = 0; k< players[j].cards.length; k++){
+                            var paragraph = document.createElement('p');
+                            paragraph.textContent = players[j].cards[k];
+                            document.getElementById("gameCards").append(paragraph);
+                        }
+                    }
+                }
                 //Loop over rooms and place suspects in correct rooms
                 for(var i = 0; i < gameRooms.length; i++){
                     //$('#'+rooms[gameRooms[i]].name+' #suspects li').remove();
@@ -270,7 +268,8 @@ var App = {
                         var suspectID = suspectMap[rooms[gameRooms[i]].suspects[j].name];
                         console.log("Suspect Proper Name: " + rooms[gameRooms[i]].suspects[j].name)
                         console.log("Suspect ID: " + suspectID);
-                        $('#'+rooms[gameRooms[i]].name+' #suspects').append('<div class="player" id="' + suspectID + '"></div>');
+                        // $('#' + rooms[gameRooms[i]].name + ' #suspects').append('<div class="player" id="' + suspectID + '"></div>');
+                        $('#' + rooms[gameRooms[i]].name + ' #suspects').append('<img class="piece" src="http://localhost:3000/' + suspectID + '.png">');
                     }
                     
                 };
@@ -290,11 +289,53 @@ var App = {
                     console.log("Player wants to make a " + splitString[1]);
                     var choice = splitString[1];
                     if(choice === "Accusation"){
-                        //Make Accusation
+                        App.Player.makeAccusation();
                     }else if(choice ==="Suggestion"){
-                        //Make Suggestion
+                        App.Player.makeSuggestion();
                     }
                 }
+
+             },
+
+             makeSuggestion : function(data){
+                App.$gameArea.html(App.$templateMakeSuggestion);
+                $('#typeOfGuess').text("Suggestion");
+                var roomSelect = document.getElementById("roomSuggestion");
+                roomSelect.options.length = 0;
+                roomSelect.options[roomSelect.options.length] = new Option(App.currentPlayerLocation.name,App.currentPlayerLocation.name);
+
+             },
+
+             makeAccusation : function(data){
+                App.$gameArea.html(App.$templateMakeSuggestion);
+                $('#typeOfGuess').text("Accusation");
+                var roomSelect = document.getElementById("roomSuggestion");
+                roomSelect.options.length = 0;
+                for(var i = 0;i < 9; i++){
+                    roomSelect.options[i] = new Option(gameRooms[i],gameRooms[i]);
+                }
+              
+             },
+
+             onMakeSuggestionClick : function(){
+                var roomSelect = document.getElementById("roomSuggestion");
+                var weaponSelect = document.getElementById("weaponSuggestion");
+                var suspectSelect = document.getElementById("suspectSuggestion");         
+                //Parse selection to figure out type
+                var roomSelection = roomSelect.options[roomSelect.selectedIndex].value;
+                var weaponSelection = weaponSelect.options[weaponSelect.selectedIndex].value;
+                var suspectSelection = suspectSelect.options[suspectSelect.selectedIndex].value;
+
+                console.log("Room: "+roomSelection);
+                console.log("Weapon: "+weaponSelection);
+                console.log("Suspect: "+suspectSelection);
+                var type = $('#typeOfGuess').text();
+
+                IO.socket.emit('makeGuess',{
+                    type:type,
+                    room:roomSelection,
+                    weapon:weaponSelection,
+                    suspect:suspectSelection});
 
              }
 

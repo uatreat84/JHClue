@@ -13,11 +13,13 @@ module.exports = {
             new suspect.Suspect("Colonel Mustard"),
             new suspect.Suspect("Mr. Green")];
         this.players = [];
+        this.caseFile = {};
         this.gameID = gameID;
         this.gameBoard = new board.GameBoard();
 
         this.initGame = function () {
             this.gameBoard.createBoard();
+            this.dealCards();
             for(var i = 0; i < this.players.length; i++){
                 if(this.players[i].suspect.name === "Miss Scarlett"){
                     this.currentPlayer = this.players[i];
@@ -29,6 +31,65 @@ module.exports = {
             }
 
        },
+
+       this.dealCards = function(){
+            var suspectCards = [
+                    "Miss Scarlett",
+                    "Professor Plum",
+                    "Colonel Mustard",
+                    "Mrs. Peacock",
+                    "Mr. Green",
+                    "Mrs. White"];
+
+            var weaponCards = [
+                    "Knife",
+                    "Rope",
+                    "Gun",
+                    "Candle Stick",
+                    "Lead Pipe",
+                    "Wrench"];
+            
+            var roomCards = [
+                    "Study",
+                    "Hall",
+                    "Lounge",
+                    "Library",
+                    "Billiard",
+                    "Dining",
+                    "Conservatory",
+                    "Ball",
+                    "Kitchen"];
+
+                var randomSuspect = Math.floor( Math.random() * suspectCards.length ); 
+                var randomWeapon = Math.floor( Math.random() * weaponCards.length);
+                var randomRoom = Math.floor( Math.random() * roomCards.length);
+
+
+                this.caseFile["Suspect"]  = suspectCards[randomSuspect];
+                suspectCards.splice(randomSuspect,1);
+                this.caseFile["Weapon"] = weaponCards[randomWeapon];
+                weaponCards.splice(randomWeapon,1);
+                this.caseFile["Room"] = roomCards[randomRoom];
+                roomCards.splice(roomCards,1);
+                console.log("CaseFile Suspect: " +this.caseFile["Suspect"]);
+                console.log("CaseFile Weapon: " +this.caseFile["Weapon"]);
+                console.log("CaseFile Room: " +this.caseFile["Room"]);
+
+                var allCards = suspectCards.concat(weaponCards, roomCards);
+
+                var playerIndex = 0;
+                while(allCards.length > 0){
+                    playerIndex = playerIndex % this.players.length;
+                    var randomCard = Math.floor( Math.random() * allCards.length);
+                    this.players[playerIndex].cards.push(allCards[randomCard]);
+                    allCards.splice(randomCard,1);
+                    playerIndex = playerIndex + 1;
+                }
+
+
+
+
+       }
 
        this.getMoveOptions = function(){
             var options = [];
@@ -68,6 +129,10 @@ module.exports = {
             //console.log("Options: " + options);
             return options;
         },
+
+        this.currentPlayerLocation = function(){
+            return this.gameBoard.getSuspectLocation(this.currentPlayer.suspect);
+        }
    
        this.moveCurrentPlayer = function(destination){
             if(this.currentPlayer === undefined ){
@@ -85,6 +150,19 @@ module.exports = {
             options.push("Make Accusation");
             
             return options;
+        },
+
+        this.verifyAccusation = function(accusation){
+            if(this.caseFile["Room"] === accusation.room && 
+                this.caseFile["Suspect"] === accusation.suspect &&
+                 this.caseFile["Weapon"] === accusation.weapon)
+            {
+                return true;
+
+            }else{
+                return false;
+            }
+
         }
     }
 

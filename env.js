@@ -15,6 +15,7 @@ exports.initGame = function(sio,socket){
     gameSocket.on('playerSelectSuspect',playerSelectSuspect);
     gameSocket.on('startGame',playerStartGame);
     gameSocket.on('moveCurrentPlayer',moveCurrentPlayer);
+    gameSocket.on('makeGuess',playerMakeGuess);
 
 }
 
@@ -42,17 +43,10 @@ function playerSelectSuspect(data){
     var sock = this;
 
     console.log('Player selected ' + data.selectedSuspect);
-    if(data.selectedSuspect >= 1 && data.selectedSuspect <=currentGame.suspects.length){
-        var newPlayer = new player.Player(data.playerName,this.id,true);
-        newPlayer.suspect = currentGame.suspects[data.selectedSuspect- 1];
-        currentGame.suspects.splice(data.selectedSuspect - 1,1);
-        currentGame.players.push(newPlayer);
-        io.sockets.in(currentGame.gameID).emit('suspectSelected', {gameId: gameID, mySocketId: this.id, game: currentGame});
-    }else{
-        //TODO make error handling better
-        
-        this.emit('invalidSuspect',{suspectList: currentGame.suspects});
-    }
+    var newPlayer = new player.Player(data.playerName,this.id,true);
+    newPlayer.suspect = currentGame.suspects[data.selectedSuspect];
+    currentGame.players.push(newPlayer);
+    io.sockets.in(currentGame.gameID).emit('suspectSelected', {gameId: gameID, mySocketId: this.id, game: currentGame}); 
 
 }
 
@@ -60,7 +54,11 @@ function playerStartGame(data){
     console.log('Game started by ID: '+this.id);
     currentGame.initGame();
     var options = currentGame.getMoveOptions();
-    io.sockets.in(currentGame.gameID).emit('displayGame',{game: currentGame, currentPlayer: currentGame.currentPlayer, moveOptions: options});
+    io.sockets.in(currentGame.gameID).emit('displayGame',{
+        game: currentGame, 
+        currentPlayer: currentGame.currentPlayer, 
+        currentLocation: currentGame.currentPlayerLocation(),
+        moveOptions: options});
 
 
 }
@@ -69,8 +67,29 @@ function moveCurrentPlayer(data){
     var destination = data.destination;
     console.log("Current Player wants to move to " + destination);
     var options = currentGame.moveCurrentPlayer(destination);
-    io.sockets.in(currentGame.gameID).emit('displayGame',{game: currentGame, currentPlayer: currentGame.currentPlayer, moveOptions: options});
+    io.sockets.in(currentGame.gameID).emit('displayGame',{
+        game: currentGame,
+        currentPlayer: currentGame.currentPlayer, 
+        currentLocation: currentGame.currentPlayerLocation(),
+        moveOptions: options});
 
+}
+
+function playerMakeGuess(data){
+    console.log("Player Made Guess: "+data.type);
+    if(data.type ==="Accusation"){
+        accusation = {
+            room:data.room,
+            suspect:data.suspect,
+            weapon:data.weapon
+        }
+        console.log(accusation.weapon)
+        if(currentGame.verifyAccusation(accusation)){
+            console.log("Player win");
+        }else{
+            console.log("Player loses");
+        }
+    }
 }
 
 
