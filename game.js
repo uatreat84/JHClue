@@ -86,9 +86,6 @@ module.exports = {
                     playerIndex = playerIndex + 1;
                 }
 
-
-
-
        }
 
        this.getMoveOptions = function(){
@@ -141,7 +138,7 @@ module.exports = {
             }
             var options = [];
             var currentSuspect = this.currentPlayer.suspect;
-            this.gameBoard.moveSuspect({suspect:currentSuspect,destination:destination});
+            this.gameBoard.moveCurrentSuspect({suspect:currentSuspect,destination:destination});
 
             var suspectLocation = this.gameBoard.getSuspectLocation(currentSuspect);
             if(!suspectLocation.isHallway){
@@ -163,7 +160,43 @@ module.exports = {
                 return false;
             }
 
-        }
+        },
+
+        this.startProveSuggestion = function(guess){
+            this.currentSuggestion = guess;
+            this.currentSuggestionIndex = this.players.indexOf(this.currentPlayer);
+            console.log("Current Player Index:" +this.currentSuggestionIndex );
+            this.currentSuggestionIndex =  (this.currentSuggestionIndex + 1) % this.players.length;
+
+            console.log("Suggestion Index: "+ this.currentSuggestionIndex);
+            return this.players[this.currentSuggestionIndex].clientID
+        },
+
+        this.currentSuggestionCards = function(){
+            return this.players[this.currentSuggestionIndex].cards;
+        },
+
+        this.getCurrentSuggestionClient = function(){
+           return this.players[this.currentSuggestionIndex].clientID 
+       },
+
+       this.getCurrentSuggestionPlayer = function(){
+            return this.players[this.currentSuggestionIndex]; 
+       },
+
+       this.nextSuggestionClient = function(){
+            var currentPlayerIndex = this.players.indexOf(this.currentPlayer);
+            console.log("Current Suggestion Index:" +this.currentSuggestionIndex );
+            this.currentSuggestionIndex =  (this.currentSuggestionIndex + 1) % this.players.length;
+            console.log("Suggestion Index: "+ this.currentSuggestionIndex);
+            if(this.currentSuggestionIndex != currentPlayerIndex){
+                return true;
+            }else{
+                return false;
+            }
+
+
+       }
     }
 
 

@@ -108,7 +108,7 @@ module.exports = {
             }
         },
 
-        this.moveSuspect = function(data){
+        this.moveCurrentSuspect = function(data){
             var suspect = data.suspect;
             var destination = data.destination;
             var currentRoom = this.suspectLocations[suspect.name];
