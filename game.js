@@ -127,6 +127,13 @@ module.exports = {
             return options;
         },
 
+        this.goToNextPlayer = function(){
+            var currentPlayerIndex = this.players.indexOf(this.currentPlayer);
+            console.log("Current Player Index:" +currentPlayerIndex );
+            currentPlayerIndex =  (currentPlayerIndex + 1) % this.players.length;
+            this.currentPlayer = this.players[currentPlayerIndex];
+        }
+
         this.currentPlayerLocation = function(){
             return this.gameBoard.getSuspectLocation(this.currentPlayer.suspect);
         }

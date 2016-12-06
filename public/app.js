@@ -153,6 +153,7 @@ var App = {
             App.$doc.on('click', '#btnSelectSuspect',App.Player.onSuspectSelectClick);
             App.$doc.on('click', '#btnPlayClue',App.Player.onStartGameClick);
             App.$doc.on('click', '#btnMoveOptionSelect', App.Player.onOptionSelectClick);
+            App.$doc.on('click', '#btnMoveOptionDone', App.Player.onOptionDoneClick);
             App.$doc.on('click', '#btnMakeSuggestion', App.Player.onMakeSuggestionClick);
             App.$doc.on('click', '#btnSuggestionSelect', App.Player.onProveSuggestionClick);
         },
@@ -310,6 +311,11 @@ var App = {
                         App.Player.makeSuggestion();
                     }
                 }
+
+             },
+
+             onOptionDoneClick: function(data){
+                IO.socket.emit('nextPlayer');
 
              },
 

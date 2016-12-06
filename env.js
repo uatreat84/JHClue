@@ -17,6 +17,7 @@ exports.initGame = function(sio,socket){
     gameSocket.on('moveCurrentPlayer',moveCurrentPlayer);
     gameSocket.on('makeGuess',playerMakeGuess);
     gameSocket.on('suggestionAnswer',suggestionAnswer);
+    gameSocket.on('nextPlayer',nextPlayer);
 
 }
 
@@ -71,6 +72,15 @@ function playerStartGame(data){
         moveOptions: currentGame.getMoveOptions()});
 
 
+}
+
+function nextPlayer(){
+    currentGame.goToNextPlayer();
+    io.sockets.in(currentGame.gameID).emit('displayGame',{
+        game: currentGame, 
+        currentPlayer: currentGame.currentPlayer, 
+        currentLocation: currentGame.currentPlayerLocation(),
+        moveOptions: currentGame.getMoveOptions()});
 }
 
 function moveCurrentPlayer(data){
