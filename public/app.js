@@ -203,7 +203,7 @@ var App = {
                 App.$gameArea.html(App.$templateWaitGame);
                 IO.socket.emit('playerSelectSuspect',data); 
 
-            },
+            }, 
 
             onStartGameClick : function (){
                 console.log('Starting game');

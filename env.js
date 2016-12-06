@@ -45,10 +45,11 @@ function playerSelectSuspect(data){
     console.log('Player selected ' + data.selectedSuspect);
     var newPlayer = new player.Player(data.playerName,this.id,true);
     newPlayer.suspect = currentGame.suspects[data.selectedSuspect];
+    currentGame.suspects.splice(data.selectedSuspect, 1);
     currentGame.players.push(newPlayer);
-    io.sockets.in(currentGame.gameID).emit('suspectSelected', {gameId: gameID, mySocketId: this.id, game: currentGame}); 
+    io.sockets.in(currentGame.gameID).emit('suspectSelected', {gameId: gameID, mySocketId: this.id, game: currentGame});
 
-}
+} 
 
 function playerStartGame(data){
     console.log('Game started by ID: '+this.id);
