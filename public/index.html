@@ -13,6 +13,33 @@
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="style/game.css">
+      <style>
+          card {
+              float: left;
+              max-width: 160px;
+              margin: 0;
+              padding: 1em;
+          }
+
+          cards div {
+            list-style-type: none;
+            padding: 0;
+              }
+
+          boards {
+              float: left;
+              margin-left: 170px;
+              border-left: 1px solid gray;
+              padding: 1em;
+              overflow: hidden;
+          }
+
+          logs {
+                 position: absolute;
+        bottom: 30px;
+        width: 100%;
+          }
+      </style>
   </head>
   <body>
 
@@ -99,54 +126,64 @@
                 </div>
                       <!-- This is where the templates defined below should be used -->
             </div>
-
-           
-            <div class="board" id="board">
-                <div class="room" id="Study"><div><img class="room" src="http://localhost:3000/Study.png"></div><ul id="suspects"></ul></div>
-                <div class="room" id="Hall"><div><img class="room" src="http://localhost:3000/Hall.png"></div><ul id="suspects"></ul></div>
-                <div class="room" id="Lounge"><div><img class="room" src="http://localhost:3000/Lounge.png"></div><ul id="suspects"></ul></div>
-                <div class="room" id="Library"><div><img class="room" src="http://localhost:3000/Library.png"></div><ul id="suspects"></ul></div>
-                <div class="room" id="Billiard"><div><img class="room" src="http://localhost:3000/Billard.png"></div><ul id="suspects"></ul></div>
-                <div class="room" id="Dining"><div><img class="room" src="http://localhost:3000/Dining.png"></div><ul id="suspects"></ul></div>
-                <div class="room" id="Conservatory"><div><img class="room" src="http://localhost:3000/Conservatory.png"></div><ul id="suspects"></ul></div>
-                <div class="room" id="Ball"><div><img class="room" src="http://localhost:3000/Ball.png"></div><ul id="suspects"></ul></div>
-                <div class="room" id="Kitchen"><div><img class="room" src="http://localhost:3000/Kitchen.png"></div><ul id="suspects"></ul></div>
-                <div class="hallway" id="StudyToHall"><div><img class="hall" src="http://localhost:3000/HallwayHor.png"></div><ul id="suspects"></ul></div>
-                <div class="hallway" id="StudyToLibrary"><div><img class="hall" src="http://localhost:3000/HallwayVer.png"></div><ul id="suspects"></ul></div>
-                <div class="hallway" id="HallToLounge"><div><img class="hall" src="http://localhost:3000/HallwayHor.png"></div><ul id="suspects"></ul></div>
-                <div class="hallway" id="HallToBilliard"><div><img class="hall" src="http://localhost:3000/HallwayVer.png"></div><ul id="suspects"></ul></div>
-                <div class="hallway" id="LoungeToDining"><div><img class="hall" src="http://localhost:3000/HallwayVer.png"></div><ul id="suspects"></ul></div>
-                <div class="hallway" id="LibraryToBilliard"><div><img class="hall" src="http://localhost:3000/HallwayHor.png"></div><ul id="suspects"></ul></div>
-                <div class="hallway" id="LibraryToConservatory"><div><img class="hall" src="http://localhost:3000/HallwayVer.png"></div><ul id="suspects"></ul></div>
-                <div class="hallway" id="BilliardToDining"><div><img class="hall" src="http://localhost:3000/HallwayHor.png"></div><ul id="suspects"></ul></div>
-                <div class="hallway" id="BilliardToBall"><div><img class="hall" src="http://localhost:3000/HallwayVer.png"></div><ul id="suspects"></ul></div>
-                <div class="hallway" id="DiningToKitchen"><div><img class="hall" src="http://localhost:3000/HallwayVer.png"></div><ul id="suspects"></ul></div>
-                <div class="hallway" id="ConservatoryToBall"><div><img class="hall" src="http://localhost:3000/HallwayHor.png"></div><ul id="suspects"></ul></div>
-                <div class="hallway" id="BallToKitchen"><div><img class="hall" src="http://localhost:3000/HallwayHor.png"></div><ul id="suspects"></ul></div>
-            </div>
-
-            <div id="cardWrapper">
-                <h>Your Cards</h>
-                <div id="gameCards">
-                </div>
-            </div>
-            
-            <div id="gameLogContainer">
-                <div id=gameLogTitle>Game Log</div>
-                <div id="scrollBox">
-                    <div id="gameLogContent">
-                        <p>Sample Game Log Content...</p>
-                        <p>Mr. Green moves from hallway to Library</p>
-                        <p>Mr. Green makes suggestion: Mr. Green in Library with the Rope</p>
-                        <p>Ms. White does not prove suggestion false</p>
-                        <p>Col. Mustard proves suggestion false</p>
-                        <p>Mr. Green's turn has ended</p>
-                        <p>It is now Ms. White's turn</p>
+            <card>
+                <div id="cardWrapper">
+                    <h>Your Cards</h>
+                    <div id="gameCards">
                     </div>
                 </div>
-                <p><span id="gameLogStatus" ></span></p>  
-            </div>
+            </card>
+            <boards>
+                <div class="board" id="board">
+                    <div class="room" id="Study"><div><img class="room" src="http://localhost:3000/Study.png"></div><ul id="suspects"></ul></div>
+                    <div class="room" id="Hall"><div><img class="room" src="http://localhost:3000/Hall.png"></div><ul id="suspects"></ul></div>
+                    <div class="room" id="Lounge"><div><img class="room" src="http://localhost:3000/Lounge.png"></div><ul id="suspects"></ul></div>
+                    <div class="room" id="Library"><div><img class="room" src="http://localhost:3000/Library.png"></div><ul id="suspects"></ul></div>
+                    <div class="room" id="Billiard"><div><img class="room" src="http://localhost:3000/Billard.png"></div><ul id="suspects"></ul></div>
+                    <div class="room" id="Dining"><div><img class="room" src="http://localhost:3000/Dining.png"></div><ul id="suspects"></ul></div>
+                    <div class="room" id="Conservatory"><div><img class="room" src="http://localhost:3000/Conservatory.png"></div><ul id="suspects"></ul></div>
+                    <div class="room" id="Ball"><div><img class="room" src="http://localhost:3000/Ball.png"></div><ul id="suspects"></ul></div>
+                    <div class="room" id="Kitchen"><div><img class="room" src="http://localhost:3000/Kitchen.png"></div><ul id="suspects"></ul></div>
+                    <div class="hallway" id="StudyToHall"><div><img class="hall" src="http://localhost:3000/HallwayHor.png"></div><ul id="suspects"></ul></div>
+                    <div class="hallway" id="StudyToLibrary"><div><img class="hall" src="http://localhost:3000/HallwayVer.png"></div><ul id="suspects"></ul></div>
+                    <div class="hallway" id="HallToLounge"><div><img class="hall" src="http://localhost:3000/HallwayHor.png"></div><ul id="suspects"></ul></div>
+                    <div class="hallway" id="HallToBilliard"><div><img class="hall" src="http://localhost:3000/HallwayVer.png"></div><ul id="suspects"></ul></div>
+                    <div class="hallway" id="LoungeToDining"><div><img class="hall" src="http://localhost:3000/HallwayVer.png"></div><ul id="suspects"></ul></div>
+                    <div class="hallway" id="LibraryToBilliard"><div><img class="hall" src="http://localhost:3000/HallwayHor.png"></div><ul id="suspects"></ul></div>
+                    <div class="hallway" id="LibraryToConservatory"><div><img class="hall" src="http://localhost:3000/HallwayVer.png"></div><ul id="suspects"></ul></div>
+                    <div class="hallway" id="BilliardToDining"><div><img class="hall" src="http://localhost:3000/HallwayHor.png"></div><ul id="suspects"></ul></div>
+                    <div class="hallway" id="BilliardToBall"><div><img class="hall" src="http://localhost:3000/HallwayVer.png"></div><ul id="suspects"></ul></div>
+                    <div class="hallway" id="DiningToKitchen"><div><img class="hall" src="http://localhost:3000/HallwayVer.png"></div><ul id="suspects"></ul></div>
+                    <div class="hallway" id="ConservatoryToBall"><div><img class="hall" src="http://localhost:3000/HallwayHor.png"></div><ul id="suspects"></ul></div>
+                    <div class="hallway" id="BallToKitchen"><div><img class="hall" src="http://localhost:3000/HallwayHor.png"></div><ul id="suspects"></ul></div>
+                    <div class="startside" id="plum"><div></div><ul id="suspects"></ul></div>
+                    <div class="startside" id="peacock"><div></div><ul id="suspects"></ul></div>
+                    <div class="starttop" id="scarlett"><div></div><ul id="suspects"></ul></div>
+                    <div class="starttop" id="green"><div></div><ul id="suspects"></ul></div>
+                    <div class="starttop" id="white"><div></div><ul id="suspects"></ul></div>
+                    <div class="startside" id="mustard"><div></div><ul id="suspects"></ul></div>
+                </div>
+            </boards>
+            
+            
         </div>
+         <logs>
+             <div id="gameLogContainer">
+                 <div id=gameLogTitle>Game Log</div>
+                 <div id="scrollBox">
+                     <div id="gameLogContent">
+                         <p>Sample Game Log Content...</p>
+                         <p>Mr. Green moves from hallway to Library</p>
+                         <p>Mr. Green makes suggestion: Mr. Green in Library with the Rope</p>
+                         <p>Ms. White does not prove suggestion false</p>
+                         <p>Col. Mustard proves suggestion false</p>
+                         <p>Mr. Green's turn has ended</p>
+                         <p>It is now Ms. White's turn</p>
+                     </div>
+                 </div>
+                 <p><span id="gameLogStatus"></span></p>
+             </div>
+         </logs>
     </script>
      <script id="prove-suggestion-template" type="text/template">
         <div id="suggestionWrapper">
