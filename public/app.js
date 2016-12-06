@@ -71,7 +71,13 @@ jQuery(function($){
     "BilliardToBall",
     "DiningToKitchen",
     "ConservatoryToBall",
-    "BallToKitchen"
+    "BallToKitchen",
+    "Plum",
+    "Peacock",
+    "Scarlett",
+    "Green",
+    "White",
+    "Mustard",
     ];
 
     var suspectMap = {
