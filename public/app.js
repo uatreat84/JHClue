@@ -285,6 +285,8 @@ var App = {
                         var suspectID = suspectMap[rooms[gameRooms[i]].suspects[j].name];
                         console.log("Suspect Proper Name: " + rooms[gameRooms[i]].suspects[j].name)
                         console.log("Suspect ID: " + suspectID);
+                        console.log("Room ID: " + rooms[gameRooms[i]].name);
+                        console.log('#' + rooms[gameRooms[i]].name + ' #suspects');
                         // $('#' + rooms[gameRooms[i]].name + ' #suspects').append('<div class="player" id="' + suspectID + '"></div>');
                         $('#' + rooms[gameRooms[i]].name + ' #suspects').append('<img class="piece" src="http://localhost:3000/' + suspectID + '.png">');
                     }
