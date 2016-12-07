@@ -261,8 +261,19 @@ var App = {
                     //@TODO this needs to be done or else other players can input move numbers.
                     //App.$currentPlayer.html(App.$templateCurrentPlayer);
                     App.Player.updateMoveOptions(data.moveOptions);
+                    // Display Current Player Section (if not already displayed)
+                    console.log("I should be the Current player?: " + $('#currentPlayer').is(":visible"));
+                    if(!$('#currentPlayer').is(":visible")){
+                        $('#currentPlayer').show();
+                    }
                 }else{
                     $('#playerStatus').text("Waiting for "+data.currentPlayer.name);
+                    // Hide Current player section (if not already hidden)
+                    console.log("I should not be the Current player?: " + $('#currentPlayer').is(":visible"));
+                    if($('#currentPlayer').is(":visible")){
+                        $('#currentPlayer').hide();
+                    }
+
                 }
                 console.log("My ID: "+App.mySocketId);
                 console.log("Current Player: "+data.currentPlayer.clientID);
@@ -313,7 +324,7 @@ var App = {
                         console.log("Room ID: " + rooms[gameRooms[i]].name);
                         console.log('#' + rooms[gameRooms[i]].name + ' #suspects');
                         // $('#' + rooms[gameRooms[i]].name + ' #suspects').append('<div class="player" id="' + suspectID + '"></div>');
-                        $('#' + rooms[gameRooms[i]].name + ' #suspects').append('<img class="piece" src="http://localhost:3000/' + suspectID + '.png">');
+                        $('#' + rooms[gameRooms[i]].name + ' #suspects').append('<img class="piece" src="images/' + suspectID + '.png">');
                     }
                     
                 };
