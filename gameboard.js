@@ -42,7 +42,7 @@ module.exports = {
 
 
             study.adjRooms  = ["StudyToHall","StudyToLibrary","Kitchen"] 
-            hall.adjRooms = ["StudyToHall","HallToLounge"];
+            hall.adjRooms = ["StudyToHall","HallToLounge","HallToBilliard"];
             lounge.adjRooms = ["HallToLounge","LoungeToDining","Conservatory"];
             library.adjRooms = ["StudyToLibrary","LibraryToBilliard","LibraryToConservatory"];
             billiard.adjRooms = ["LibraryToBilliard","HallToBilliard","BilliardToDining","BilliardToBall"];

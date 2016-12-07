@@ -285,13 +285,35 @@ img.piece {
     width: 21px;
     position:absolute;
     z-index:1;
-    bottom:0;
-    right:0
 }
 
 img.card {
     height: 90px;
     width: 60px;
+}
+#whitePiece {
+	bottom: 0;
+	right: 0;
+}
+#peacockPiece {
+	bottom: 0;
+	right: 21px;
+}
+#plumPiece {
+	bottom: 0;
+	right: 42px;
+}
+#scarlettPiece {
+	bottom: 0;
+	left: 0px;
+}
+#mustardPiece {
+	bottom: 0;
+	left: 21px;
+}
+#greenPiece {
+	bottom: 0;
+	left: 42px;
 }
 /***************************
 ** Styles for the Game Log

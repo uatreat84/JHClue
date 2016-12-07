@@ -327,7 +327,7 @@ var App = {
                         //console.log("Room ID: " + rooms[gameRooms[i]].name);
                         //console.log('#' + rooms[gameRooms[i]].name + ' #suspects');
                         // $('#' + rooms[gameRooms[i]].name + ' #suspects').append('<div class="player" id="' + suspectID + '"></div>');
-                        $('#' + rooms[gameRooms[i]].name + ' #suspects').append('<img class="piece" src="images/' + suspectID + '.png">');
+                        $('#' + rooms[gameRooms[i]].name + ' #suspects').append('<img id="' + suspectID + 'Piece" class="piece" src="images/' + suspectID + '.png">');
                     }
                     
                 };
