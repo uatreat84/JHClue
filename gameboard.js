@@ -143,5 +143,32 @@ module.exports = {
             console.log("Suspect is now in " + this.suspectLocations[suspect.name].name);
         }
 
+
+         this.moveSuspectByName = function(data){
+            var suspectName = data.suspect;
+            var destinationName = data.destination;
+            var currentRoom = this.suspectLocations[suspectName];
+            console.log("Suspect was in " + currentRoom.name);
+            //Remove suspect from current Room
+            var index = 0;
+            for(var i = 0;i<currentRoom.suspects.length;i++){
+                if(currentRoom.suspects[i].name === suspectName){
+                    index = i;
+                    break;
+                }
+            }
+            var suspect = currentRoom.suspects[i];
+            currentRoom.suspects.splice(index,1);
+            //Add suspect to new room
+            var destinationRoom = this.rooms[destinationName]
+            destinationRoom.suspects.push(suspect);
+
+            //Update Map
+            this.suspectLocations[suspect.name] = destinationRoom;
+
+            console.log("Suspect is now in " + this.suspectLocations[suspect.name].name);
+        }
+
+
      }
 };

@@ -26,8 +26,10 @@ jQuery(function($){
             IO.socket.on('needToSelectSuspect', IO.selectSuspect);
             IO.socket.on('suspectSelected',IO.suspectSelected);
             IO.socket.on('displayGame',IO.displayGame);
+            IO.socket.on('updateLog',IO.updateLog);
             IO.socket.on('proveSuggestion',IO.proveSuggestion);
             IO.socket.on('displayProof',IO.displayProof);
+            IO.socket.on('playerWon',IO.displayPlayerWon);
         },
 
         /**
@@ -57,6 +59,14 @@ jQuery(function($){
 
         displayProof: function(data){
             App.Player.displayProof(data);
+        },
+
+        updateLog: function(data){
+            App.addToLog(data.log);
+        },
+
+        displayPlayerWon: function(data){
+            App.Player.playerWon(data);
         }
      
     };
@@ -111,6 +121,8 @@ var App = {
         currentPlayerSocket: '',
 
         currentPlayerLocation: [],
+
+        myName: '',
 
         
 
@@ -173,7 +185,11 @@ var App = {
             //App.$gameArea.html(App.$templateSelectSuspect);
         },
 
-
+        addToLog : function(data){
+           var paragraph = document.createElement('p');
+            paragraph.textContent = data;   
+            document.getElementById("gameLogContent").append(paragraph);
+        },
 
 
 
@@ -200,7 +216,7 @@ var App = {
  
             selectSuspect: function(data) {
                 App.$gameArea.html(App.$templateSelectSuspect);
-
+                $('#gameLogContent p').remove();
                 var suspects = data.suspectList;
                 for(var i = 0; i < suspects.length; i++){
                         // Update host screen
@@ -219,6 +235,7 @@ var App = {
                     selectedSuspect : +$('#availableSuspects').val(),
                     playerName : $('#inputPlayerName').val() || 'anon',
                 };
+                App.myName = data.playerName;
                 console.log('Player selected suspect number ' + data.selectedSuspect);
                 App.$gameArea.html(App.$templateWaitGame);
                 IO.socket.emit('playerSelectSuspect',data); 
@@ -232,6 +249,9 @@ var App = {
             },
 
             displayGame : function(data){
+                if(data.log != undefined){
+                    App.addToLog(data.log);   
+                }
                 App.Player.updateGameBoard(data.game)
                 App.currentPlayerSocket = data.currentPlayer.clientID;
                 App.currentPlayerLocation=data.currentLocation
@@ -263,7 +283,9 @@ var App = {
 
             },
 
-            updateGameBoard : function(data){            
+
+
+            updateGameBoard : function(data){         
                 var rooms = data.gameBoard.rooms;
                 App.$gameArea.html(App.$templatePlayGame);
                 var players = data.players;
@@ -356,7 +378,7 @@ var App = {
                 console.log("Room: "+roomSelection);
                 console.log("Weapon: "+weaponSelection);
                 console.log("Suspect: "+suspectSelection);
-                var type = $('#typeOfGuess').text();
+                var type = $('#typeOfGuess').text();              
 
                 IO.socket.emit('makeGuess',{
                     type:type,
@@ -398,6 +420,12 @@ var App = {
              displayProof : function(data){
                 var proof = data.proof;
                 alert("Suggestion: "+ proof);
+             },
+
+             playerWon: function(data){
+                alert("GAME OVER!");
+                IO.socket.emit('resetGame');
+                IO.socket.emit('initGame');
              }
 
 

@@ -46,7 +46,16 @@
     <div id="gameArea">
         <!-- This is where the templates defined below will be used -->
    </div>
-
+         <logs>
+             <div id="gameLogContainer">
+                 <div id=gameLogTitle>Game Log</div>
+                 <div id="scrollBox">
+                     <div id="gameLogContent">
+                     </div>
+                 </div>
+                 <p><span id="gameLogStatus"></span></p>
+             </div>
+         </logs>
 
         <!-- This screen appears when a user clicks "Start" on the Join Screen -->
     <script id="wait-game-template" type="text/template">
@@ -65,11 +74,11 @@
     <script id="select-suspect-template" type="text/template">
         <div class="suspectWrapper">
             <div class="info">
-                <label for="inputPlayerName">Your Name:</label>
+                <label for="inputPlayerName">User Name:</label>
                 <input id="inputPlayerName" type="text" />
             </div>
             <div class="info">
-                <label for="inputSuspectNumber">Suspect number:</label>
+                <label for="inputSuspectNumber">Suspect :</label>
                 <select id="availableSuspects"></select>
             </div>
 
@@ -167,23 +176,7 @@
             
             
         </div>
-         <logs>
-             <div id="gameLogContainer">
-                 <div id=gameLogTitle>Game Log</div>
-                 <div id="scrollBox">
-                     <div id="gameLogContent">
-                         <p>Sample Game Log Content...</p>
-                         <p>Mr. Green moves from hallway to Library</p>
-                         <p>Mr. Green makes suggestion: Mr. Green in Library with the Rope</p>
-                         <p>Ms. White does not prove suggestion false</p>
-                         <p>Col. Mustard proves suggestion false</p>
-                         <p>Mr. Green's turn has ended</p>
-                         <p>It is now Ms. White's turn</p>
-                     </div>
-                 </div>
-                 <p><span id="gameLogStatus"></span></p>
-             </div>
-         </logs>
+
     </script>
      <script id="prove-suggestion-template" type="text/template">
         <div id="suggestionWrapper">
