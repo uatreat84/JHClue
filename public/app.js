@@ -294,10 +294,16 @@ var App = {
                 for(var j = 0; j < players.length; j++){
                     if(players[j].clientID === App.mySocketId){
                         //Display cards dealt to player
-                        for(var k = 0; k< players[j].cards.length; k++){
-                            var paragraph = document.createElement('p');
+                        for (var k = 0; k < players[j].cards.length; k++) {
+                            var Card = document.createElement("img");
+                            Card.setAttribute('src', 'http://localhost:3000/' + players[j].cards[k].replace(' ', '') + 'card.png');
+                            Card.setAttribute('class', 'card');
+                            document.getElementById("gameCards").appendChild(Card);
+                            /*var paragraph = document.createElement('p');
                             paragraph.textContent = players[j].cards[k];
-                            document.getElementById("gameCards").append(paragraph);
+                            console.log("Card ID: " + players[j].cards[k]);
+                            paragraph.textContent = '<img class="piece" src="http://localhost:3000/' + players[j].cards[k] + 'card.png">';
+                            document.getElementById("gameCards").append(paragraph);*/
                         }
                     }
                 }
@@ -310,8 +316,8 @@ var App = {
                         var suspectID = suspectMap[rooms[gameRooms[i]].suspects[j].name];
                         console.log("Suspect Proper Name: " + rooms[gameRooms[i]].suspects[j].name)
                         console.log("Suspect ID: " + suspectID);
-                        console.log("Room ID: " + rooms[gameRooms[i]].name);
-                        console.log('#' + rooms[gameRooms[i]].name + ' #suspects');
+                        //console.log("Room ID: " + rooms[gameRooms[i]].name);
+                        //console.log('#' + rooms[gameRooms[i]].name + ' #suspects');
                         // $('#' + rooms[gameRooms[i]].name + ' #suspects').append('<div class="player" id="' + suspectID + '"></div>');
                         $('#' + rooms[gameRooms[i]].name + ' #suspects').append('<img class="piece" src="http://localhost:3000/' + suspectID + '.png">');
                     }
