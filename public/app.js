@@ -261,8 +261,16 @@ var App = {
                     //@TODO this needs to be done or else other players can input move numbers.
                     //App.$currentPlayer.html(App.$templateCurrentPlayer);
                     App.Player.updateMoveOptions(data.moveOptions);
+                    // Display Current Player Section (if not already displayed)
+                    if(!$('#currentPlayer').is(":visible")){
+                        $('#currentPlayer').show();
+                    }
                 }else{
                     $('#playerStatus').text("Waiting for "+data.currentPlayer.name);
+                    // Hide Current player section (if not already hidden)
+                    if($('#currentPlayer').is(":visible")){
+                        $('#currentPlayer').hide();
+                    }                     
                 }
                 console.log("My ID: "+App.mySocketId);
                 console.log("Current Player: "+data.currentPlayer.clientID);
@@ -296,7 +304,7 @@ var App = {
                         //Display cards dealt to player
                         for (var k = 0; k < players[j].cards.length; k++) {
                             var Card = document.createElement("img");
-                            Card.setAttribute('src', 'http://localhost:3000/' + players[j].cards[k].replace(' ', '') + 'card.png');
+                            Card.setAttribute('src', 'images/' + players[j].cards[k].replace(' ', '') + 'card.png');
                             Card.setAttribute('class', 'card');
                             document.getElementById("gameCards").appendChild(Card);
                             /*var paragraph = document.createElement('p');
@@ -319,7 +327,7 @@ var App = {
                         //console.log("Room ID: " + rooms[gameRooms[i]].name);
                         //console.log('#' + rooms[gameRooms[i]].name + ' #suspects');
                         // $('#' + rooms[gameRooms[i]].name + ' #suspects').append('<div class="player" id="' + suspectID + '"></div>');
-                        $('#' + rooms[gameRooms[i]].name + ' #suspects').append('<img class="piece" src="http://localhost:3000/' + suspectID + '.png">');
+                        $('#' + rooms[gameRooms[i]].name + ' #suspects').append('<img class="piece" src="images/' + suspectID + '.png">');
                     }
                     
                 };
@@ -353,7 +361,9 @@ var App = {
              },
 
              makeSuggestion : function(data){
-                App.$gameArea.html(App.$templateMakeSuggestion);
+                //App.$gameArea.html(App.$templateMakeSuggestion);
+                // Display suggestion html
+                $('#suggestionWrapper').show();
                 $('#typeOfGuess').text("Suggestion");
                 var roomSelect = document.getElementById("roomSuggestion");
                 roomSelect.options.length = 0;
@@ -385,6 +395,7 @@ var App = {
                 console.log("Weapon: "+weaponSelection);
                 console.log("Suspect: "+suspectSelection);
                 var type = $('#typeOfGuess').text();              
+                $('#suggestionWrapper').hide();
 
                 IO.socket.emit('makeGuess',{
                     type:type,
@@ -396,15 +407,17 @@ var App = {
 
              proveSuggestion : function(data){
                 console.log("Prove Suggestion");
-                App.$gameArea.html(App.$templateProveSuggestion);
+                //App.$gameArea.html(App.$templateProveSuggestion);
                 var guess = data.guess;
                 var playerCards = data.currentCards;
-
+                $('#proveSuggestionWrapper').show();
+/*
                 for(var k = 0; k< playerCards.length; k++){
                     var paragraph = document.createElement('p');
                     paragraph.textContent = playerCards[k];
                     document.getElementById("gameCards").append(paragraph);
                 }
+*/
                 $('#currentSuggestion').append('<input type="radio" name="suggestion" value="'+guess.suspect+'">' + guess.suspect + '</br>');
                 $('#currentSuggestion').append('<input type="radio" name="suggestion" value="'+guess.weapon+'">' + guess.weapon + '</br>');
                 $('#currentSuggestion').append('<input type="radio" name="suggestion" value="'+guess.roonm+'">' + guess.room + '</br>');
@@ -417,10 +430,10 @@ var App = {
                 var selection = $('input:radio[name="suggestion"]:checked').val()
                 //need error checking - make sure that selection is one of their cards
                 console.log("Selected: "+ selection);
+                $('#proveSuggestionWrapper').hide();
                 IO.socket.emit('suggestionAnswer',{
                     reply:selection
                 });
-
              },
 
              displayProof : function(data){

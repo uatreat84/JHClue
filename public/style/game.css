@@ -10,12 +10,40 @@ canvas {
 
 
 #title{
-	font-size: 24px;
+	font-size: 30px;
+	width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 3%;
+	text-align: center;
+	border-bottom: 2px solid black
 }
 
 #JHClueLogo{
-	height: 150px;
-	width: auto;
+	height: 50px;
+ 	width: auto;
+	margin: auto;
+}
+#playerStatus{
+	font-size: 20px;
+	color: green;
+	width: 100%;
+	text-align: center;
+}
+#currentPlayer{
+	width: 100%;
+	text-align: center;
+	display: none;
+}
+#suggestionWrapper{
+	width: 100%;
+	text-align: center;
+	display: none;	
+}
+#proveSuggestionWrapper{
+	width: 100%;
+	text-align: center;
+	display: none;	
 }
 
 
@@ -191,7 +219,7 @@ canvas {
 	position: absolute;
 	bottom: 0%;
 	right: 25%;
-    background-color: white;
+    background-color: lightgrey;
 }
 .roomImage{
 	position: absolute;
@@ -290,3 +318,31 @@ img.card {
 #gameLogContent > p{
 	margin: 0
 }
+
+card {
+	float: left;
+	max-width: 160px;
+	margin: 0;
+	padding: 1em;
+}
+
+cards div {
+	list-style-type: none;
+	padding: 0;
+}
+
+/*boards {
+	float: left;
+	margin-left: 170px;
+	border-left: 1px solid gray;
+	padding: 1em;
+	overflow: hidden;
+}
+
+logs {
+	position: absolute;
+	bottom: 30px;
+	width: 100%;
+}
+*/
+
