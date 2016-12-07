@@ -45,22 +45,17 @@ function playerSelectSuspect(data){
     var sock = this;
 
     console.log('Player selected ' + data.selectedSuspect);
-    if(data.selectedSuspect >= 1){
-        var newPlayer = new player.Player(data.playerName,this.id,true);
-        newPlayer.suspect = currentGame.suspects[data.selectedSuspect- 1];
-        if(currentGame.suspects.length == 0){
-            //TODO make error handling better
-            this.emit('needToSelectSuspect',{suspectList: currentGame.suspects});
-        }
-        currentGame.suspects.splice(data.selectedSuspect - 1,1);
-        currentGame.players.push(newPlayer);
-        io.sockets.in(currentGame.gameID).emit('suspectSelected', {gameId: gameID, mySocketId: this.id, game: currentGame});
-    }else{
+
+    var newPlayer = new player.Player(data.playerName,this.id,true);
+    newPlayer.suspect = currentGame.suspects[data.selectedSuspect];
+    if(currentGame.suspects.length == 0){
         //TODO make error handling better
         this.emit('needToSelectSuspect',{suspectList: currentGame.suspects});
     }
-
-}
+    currentGame.suspects.splice(data.selectedSuspect, 1);
+    currentGame.players.push(newPlayer);
+    io.sockets.in(currentGame.gameID).emit('suspectSelected', {gameId: gameID, mySocketId: this.id, game: currentGame});
+} 
 
 function playerStartGame(data){
     console.log('Game started by ID: '+this.id);
@@ -92,7 +87,6 @@ function moveCurrentPlayer(data){
         currentPlayer: currentGame.currentPlayer, 
         currentLocation: currentGame.currentPlayerLocation(),
         moveOptions: options});
-
 }
 
 function playerMakeGuess(data){
@@ -115,7 +109,6 @@ function playerMakeGuess(data){
         io.sockets.to(nextClientID).emit("proveSuggestion",{
             guess:currentGame.currentSuggestion,
             currentCards:currentGame.currentSuggestionCards()});
-
     }
 }
 
@@ -158,5 +151,3 @@ function suggestionAnswer(data){
         io.sockets.to(currentGame.currentPlayer.clientID).emit("displayProof",{proof:proof});
     }
  }
-
-

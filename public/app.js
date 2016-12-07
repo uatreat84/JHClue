@@ -143,6 +143,7 @@ var App = {
             App.$templateCurrentPlayer = $("#current-player-template").html();
             App.$templateMakeSuggestion = $("#make-suggestion-template").html();
             App.$templateProveSuggestion = $("#prove-suggestion-template").html();
+
         
         },
 
@@ -203,24 +204,26 @@ var App = {
                 var suspects = data.suspectList;
                 for(var i = 0; i < suspects.length; i++){
                         // Update host screen
-                    $('#availableSuspects')
-                        .append('<li>' + suspects[i].name );
-                    console.log(suspects[i].name + " is available");
-       
+						var sus = suspects[i];
+						var op = document.createElement("option");
+						op.textContent = sus.name;
+						op.value = i;
+						availableSuspects.appendChild(op); 
+                    console.log(sus.name + " is available");
                 }
 
 
             },
             onSuspectSelectClick : function () {
                 var data = {
-                    selectedSuspect : +($('#suspectNumber').val()),
+                    selectedSuspect : +$('#availableSuspects').val(),
                     playerName : $('#inputPlayerName').val() || 'anon',
                 };
-                console.log('Player selected ' + data.selectedSuspect);
+                console.log('Player selected suspect number ' + data.selectedSuspect);
                 App.$gameArea.html(App.$templateWaitGame);
-                IO.socket.emit('playerSelectSuspect',data);
+                IO.socket.emit('playerSelectSuspect',data); 
 
-            },
+            }, 
 
             onStartGameClick : function (){
                 console.log('Starting game');
