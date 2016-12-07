@@ -43,6 +43,17 @@ canvas {
 	height: 12.5%;
 	outline: 1px solid black;
 }
+.startside{
+	width: 6.25%;
+	height: 12.5%;
+	outline: 1px solid black;
+
+}
+.starttop{
+	width: 12.5%;
+	height: 6.25%;
+	outline: 1px solid black;
+}
 #Study{
 	position: absolute;
 	top: 0%;
@@ -146,6 +157,42 @@ canvas {
 	bottom: 6.25%;
 	right: 25%;
 }
+#Plum{
+	position: absolute;
+	top: 25%;
+	left: 0%;
+    background-color:blueviolet;
+}
+#Scarlett{
+	position: absolute;
+	top: 0%;
+	right: 25%;
+    background-color: indianred;
+}
+#Peacock{
+	position: absolute;
+	bottom: 25%;
+	left: 0%;
+    background-color: blue;
+}
+#Green{
+	position: absolute;
+	bottom: 0%;
+	left: 25%;
+    background-color:lightgreen;
+}
+#Mustard{
+	position: absolute;
+	top: 25%;
+	right: 0%;
+    background-color:burlywood;
+}
+#White{
+	position: absolute;
+	bottom: 0%;
+	right: 25%;
+    background-color: white;
+}
 .roomImage{
 	position: absolute;
 	width: 100%;
@@ -161,7 +208,7 @@ canvas {
 /***************************
 ** Styles for the Suspects
 ***************************/
-
+/*
 .player {
 	height: 20%;
 	width: 20%;
@@ -186,7 +233,7 @@ canvas {
 #green {
 	background-color: green
 }
-
+*/
 /***************************
 ** Styles for the Game Board Images
 ***************************/

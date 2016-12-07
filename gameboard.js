@@ -20,17 +20,26 @@ module.exports = {
 
             //Hallways
             var studyToHall = new room.Room("StudyToHall",true,[]);
-            var hallToLounge = new room.Room("HallToLounge",true,[new suspect.Suspect("Miss Scarlett")]);
-            var studyToLibrary = new room.Room("StudyToLibrary",true,[new suspect.Suspect("Professor Plum")]);
+            var hallToLounge = new room.Room("HallToLounge",true,[]);
+            var studyToLibrary = new room.Room("StudyToLibrary",true,[]);
             var hallToBilliard = new room.Room("HallToBilliard",true,[]);
-            var loungeToDining = new room.Room("LoungeToDining",true,[new suspect.Suspect("Colonel Mustard")]);
+            var loungeToDining = new room.Room("LoungeToDining",true,[]);
             var libToBilliard = new room.Room("LibraryToBilliard",true,[]);
             var billiardToDining = new room.Room("BilliardToDining",true,[]);
-            var libToConserv = new room.Room("LibraryToConservatory",true,[new suspect.Suspect("Mrs. Peacock")]);
+            var libToConserv = new room.Room("LibraryToConservatory",true,[]);
             var billiardToBall = new room.Room("BilliardToBall",true,[]);
             var diningToKitchen = new room.Room("DiningToKitchen",true,[]);
-            var conservToBall = new room.Room("ConservatoryToBall",true,[new suspect.Suspect("Mr. Green")]);
-            var ballToKitchen = new room.Room("BallToKitchen",true,[new suspect.Suspect("Mrs. White")]);
+            var conservToBall = new room.Room("ConservatoryToBall",true,[]);
+            var ballToKitchen = new room.Room("BallToKitchen", true, []);
+
+            //StartPoints
+            var plum = new room.Room("Plum", false, [new suspect.Suspect("Professor Plum")]);
+            var scarlett = new room.Room("Scarlett", false, [new suspect.Suspect("Miss Scarlett")]);
+            var mustard = new room.Room("Mustard", false, [new suspect.Suspect("Colonel Mustard")]);
+            var peacock = new room.Room("Peacock", false, [new suspect.Suspect("Mrs. Peacock")]);
+            var white = new room.Room("White", false, [new suspect.Suspect("Mrs. White")]);
+            var green = new room.Room("Green", false, [new suspect.Suspect("Mr. Green")]);
+
 
             study.adjRooms  = ["StudyToHall","StudyToLibrary","Kitchen"] 
             hall.adjRooms = ["StudyToHall","HallToLounge"];
@@ -55,12 +64,20 @@ module.exports = {
             conservToBall.adjRooms = ["Conservatory","Ball"];
             ballToKitchen.adjRooms = ["Ball","Kitchen"];
 
-            this.rooms = {
+            plum.adjRooms = ["StudyToLibrary"]
+            peacock.adjRooms = ["LibraryToConservatory"];
+            scarlett.adjRooms = ["HallToLounge"];
+            green.adjRooms = ["ConservatoryToBall"];
+            white.adjRooms = ["BallToKitchen"];
+            mustard.adjRooms = ["LoungeToDining"];
+
+            this.rooms = {"Scarlett": scarlett,
                 "Study": study, "StudyToHall":studyToHall,"Hall": hall,"HallToLounge":hallToLounge,"Lounge":lounge,
-                "StudyToLibrary":studyToLibrary,"HallToBilliard":hallToBilliard,"LoungeToDining":loungeToDining,
+                "Plum": plum, "StudyToLibrary": studyToLibrary, "HallToBilliard": hallToBilliard, "LoungeToDining": loungeToDining, "Mustard": mustard,
                 "Library":library,"LibraryToBilliard":libToBilliard,"Billiard":billiard,"BilliardToDining":billiardToDining, "Dining":dining,
-                "LibraryToConservatory":libToConserv,"BilliardToBall":billiardToBall,"DiningToKitchen":diningToKitchen,
-                "Conservatory":conservatory,"ConservatoryToBall":conservToBall,"Ball":ball,"BallToKitchen":ballToKitchen,"Kitchen":kitchen};
+                "Peacock": peacock, "LibraryToConservatory": libToConserv, "BilliardToBall": billiardToBall, "DiningToKitchen": diningToKitchen,
+                "Conservatory": conservatory, "ConservatoryToBall": conservToBall, "Ball": ball, "BallToKitchen": ballToKitchen, "Kitchen": kitchen,
+                "Green": green,"White": white};
 
             /*this.rooms.push(study);
             this.rooms.push(studyToHall);
@@ -86,12 +103,12 @@ module.exports = {
 
             
             this.suspectLocations = {
-                "Miss Scarlett":hallToLounge,
-                "Professor Plum":studyToLibrary,
-                "Colonel Mustard":loungeToDining,
-                "Mrs. Peacock":libToConserv,
-                "Mr. Green":conservToBall,
-                "Mrs. White":ballToKitchen};
+                "Miss Scarlett":scarlett,
+                "Professor Plum":plum,
+                "Colonel Mustard":mustard,
+                "Mrs. Peacock":peacock,
+                "Mr. Green":green,
+                "Mrs. White":white};
 
         },
 
@@ -108,7 +125,7 @@ module.exports = {
             }
         },
 
-        this.moveSuspect = function(data){
+        this.moveCurrentSuspect = function(data){
             var suspect = data.suspect;
             var destination = data.destination;
             var currentRoom = this.suspectLocations[suspect.name];
