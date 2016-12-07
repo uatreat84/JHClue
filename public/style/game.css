@@ -36,6 +36,16 @@ canvas {
 	text-align: center;
 	display: none;
 }
+#suggestionWrapper{
+	width: 100%;
+	text-align: center;
+	display: none;	
+}
+#proveSuggestionWrapper{
+	width: 100%;
+	text-align: center;
+	display: none;	
+}
 
 
 /***************************

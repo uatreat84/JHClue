@@ -92,7 +92,7 @@
                 <!-- 
                 I just put a .hide() and .show() functions for the "currentPlayer" div in the appropriate section in the app.js.  It appears to be working, but not sure if it needed to be put in a template section for another reason - Joe 
                 -->
-                 <div class="currentPlayerWrapper">
+                 <div id="currentPlayerWrapper">
                     <div class="info">
                         <select id="moveOptions"></select>
                     </div>
@@ -101,7 +101,40 @@
                         <button id="btnMoveOptionDone" class="btn right">Done</button>
                     </div>
                 </div>
-                      <!-- This is where the templates defined below should be used -->
+                <div id="suggestionWrapper">
+                    <div class="info">
+                        <div id="typeOfGuess"></div>
+                        <select id="suspectSuggestion">
+                            <option value="Mr. Green">Mr. Green</option>
+                            <option value="Mrs. White">Mrs. White</option>
+                            <option value="Mrs. Peacock">Mrs. Peacock</option>
+                            <option value="Colonel Mustard">Colonel Mustard</option>
+                            <option value="Professor Plum">Professor Plum</option>
+                            <option value="Miss Scarlett">Miss Scarlett</option>
+                        </select>
+
+                        <select id="weaponSuggestion">
+                            <option value="Knife">Knife</option>
+                            <option value="Rope">Rope</option>
+                            <option value="Gun">Gun</option>
+                            <option value="Candle Stick">Candle Stick</option>
+                            <option value="Lead Pipe">Lead Pipe</option>
+                            <option value="Wrench">Wrench</option>
+                        </select>
+                        <select id="roomSuggestion"></select>
+                    </div>
+                    <div class="info buttons">
+                     <button id="btnMakeSuggestion" class="btn left">Select</button>
+                    </div>
+                    <!-- This is where the templates defined below should be used -->
+                </div>
+            </div>
+            <div id="proveSuggestionWrapper">
+                <h> Current Suggestion</h>
+                <form id = "currentSuggestion">
+                    <input type="radio"  name="suggestion" value="none" checked>none</br> 
+                </form>
+                <button id="btnSuggestionSelect" class="btn left">Select</button>
             </div>
             <card>
                 <div id="cardWrapper">
@@ -157,7 +190,7 @@
 
     </script>
      <script id="prove-suggestion-template" type="text/template">
-        <div id="suggestionWrapper">
+        <div id="proveSuggestionWrapper">
             <h>Your Cards</h>
             <div id="gameCards"></div>
             <h> Current Suggestion</h>

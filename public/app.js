@@ -358,7 +358,9 @@ var App = {
              },
 
              makeSuggestion : function(data){
-                App.$gameArea.html(App.$templateMakeSuggestion);
+                //App.$gameArea.html(App.$templateMakeSuggestion);
+                // Display suggestion html
+                $('#suggestionWrapper').show();
                 $('#typeOfGuess').text("Suggestion");
                 var roomSelect = document.getElementById("roomSuggestion");
                 roomSelect.options.length = 0;
@@ -389,7 +391,8 @@ var App = {
                 console.log("Room: "+roomSelection);
                 console.log("Weapon: "+weaponSelection);
                 console.log("Suspect: "+suspectSelection);
-                var type = $('#typeOfGuess').text();              
+                var type = $('#typeOfGuess').text();
+                $('#suggestionWrapper').hide();
 
                 IO.socket.emit('makeGuess',{
                     type:type,
@@ -401,15 +404,17 @@ var App = {
 
              proveSuggestion : function(data){
                 console.log("Prove Suggestion");
-                App.$gameArea.html(App.$templateProveSuggestion);
+                //App.$gameArea.html(App.$templateProveSuggestion);
+                $('#proveSuggestionWrapper').show();
                 var guess = data.guess;
                 var playerCards = data.currentCards;
-
+/*
                 for(var k = 0; k< playerCards.length; k++){
                     var paragraph = document.createElement('p');
                     paragraph.textContent = playerCards[k];
                     document.getElementById("gameCards").append(paragraph);
                 }
+*/
                 $('#currentSuggestion').append('<input type="radio" name="suggestion" value="'+guess.suspect+'">' + guess.suspect + '</br>');
                 $('#currentSuggestion').append('<input type="radio" name="suggestion" value="'+guess.weapon+'">' + guess.weapon + '</br>');
                 $('#currentSuggestion').append('<input type="radio" name="suggestion" value="'+guess.roonm+'">' + guess.room + '</br>');
@@ -422,6 +427,7 @@ var App = {
                 var selection = $('input:radio[name="suggestion"]:checked').val()
                 //need error checking - make sure that selection is one of their cards
                 console.log("Selected: "+ selection);
+                $('#proveSuggestionWrapper').hide();
                 IO.socket.emit('suggestionAnswer',{
                     reply:selection
                 });
