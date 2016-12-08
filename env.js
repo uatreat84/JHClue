@@ -60,7 +60,8 @@ function playerSelectSuspect(data){
     }
     currentGame.suspects.splice(data.selectedSuspect, 1);
     currentGame.players.push(newPlayer);
-    io.sockets.in(currentGame.gameID).emit('suspectSelected', {gameId: gameID, mySocketId: this.id, game: currentGame});
+    io.sockets./*in(currentGame.gameID).*/emit('suspectSelected', {gameId: gameID, mySocketId: this.id, game: currentGame, suspectList: currentGame.suspects});
+
 } 
 
 function playerStartGame(data){
