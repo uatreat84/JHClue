@@ -252,12 +252,15 @@ var App = {
                 if(data.log != undefined){
                     App.addToLog(data.log);   
                 }
-                App.Player.updateGameBoard(data.game)
+                App.Player.updateGameBoard(data.game);
                 App.currentPlayerSocket = data.currentPlayer.clientID;
-                App.currentPlayerLocation=data.currentLocation
+                App.currentPlayerLocation=data.currentLocation;
+                var players = data.game.players;
+                console.log("Players: "+ players);
+
                 console.log("Current location: "+App.currentPlayerLocation.name);
                 if(App.mySocketId === data.currentPlayer.clientID){
-                    $('#playerStatus').text("You are the Current Player");
+                    $('#playerStatus').text(data.currentPlayer.name + " (" + data.currentPlayer.suspect.name + "), it is your turn");
                     //@TODO this needs to be done or else other players can input move numbers.
                     //App.$currentPlayer.html(App.$templateCurrentPlayer);
                     App.Player.updateMoveOptions(data.moveOptions);
@@ -266,10 +269,19 @@ var App = {
                         $('#currentPlayer').show();
                     }
                 }else{
-                    $('#playerStatus').text("Waiting for "+data.currentPlayer.name);
-                    // Hide Current player section (if not already hidden)
-                    if($('#currentPlayer').is(":visible")){
-                        $('#currentPlayer').hide();
+                    //Loop over players to find player that matches this socket ID
+                    for(var j = 0; j < players.length; j++){
+                        if(players[j].clientID === App.mySocketId){
+                            $('#playerStatus').text("Waiting for " + data.currentPlayer.name);
+                            $('#playerStatus').text(players[j].name +
+                                " (" + players[j].suspect.name + "), waiting for " +
+                                data.currentPlayer.name + " (" +
+                                data.currentPlayer.suspect.name + ")");
+                            // Hide Current player section (if not already hidden)
+                            if($('#currentPlayer').is(":visible")){
+                                $('#currentPlayer').hide();
+                            }
+                        }
                     }                     
                 }
                 console.log("My ID: "+App.mySocketId);
