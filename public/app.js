@@ -26,6 +26,10 @@ jQuery(function($){
             IO.socket.on('needToSelectSuspect', IO.selectSuspect);
             IO.socket.on('suspectSelected',IO.suspectSelected);
             IO.socket.on('displayGame',IO.displayGame);
+            IO.socket.on('updateLog',IO.updateLog);
+            IO.socket.on('proveSuggestion',IO.proveSuggestion);
+            IO.socket.on('displayProof',IO.displayProof);
+            IO.socket.on('playerWon',IO.displayPlayerWon);
         },
 
         /**
@@ -47,6 +51,22 @@ jQuery(function($){
 
         displayGame: function(data){
             App.Player.displayGame(data);
+        },
+
+        proveSuggestion: function(data){
+            App.Player.proveSuggestion(data);
+        },
+
+        displayProof: function(data){
+            App.Player.displayProof(data);
+        },
+
+        updateLog: function(data){
+            App.addToLog(data.log);
+        },
+
+        displayPlayerWon: function(data){
+            App.Player.playerWon(data);
         }
      
     };
@@ -71,7 +91,13 @@ jQuery(function($){
     "BilliardToBall",
     "DiningToKitchen",
     "ConservatoryToBall",
-    "BallToKitchen"
+    "BallToKitchen",
+    "Plum",
+    "Peacock",
+    "Scarlett",
+    "Green",
+    "White",
+    "Mustard",
     ];
 
     var suspectMap = {
@@ -82,6 +108,8 @@ jQuery(function($){
         "Colonel Mustard": "mustard",
         "Mr. Green": "green"
     };
+
+	var numPlayers = 0;
 
 var App = {
 
@@ -95,6 +123,8 @@ var App = {
         currentPlayerSocket: '',
 
         currentPlayerLocation: [],
+
+        myName: '',
 
         
 
@@ -126,6 +156,8 @@ var App = {
             App.$templatePlayGame = $('#play-game-template').html();
             App.$templateCurrentPlayer = $("#current-player-template").html();
             App.$templateMakeSuggestion = $("#make-suggestion-template").html();
+            App.$templateProveSuggestion = $("#prove-suggestion-template").html();
+
         
         },
 
@@ -136,7 +168,9 @@ var App = {
             App.$doc.on('click', '#btnSelectSuspect',App.Player.onSuspectSelectClick);
             App.$doc.on('click', '#btnPlayClue',App.Player.onStartGameClick);
             App.$doc.on('click', '#btnMoveOptionSelect', App.Player.onOptionSelectClick);
+            App.$doc.on('click', '#btnMoveOptionDone', App.Player.onOptionDoneClick);
             App.$doc.on('click', '#btnMakeSuggestion', App.Player.onMakeSuggestionClick);
+            App.$doc.on('click', '#btnSuggestionSelect', App.Player.onProveSuggestionClick);
         },
 
         /* *************************************
@@ -153,7 +187,11 @@ var App = {
             //App.$gameArea.html(App.$templateSelectSuspect);
         },
 
-
+        addToLog : function(data){
+           var paragraph = document.createElement('p');
+            paragraph.textContent = data;   
+            document.getElementById("gameLogContent").append(paragraph);
+        },
 
 
 
@@ -180,7 +218,7 @@ var App = {
  
             selectSuspect: function(data) {
                 App.$gameArea.html(App.$templateSelectSuspect);
-
+                $('#gameLogContent p').remove();
                 var suspects = data.suspectList;
                 for(var i = 0; i < suspects.length; i++){
                         // Update host screen
@@ -199,19 +237,23 @@ var App = {
                     selectedSuspect : +$('#availableSuspects').val(),
                     playerName : $('#inputPlayerName').val() || 'anon',
                 };
+                App.myName = data.playerName;
                 console.log('Player selected suspect number ' + data.selectedSuspect);
                 App.$gameArea.html(App.$templateWaitGame);
-                IO.socket.emit('playerSelectSuspect',data); 
-
+                numPlayers +=1;
+                IO.socket.emit('playerSelectSuspect',data);
             }, 
 
             onStartGameClick : function (){
-                console.log('Starting game');
+            	console.log('Starting game');
                 App.$gameArea.html(App.$templatePlayGame);
                 IO.socket.emit('startGame');
             },
 
             displayGame : function(data){
+                if(data.log != undefined){
+                    App.addToLog(data.log);   
+                }
                 App.Player.updateGameBoard(data.game)
                 App.currentPlayerSocket = data.currentPlayer.clientID;
                 App.currentPlayerLocation=data.currentLocation
@@ -243,8 +285,11 @@ var App = {
 
             },
 
-            updateGameBoard : function(data){            
+
+
+            updateGameBoard : function(data){         
                 var rooms = data.gameBoard.rooms;
+                               
                 App.$gameArea.html(App.$templatePlayGame);
                 var players = data.players;
                 console.log("Players: "+ players);
@@ -268,6 +313,8 @@ var App = {
                         var suspectID = suspectMap[rooms[gameRooms[i]].suspects[j].name];
                         console.log("Suspect Proper Name: " + rooms[gameRooms[i]].suspects[j].name)
                         console.log("Suspect ID: " + suspectID);
+                        console.log("Room ID: " + rooms[gameRooms[i]].name);
+                        console.log('#' + rooms[gameRooms[i]].name + ' #suspects');
                         // $('#' + rooms[gameRooms[i]].name + ' #suspects').append('<div class="player" id="' + suspectID + '"></div>');
                         $('#' + rooms[gameRooms[i]].name + ' #suspects').append('<img class="piece" src="http://localhost:3000/' + suspectID + '.png">');
                     }
@@ -294,6 +341,11 @@ var App = {
                         App.Player.makeSuggestion();
                     }
                 }
+
+             },
+
+             onOptionDoneClick: function(data){
+                IO.socket.emit('nextPlayer');
 
              },
 
@@ -329,7 +381,7 @@ var App = {
                 console.log("Room: "+roomSelection);
                 console.log("Weapon: "+weaponSelection);
                 console.log("Suspect: "+suspectSelection);
-                var type = $('#typeOfGuess').text();
+                var type = $('#typeOfGuess').text();              
 
                 IO.socket.emit('makeGuess',{
                     type:type,
@@ -337,6 +389,46 @@ var App = {
                     weapon:weaponSelection,
                     suspect:suspectSelection});
 
+             },
+
+             proveSuggestion : function(data){
+                console.log("Prove Suggestion");
+                App.$gameArea.html(App.$templateProveSuggestion);
+                var guess = data.guess;
+                var playerCards = data.currentCards;
+
+                for(var k = 0; k< playerCards.length; k++){
+                    var paragraph = document.createElement('p');
+                    paragraph.textContent = playerCards[k];
+                    document.getElementById("gameCards").append(paragraph);
+                }
+                $('#currentSuggestion').append('<input type="radio" name="suggestion" value="'+guess.suspect+'">' + guess.suspect + '</br>');
+                $('#currentSuggestion').append('<input type="radio" name="suggestion" value="'+guess.weapon+'">' + guess.weapon + '</br>');
+                $('#currentSuggestion').append('<input type="radio" name="suggestion" value="'+guess.roonm+'">' + guess.room + '</br>');
+
+             },
+
+             onProveSuggestionClick : function(){
+
+                console.log("Selected: "+ selection);
+                var selection = $('input:radio[name="suggestion"]:checked').val()
+                //need error checking - make sure that selection is one of their cards
+                console.log("Selected: "+ selection);
+                IO.socket.emit('suggestionAnswer',{
+                    reply:selection
+                });
+
+             },
+
+             displayProof : function(data){
+                var proof = data.proof;
+                alert("Suggestion: "+ proof);
+             },
+
+             playerWon: function(data){
+                alert("GAME OVER!");
+                IO.socket.emit('resetGame');
+                IO.socket.emit('initGame');
              }
 
 

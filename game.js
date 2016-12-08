@@ -16,6 +16,7 @@ module.exports = {
         this.caseFile = {};
         this.gameID = gameID;
         this.gameBoard = new board.GameBoard();
+        this.init = false;
 
         this.initGame = function () {
             this.gameBoard.createBoard();
@@ -29,6 +30,7 @@ module.exports = {
                 console.log("No Miss Scarlett")
                 this.currentPlayer = this.players[0];
             }
+            this.init = true;
 
        },
 
@@ -86,9 +88,6 @@ module.exports = {
                     playerIndex = playerIndex + 1;
                 }
 
-
-
-
        }
 
        this.getMoveOptions = function(){
@@ -130,6 +129,13 @@ module.exports = {
             return options;
         },
 
+        this.goToNextPlayer = function(){
+            var currentPlayerIndex = this.players.indexOf(this.currentPlayer);
+            console.log("Current Player Index:" + currentPlayerIndex );
+            currentPlayerIndex =  (currentPlayerIndex + 1) % this.players.length;
+            this.currentPlayer = this.players[currentPlayerIndex];
+        }
+
         this.currentPlayerLocation = function(){
             return this.gameBoard.getSuspectLocation(this.currentPlayer.suspect);
         }
@@ -141,7 +147,7 @@ module.exports = {
             }
             var options = [];
             var currentSuspect = this.currentPlayer.suspect;
-            this.gameBoard.moveSuspect({suspect:currentSuspect,destination:destination});
+            this.gameBoard.moveCurrentSuspect({suspect:currentSuspect,destination:destination});
 
             var suspectLocation = this.gameBoard.getSuspectLocation(currentSuspect);
             if(!suspectLocation.isHallway){
@@ -158,12 +164,76 @@ module.exports = {
                  this.caseFile["Weapon"] === accusation.weapon)
             {
                 return true;
-
             }else{
                 return false;
             }
 
+        },
+
+        this.isGameOver = function(){
+            console.log("Game over: "+this.players.length);
+            if(this.players.length === 1){
+                return true;
+            }else{
+                return false;
+            }
         }
+
+        this.eliminateCurrentPlayer = function(){
+                var eliminatedPlayer = this.currentPlayer;
+                this.goToNextPlayer();
+                var eliminatedPlayerIndex = this.players.indexOf(eliminatedPlayer);
+                this.players.splice(eliminatedPlayerIndex,1);
+                return eliminatedPlayer.name;
+        }
+
+        this.startProveSuggestion = function(guess){
+            this.currentSuggestion = guess;
+
+            //Move suspect by name
+            this.gameBoard.moveSuspectByName({suspect:guess.suspect,destination:guess.room});
+            //Mark player as "just moved by another player"
+            for(var i = 0;i<this.players.length;i++){
+                if(this.players[i].suspect.name === guess.suspect){
+                    this.players[i].suspect.wasJustMoved = true;
+                }
+            }
+
+
+            this.currentSuggestionIndex = this.players.indexOf(this.currentPlayer);
+            console.log("Current Player Index:" +this.currentSuggestionIndex );
+            this.currentSuggestionIndex =  (this.currentSuggestionIndex + 1) % this.players.length;
+
+            console.log("Suggestion Index: "+ this.currentSuggestionIndex);
+            return this.players[this.currentSuggestionIndex].clientID
+        },
+
+        this.currentSuggestionCards = function(){
+            return this.players[this.currentSuggestionIndex].cards;
+        },
+
+        this.getCurrentSuggestionClient = function(){
+           return this.players[this.currentSuggestionIndex].clientID 
+       },
+
+       this.getCurrentSuggestionPlayer = function(){
+            return this.players[this.currentSuggestionIndex]; 
+       },
+
+       this.nextSuggestionClient = function(){
+            var currentPlayerIndex = this.players.indexOf(this.currentPlayer);
+            console.log("Current Suggestion Index:" +this.currentSuggestionIndex );
+            this.currentSuggestionIndex =  (this.currentSuggestionIndex + 1) % this.players.length;
+            console.log("Suggestion Index: "+ this.currentSuggestionIndex);
+            if(this.currentSuggestionIndex != currentPlayerIndex){
+                return true;
+            }else{
+                return false;
+            }
+
+
+       }
+
     }
 
 

@@ -13,13 +13,56 @@
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="style/game.css">
+      <style>
+          card {
+              float: left;
+              max-width: 160px;
+              margin: 0;
+              padding: 1em;
+          }
+
+          cards div {
+            list-style-type: none;
+            padding: 0;
+              }
+
+          boards {
+              float: left;
+              margin-left: 170px;
+              border-left: 1px solid gray;
+              padding: 1em;
+              overflow: hidden;
+          }
+
+          logs {
+          		 position: fixed;
+               	 right: 0px;
+                 bottom: 0px;
+          }
+        
+          notepad {
+          		position: absolute;
+          		width: 10%;
+          		padding: 1em;
+          }
+
+      </style>
   </head>
   <body>
-
+<!-- TODO - in certain positions the game log gets in the way of adjusting things on the notepad. this needs to be fixed -->  
     <div id="gameArea">
         <!-- This is where the templates defined below will be used -->
    </div>
-
+         <logs>
+             <div id="gameLogContainer">
+                 <div id=gameLogTitle>Game Log</div>
+                 <div id="scrollBox">
+                     <div id="gameLogContent">
+                     </div>
+                 </div>
+                 <p><span id="gameLogStatus"></span></p>
+             </div>
+         </logs>
 
         <!-- This screen appears when a user clicks "Start" on the Join Screen -->
     <script id="wait-game-template" type="text/template">
@@ -38,11 +81,11 @@
     <script id="select-suspect-template" type="text/template">
         <div class="suspectWrapper">
             <div class="info">
-                <label for="inputPlayerName">Your Name:</label>
+                <label for="inputPlayerName">User Name:</label>
                 <input id="inputPlayerName" type="text" />
             </div>
             <div class="info">
-                <label for="inputSuspectNumber">Suspect number:</label>
+                <label for="inputSuspectNumber">Suspect :</label>
                 <select id="availableSuspects"></select>
             </div>
 
@@ -94,59 +137,110 @@
                     </div>
                     <div class="info buttons">
                         <button id="btnMoveOptionSelect" class="btn left">Select</button>
+                        <button id="btnMoveOptionDone" class="btn right">Done</button>
                     </div>
                 </div>
                       <!-- This is where the templates defined below should be used -->
             </div>
-
-           
-            <div class="board" id="board">
-                <div class="room" id="Study"><div><img class="room" src="http://localhost:3000/Study.png"></div><ul id="suspects"></ul></div>
-                <div class="room" id="Hall"><div><img class="room" src="http://localhost:3000/Hall.png"></div><ul id="suspects"></ul></div>
-                <div class="room" id="Lounge"><div><img class="room" src="http://localhost:3000/Lounge.png"></div><ul id="suspects"></ul></div>
-                <div class="room" id="Library"><div><img class="room" src="http://localhost:3000/Library.png"></div><ul id="suspects"></ul></div>
-                <div class="room" id="Billiard"><div><img class="room" src="http://localhost:3000/Billard.png"></div><ul id="suspects"></ul></div>
-                <div class="room" id="Dining"><div><img class="room" src="http://localhost:3000/Dining.png"></div><ul id="suspects"></ul></div>
-                <div class="room" id="Conservatory"><div><img class="room" src="http://localhost:3000/Conservatory.png"></div><ul id="suspects"></ul></div>
-                <div class="room" id="Ball"><div><img class="room" src="http://localhost:3000/Ball.png"></div><ul id="suspects"></ul></div>
-                <div class="room" id="Kitchen"><div><img class="room" src="http://localhost:3000/Kitchen.png"></div><ul id="suspects"></ul></div>
-                <div class="hallway" id="StudyToHall"><div><img class="hall" src="http://localhost:3000/HallwayHor.png"></div><ul id="suspects"></ul></div>
-                <div class="hallway" id="StudyToLibrary"><div><img class="hall" src="http://localhost:3000/HallwayVer.png"></div><ul id="suspects"></ul></div>
-                <div class="hallway" id="HallToLounge"><div><img class="hall" src="http://localhost:3000/HallwayHor.png"></div><ul id="suspects"></ul></div>
-                <div class="hallway" id="HallToBilliard"><div><img class="hall" src="http://localhost:3000/HallwayVer.png"></div><ul id="suspects"></ul></div>
-                <div class="hallway" id="LoungeToDining"><div><img class="hall" src="http://localhost:3000/HallwayVer.png"></div><ul id="suspects"></ul></div>
-                <div class="hallway" id="LibraryToBilliard"><div><img class="hall" src="http://localhost:3000/HallwayHor.png"></div><ul id="suspects"></ul></div>
-                <div class="hallway" id="LibraryToConservatory"><div><img class="hall" src="http://localhost:3000/HallwayVer.png"></div><ul id="suspects"></ul></div>
-                <div class="hallway" id="BilliardToDining"><div><img class="hall" src="http://localhost:3000/HallwayHor.png"></div><ul id="suspects"></ul></div>
-                <div class="hallway" id="BilliardToBall"><div><img class="hall" src="http://localhost:3000/HallwayVer.png"></div><ul id="suspects"></ul></div>
-                <div class="hallway" id="DiningToKitchen"><div><img class="hall" src="http://localhost:3000/HallwayVer.png"></div><ul id="suspects"></ul></div>
-                <div class="hallway" id="ConservatoryToBall"><div><img class="hall" src="http://localhost:3000/HallwayHor.png"></div><ul id="suspects"></ul></div>
-                <div class="hallway" id="BallToKitchen"><div><img class="hall" src="http://localhost:3000/HallwayHor.png"></div><ul id="suspects"></ul></div>
-            </div>
-
-            <div id="cardWrapper">
-                <h>Your Cards</h>
-                <div id="gameCards">
-                </div>
-            </div>
-            
-            <div id="gameLogContainer">
-                <div id=gameLogTitle>Game Log</div>
-                <div id="scrollBox">
-                    <div id="gameLogContent">
-                        <p>Sample Game Log Content...</p>
-                        <p>Mr. Green moves from hallway to Library</p>
-                        <p>Mr. Green makes suggestion: Mr. Green in Library with the Rope</p>
-                        <p>Ms. White does not prove suggestion false</p>
-                        <p>Col. Mustard proves suggestion false</p>
-                        <p>Mr. Green's turn has ended</p>
-                        <p>It is now Ms. White's turn</p>
+            <card>
+                <div id="cardWrapper">
+                    <h>Your Cards</h>
+                    <div id="gameCards">
                     </div>
                 </div>
-                <p><span id="gameLogStatus" ></span></p>  
-            </div>
+            </card>
+            <boards>
+                <div class="board" id="board">
+                    <div class="room" id="Study"><div><img class="room" src="http://localhost:3000/Study.png"></div><ul id="suspects"></ul></div>
+                    <div class="room" id="Hall"><div><img class="room" src="http://localhost:3000/Hall.png"></div><ul id="suspects"></ul></div>
+                    <div class="room" id="Lounge"><div><img class="room" src="http://localhost:3000/Lounge.png"></div><ul id="suspects"></ul></div>
+                    <div class="room" id="Library"><div><img class="room" src="http://localhost:3000/Library.png"></div><ul id="suspects"></ul></div>
+                    <div class="room" id="Billiard"><div><img class="room" src="http://localhost:3000/Billard.png"></div><ul id="suspects"></ul></div>
+                    <div class="room" id="Dining"><div><img class="room" src="http://localhost:3000/Dining.png"></div><ul id="suspects"></ul></div>
+                    <div class="room" id="Conservatory"><div><img class="room" src="http://localhost:3000/Conservatory.png"></div><ul id="suspects"></ul></div>
+                    <div class="room" id="Ball"><div><img class="room" src="http://localhost:3000/Ball.png"></div><ul id="suspects"></ul></div>
+                    <div class="room" id="Kitchen"><div><img class="room" src="http://localhost:3000/Kitchen.png"></div><ul id="suspects"></ul></div>
+                    <div class="hallway" id="StudyToHall"><div><img class="hall" src="http://localhost:3000/HallwayHor.png"></div><ul id="suspects"></ul></div>
+                    <div class="hallway" id="StudyToLibrary"><div><img class="hall" src="http://localhost:3000/HallwayVer.png"></div><ul id="suspects"></ul></div>
+                    <div class="hallway" id="HallToLounge"><div><img class="hall" src="http://localhost:3000/HallwayHor.png"></div><ul id="suspects"></ul></div>
+                    <div class="hallway" id="HallToBilliard"><div><img class="hall" src="http://localhost:3000/HallwayVer.png"></div><ul id="suspects"></ul></div>
+                    <div class="hallway" id="LoungeToDining"><div><img class="hall" src="http://localhost:3000/HallwayVer.png"></div><ul id="suspects"></ul></div>
+                    <div class="hallway" id="LibraryToBilliard"><div><img class="hall" src="http://localhost:3000/HallwayHor.png"></div><ul id="suspects"></ul></div>
+                    <div class="hallway" id="LibraryToConservatory"><div><img class="hall" src="http://localhost:3000/HallwayVer.png"></div><ul id="suspects"></ul></div>
+                    <div class="hallway" id="BilliardToDining"><div><img class="hall" src="http://localhost:3000/HallwayHor.png"></div><ul id="suspects"></ul></div>
+                    <div class="hallway" id="BilliardToBall"><div><img class="hall" src="http://localhost:3000/HallwayVer.png"></div><ul id="suspects"></ul></div>
+                    <div class="hallway" id="DiningToKitchen"><div><img class="hall" src="http://localhost:3000/HallwayVer.png"></div><ul id="suspects"></ul></div>
+                    <div class="hallway" id="ConservatoryToBall"><div><img class="hall" src="http://localhost:3000/HallwayHor.png"></div><ul id="suspects"></ul></div>
+                    <div class="hallway" id="BallToKitchen"><div><img class="hall" src="http://localhost:3000/HallwayHor.png"></div><ul id="suspects"></ul></div>
+                    <div class="startside" id="Plum"><ul id="suspects"></ul></div>
+                    <div class="startside" id="Peacock"><ul id="suspects"></ul></div>
+                    <div class="starttop" id="Scarlett"><ul id="suspects"></ul></div>
+                    <div class="starttop" id="Green"><ul id="suspects"></ul></div>
+                    <div class="starttop" id="White"><ul id="suspects"></ul></div>
+                    <div class="startside" id="Mustard"><ul id="suspects"></ul></div>
+                </div>
+            </boards>
+            <!-- TODO make notepad no longer reset when page reloads -->
+                <notepad>
+                <div id="notepadTitle"><h4>Notepad</h4></div>
+                <div id="notepadContainer">
+                <div class="notepadSubsection">
+                <table>
+                <tr><div id="suspectsTitle"><h5><b>&nbsp;&nbsp;Suspects</b></h5></div><tr>
+                <tr><th>&nbsp;&nbsp;Col. Mustard</th><td><select id="colMustard"><option> </option><option>&#10004</option><option>&#10008</option><option>&#10068</option></select></td></tr>
+                <tr><th>&nbsp;&nbsp;Prof. Plum</th><td><select id="profPlum"><option> </option><option>&#10004</option><option>&#10008</option><option>&#10068</option></select></td></tr>
+                <tr><th>&nbsp;&nbsp;Mr. Green</th><td><select id="mrGreen"><option> </option><option>&#10004</option><option>&#10008</option><option>&#10068</option></select></td></tr>
+                <tr><th>&nbsp;&nbsp;Mrs. Peacock</th><td><select id="mrsPeacock"><option> </option><option>&#10004</option><option>&#10008</option><option>&#10068</option></select></td></tr>
+                <tr><th>&nbsp;&nbsp;Miss Scarlett</th><td><select id="missScarlett"><option> </option><option>&#10004</option><option>&#10008</option><option>&#10068</option></select></td></tr>
+                <tr><th>&nbsp;&nbsp;Mrs. White</th><td><select id="mrsWhite"><option> </option><option>&#10004</option><option>&#10008</option><option>&#10068</option></select></td></tr>
+                </table>
+                </class>
+                <br>
+                <div class="notepadSubsection">
+                <table>
+                <tr><div id="weaponsTitle"><h5><b>&nbsp;&nbsp;Weapons</b></h5></div><tr>
+                <tr><th>&nbsp;&nbsp;Knife</th><td><select id="knife"><option> </option><option>&#10004</option><option>&#10008</option><option>&#10068</option></select></td></tr>
+                <tr><th>&nbsp;&nbsp;Candlestick</th><td><select id="candlestick"><option> </option><option>&#10004</option><option>&#10008</option><option>&#10068</option></select></td></tr>
+                <tr><th>&nbsp;&nbsp;Revolver</th><td><select id="revolver"><option> </option><option>&#10004</option><option>&#10008</option><option>&#10068</option></select></td></tr>
+                <tr><th>&nbsp;&nbsp;Rope</th><td><select id="rope"><option> </option><option>&#10004</option><option>&#10008</option><option>&#10068</option></select></td></tr>
+                <tr><th>&nbsp;&nbsp;Lead Pipe</th><td><select id = "leadPipe"><option> </option><option>&#10004</option><option>&#10008</option><option>&#10068</option></select></td></tr>
+                <tr><th>&nbsp;&nbsp;Wrench</th><td><select id="wrench"><option> </option><option>&#10004</option><option>&#10008</option><option>&#10068</option></select></td></tr>
+                </table>
+                </class>
+                <br>
+                <div class="notepadSubsection">
+              	<table>
+                <tr><div id="roomsTitle"><h5><b>&nbsp;&nbsp;Rooms</b></h5></div><tr>
+                <tr><th>&nbsp;&nbsp;Hall</th><td><select id="hall"><option> </option><option>&#10004</option><option>&#10008</option><option>&#10068</option></select></td></tr>
+                <tr><th>&nbsp;&nbsp;Lounge</th><td><select id="lounge"><option> </option><option>&#10004</option><option>&#10008</option><option>&#10068</option></select></td></tr>
+                <tr><th>&nbsp;&nbsp;Dining Room</th><td><select id="diningRoom"><option> </option><option>&#10004</option><option>&#10008</option><option>&#10068</option></select></td></tr>
+                <tr><th>&nbsp;&nbsp;Kitchen</th><td><select id="kitchen"><option> </option><option>&#10004</option><option>&#10008</option><option>&#10068</option></select></td></tr>
+                <tr><th>&nbsp;&nbsp;Ball</th><td><select id="ball"><option> </option><option>&#10004</option><option>&#10008</option><option>&#10068</option></select></td></tr>
+                <tr><th>&nbsp;&nbsp;Conservatory</th><td><select id="conservatory"><option> </option><option>&#10004</option><option>&#10008</option><option>&#10068</option></select></td></tr>
+                <tr><th>&nbsp;&nbsp;Billiard</th><td><select id="billiard"><option> </option><option>&#10004</option><option>&#10008</option><option>&#10068</option></select></td></tr>
+                <tr><th>&nbsp;&nbsp;Library</th><td><select id="library"><option> </option><option>&#10004</option><option>&#10008</option><option>&#10068</option></select></td></tr>
+                <tr><th>&nbsp;&nbsp;Study</th><td><select id="study"><option> </option><option>&#10004</option><option>&#10008</option><option>&#10068</option></select></td></tr>
+                </table>
+                </class>
+                <br>
+                </div>
+                </notepad>
         </div>
+
     </script>
+     <script id="prove-suggestion-template" type="text/template">
+        <div id="suggestionWrapper">
+            <h>Your Cards</h>
+            <div id="gameCards"></div>
+            <h> Current Suggestion</h>
+            <form id = "currentSuggestion">
+                    <input type="radio"  name="suggestion" value="none" checked>none</br> 
+            </form>
+            <button id="btnSuggestionSelect" class="btn left">Select</button>
+        </div>
+
+    </script>
+
     <script id="current-player-template" type="text/template">
 
     </script>
