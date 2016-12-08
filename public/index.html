@@ -52,6 +52,7 @@
 
         </div>
     </script>
+<!--
     <script id="make-suggestion-template" type="text/template">
         <div class="suggestionWrapper">
             <div class="info">
@@ -80,6 +81,7 @@
             </div>
         </div>
     </script>
+-->
      <script id="play-game-template" type="text/template">
         <div class="playingingGameWrapper">
             <div id="title">
@@ -178,27 +180,24 @@
                     <div class="startside" id="Mustard"><ul id="suspects"></ul></div>
                 </div>
             </boards>
-            <logs>
-             <div id="gameLogContainer">
-                 <div id=gameLogTitle>Game Log</div>
-                 <div id="scrollBox">
-                     <div id="gameLogContent">
-                     </div>
-                 </div>
-                 <p><span id="gameLogStatus"></span></p>
-             </div>
-         </logs>
-
-
         </div>
-
     </script>
+
 
     <script id="current-player-template" type="text/template">
-
     </script>
 
 
+    <logs>
+        <div id="gameLogContainer">
+            <div id=gameLogTitle>Game Log</div>
+            <div id="scrollBox">
+                <div id="gameLogContent">
+                </div>
+            </div>
+            <p><span id="gameLogStatus"></span></p>
+        </div>
+    </logs>
 
     <script src="/socket.io/socket.io.js"></script>
     <script src="app.js"></script>

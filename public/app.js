@@ -189,6 +189,7 @@ var App = {
            var paragraph = document.createElement('p');
             paragraph.textContent = data;   
             document.getElementById("gameLogContent").append(paragraph);
+            $('#scrollBox').scrollTop($('#scrollBox')[0].scrollHeight);
         },
 
 
@@ -202,10 +203,13 @@ var App = {
             //Update the list of players about to join
             updateWaitingList : function(data){
                 $('#playersWaiting  li').remove();
+                $('#gameLogContent p').remove();
                 var players = data.game.players;
                 console.log('players: '+ players);
-                    for(var i = 0; i < players.length; i++){
-                        // Update host screen
+                for(var i = 0; i < players.length; i++){
+                    // Update host screen
+                    var logHTML = 'Player ' + players[i].name + ' is in the game as '+players[i].suspect.name+'. (socket ID: '+players[i].clientID+')';
+                    App.addToLog(logHTML);
                     $('#playersWaiting')
                         .append('<li>Player ' + players[i].name + ' is in the game as '+players[i].suspect.name+'. (socket ID: '+players[i].clientID+')</li>');
                     console.log(players[i].name + " Joined");
@@ -216,7 +220,7 @@ var App = {
  
             selectSuspect: function(data) {
                 App.$gameArea.html(App.$templateSelectSuspect);
-                $('#gameLogContent p').remove();
+                $('#gameLogContainer').hide();
                 var suspects = data.suspectList;
                 for(var i = 0; i < suspects.length; i++){
                         // Update host screen
@@ -236,6 +240,7 @@ var App = {
                     playerName : $('#inputPlayerName').val() || 'anon',
                 };
                 App.myName = data.playerName;
+                $('#gameLogContainer').show();
                 console.log('Player selected suspect number ' + data.selectedSuspect);
                 App.$gameArea.html(App.$templateWaitGame);
                 IO.socket.emit('playerSelectSuspect',data); 

@@ -81,7 +81,7 @@ function playerStartGame(data){
 function nextPlayer(){
     currentGame.goToNextPlayer();
     io.sockets.in(currentGame.gameID).emit('displayGame',{
-        log: "It is now " + currentGame.currentPlayer.name + "'s turn",
+        log: "It is now " + currentGame.currentPlayer.name + "'s (" + currentGame.currentPlayer.suspect.name + "'s) turn",
         game: currentGame, 
         currentPlayer: currentGame.currentPlayer, 
         currentLocation: currentGame.currentPlayerLocation(),
