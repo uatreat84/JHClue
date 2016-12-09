@@ -336,6 +336,7 @@ img.card {
 #gameLogContainer{   
     width:675px;   
     margin:0px auto;
+    margin-right: 100%;
     padding: 5px;
     display: none;
     float: left;
