@@ -17,6 +17,7 @@ module.exports = {
         this.gameID = gameID;
         this.gameBoard = new board.GameBoard();
         this.init = false;
+        this.activePlayers = 0;
 
         this.initGame = function () {
             this.gameBoard.createBoard();
@@ -30,6 +31,7 @@ module.exports = {
                 console.log("No Miss Scarlett")
                 this.currentPlayer = this.players[0];
             }
+            this.activePlayers = this.players.length;
             this.init = true;
 
        },
@@ -132,8 +134,13 @@ module.exports = {
         this.goToNextPlayer = function(){
             var currentPlayerIndex = this.players.indexOf(this.currentPlayer);
             console.log("Current Player Index:" + currentPlayerIndex );
-            currentPlayerIndex =  (currentPlayerIndex + 1) % this.players.length;
-            this.currentPlayer = this.players[currentPlayerIndex];
+            for(var i = 1; i<this.players.length; i++){
+                currentPlayerIndex =  (currentPlayerIndex + i) % this.players.length;
+                if(this.players[currentPlayerIndex].active ===true){
+                    this.currentPlayer = this.players[currentPlayerIndex];
+                    break;
+                }
+            }
         }
 
         this.currentPlayerLocation = function(){
@@ -172,7 +179,7 @@ module.exports = {
 
         this.isGameOver = function(){
             console.log("Game over: "+this.players.length);
-            if(this.players.length === 1){
+            if(this.activePlayers === 1){
                 return true;
             }else{
                 return false;
@@ -181,9 +188,8 @@ module.exports = {
 
         this.eliminateCurrentPlayer = function(){
                 var eliminatedPlayer = this.currentPlayer;
-                this.goToNextPlayer();
-                var eliminatedPlayerIndex = this.players.indexOf(eliminatedPlayer);
-                this.players.splice(eliminatedPlayerIndex,1);
+                eliminatedPlayer.active =false;
+                this.activePlayers = this.activePlayers - 1;
                 return eliminatedPlayer.name;
         }
 

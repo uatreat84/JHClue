@@ -12,9 +12,8 @@ canvas {
 #title{
 	font-size: 30px;
 	width: 800px;
-	margin-left 0;
-	margin-right: auto;
-	margin-bottom: 3%;
+	margin-left: 0px;
+	margin-bottom: 1%;
 	text-align: center;
 	border-bottom: 2px solid black
 }
@@ -32,11 +31,13 @@ canvas {
 }
 #currentPlayer{
 	width: 800px;
+    margin-left: 0px;
 	text-align: center;
 	display: none;
 }
 #suggestionWrapper{
-	width: 100%;
+	width: 800px;
+    margin-left: 0px;
 	text-align: center;
 	display: none;	
 }
@@ -46,6 +47,13 @@ canvas {
 	display: none;	
 }
 
+
+/***************************
+** Styles for the Begeinning of game 
+***************************/
+#btnPlayClue{   
+    display: none;
+}
 
 /***************************
 ** Styles for the Game Board
@@ -58,7 +66,7 @@ canvas {
     background-color: black;
 	border: 1px solid black;
 	position: relative;
-	margin: 0 0
+	margin: 0 auto
 }
 
 .room{
@@ -326,9 +334,12 @@ img.card {
 }
 
 #gameLogContainer{   
+
     width:675px;   
-    margin:40px auto;   
-    padding:10px 0;   
+    margin:0px auto;   
+    padding: 5px;
+    display: none;
+
 }
 #gameLogTitle{
 	text-align: center;
@@ -340,7 +351,8 @@ img.card {
 #scrollBox{   
     height:100px;
     border: 1px solid black;
-    overflow:auto; 
+    overflow-y: show; 
+
     overflow-x:hidden;
     background: lightgray;
 } 
@@ -348,10 +360,32 @@ img.card {
 	margin: 0
 }
 
+/***************************
+** Styles for the Notepad
+***************************/
+
+#notepadContainer{
+    width:200px;
+    margin:0px auto;   
+    padding:0px;
+    border-left: 1px solid black;
+	border-right: 1px solid black;
+	border-top: 1px solid black;
+	border-bottom: 1px solid black;   
+}
+#notepadTitle{
+	width: 200px;
+	text-align: center;
+	background: darkgray;
+	border-left: 1px solid black;
+	border-right: 1px solid black;
+	border-top: 1px solid black;
+	border-bottom: 1px solid black;
+}
 
 card {
 	float: left;
-	width: 160px;
+	max-width: 160px;
 	margin: 0;
 	padding: 1em;
 }

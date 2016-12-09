@@ -35,9 +35,17 @@ function createNewGame(data){
     }
     // Join the Room and wait for the players
     this.join(gameID.toString());
+    if(currentGame.init === false){
+        // Return the Room ID (gameId) and the socket ID (mySocketId) to the browser client
+        this.emit('needToSelectSuspect',{suspectList:currentGame.suspects});
+    }else{
+        this.emit('displayGame',{
+            game: currentGame,
+            currentPlayer: currentGame.currentPlayer, 
+            currentLocation: currentGame.currentPlayerLocation(),
+            moveOptions: []});
+    }
 
-    // Return the Room ID (gameId) and the socket ID (mySocketId) to the browser client
-    this.emit('needToSelectSuspect',{suspectList:currentGame.suspects});
 }
 
 function resetGame(data){
@@ -128,7 +136,8 @@ function playerMakeGuess(data){
             console.log("Player win");
              io.sockets.in(currentGame.gameID).emit('playerWon',{});
         }else{
-            var name =currentGame.eliminateCurrentPlayer()
+            var name =currentGame.eliminateCurrentPlayer();
+            currentGame.goToNextPlayer();
             io.sockets.in(currentGame.gameID).emit('updateLog',{log: name = "made a wrong accusation. They have been eliminated."});
             if(currentGame.isGameOver()){
                 io.sockets.in(currentGame.gameID).emit('playerWon',{});
