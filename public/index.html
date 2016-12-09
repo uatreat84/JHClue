@@ -13,29 +13,6 @@
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="style/game.css">
-      <style>
-
-          boards {
-              float: left;
-              margin-left: 0px;
-              border-left: 1px solid gray;
-              padding: 1em;
-              overflow: hidden;
-          }
-
-          logs {
-          		 position: absolute;
-               	 left: 0px;
-                 bottom: 0px;
-          }
-        
-          notepad {
-          		position: absolute;
-          		width: 10%;
-          		padding: 1em;
-          }
-
-      </style>
   </head>
   <body>
 <!-- TODO - in certain positions the game log gets in the way of adjusting things on the notepad. this needs to be fixed -->  
@@ -84,36 +61,6 @@
 
         </div>
     </script>
-<!--
-    <script id="make-suggestion-template" type="text/template">
-        <div class="suggestionWrapper">
-            <div class="info">
-                <div id="typeOfGuess"></div>
-                <select id="suspectSuggestion">
-                <option value="Mr. Green">Mr. Green</option>
-                <option value="Mrs. White">Mrs. White</option>
-                <option value="Mrs. Peacock">Mrs. Peacock</option>
-                <option value="Colonel Mustard">Colonel Mustard</option>
-                <option value="Professor Plum">Professor Plum</option>
-                <option value="Miss Scarlett">Miss Scarlett</option>
-                </select>
-
-                <select id="weaponSuggestion">
-                    <option value="Knife">Knife</option>
-                    <option value="Rope">Rope</option>
-                    <option value="Gun">Gun</option>
-                    <option value="Candle Stick">Candle Stick</option>
-                    <option value="Lead Pipe">Lead Pipe</option>
-                    <option value="Wrench">Wrench</option>
-                </select>
-                <select id="roomSuggestion"></select>
-            </div>
-            <div class="info buttons">
-               <button id="btnMakeSuggestion" class="btn left">Select</button>
-            </div>
-        </div>
-    </script>
--->
      <script id="play-game-template" type="text/template">
          <div class="playingingGameWrapper">
              <div id="title">
@@ -122,12 +69,6 @@
              </div>
              <div id="playerStatus"></div>
              <div id="currentPlayer">
-                 <!-- This wrapper needs to be moved into the template below and only be loaded for the current player
-                    There is a similar comment in the APP.js file. I couldnt figure it out right so I moved on- Matt -->
-                 <!--
-            I just put a .hide() and .show() functions for the "currentPlayer" div in the appropriate section in the app.js.  It appears to be working, but not sure if it needed to be put in a template section for another reason - Joe
-            -->
-
                  <div id="currentPlayerWrapper">
 
                      <div class="info">

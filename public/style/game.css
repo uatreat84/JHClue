@@ -327,19 +327,18 @@ img.card {
 ** Styles for the Game Log
 ***************************/
 
-#logs {
+/*#logs {
     position: absolute;
     left: 0px;
     bottom: 0px;
 }
-
+*/
 #gameLogContainer{   
-
     width:675px;   
-    margin:0px auto;   
+    margin:0px auto;
     padding: 5px;
     display: none;
-
+    float: left;
 }
 #gameLogTitle{
 	text-align: center;
@@ -409,28 +408,19 @@ logs {
 	width: 100%;
 }
 */
-
-
-/***************************
-** Styles for the Notepad
-***************************/
-
-#notepadContainer{
-    width:200px;
-    margin:0px auto;   
-    padding:0px;
-    border-left: 1px solid black;
-	border-right: 1px solid black;
-	border-top: 1px solid black;
-	border-bottom: 1px solid black;   
+boards {
+	float: left;
+	margin-left: 0px;
+	border-left: 1px solid gray;
+	padding: 1em;
+	overflow: hidden;
 }
-#notepadTitle{
-	width: 200px;
-	text-align: center;
-	background: darkgray;
-	border-left: 1px solid black;
-	border-right: 1px solid black;
-	border-top: 1px solid black;
-	border-bottom: 1px solid black;
+
+notepad {
+	float: left;
+	width: 10%;
+	padding: 1em;
+	margin-bottom: -150px;
 }
+
 
