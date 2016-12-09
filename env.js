@@ -69,13 +69,13 @@ function playerStartGame(data){
     if(currentGame.init === false){
         currentGame.initGame();
     }
+
     io.sockets.in(currentGame.gameID).emit('displayGame',{
         log: "New Game started!",
         game: currentGame, 
         currentPlayer: currentGame.currentPlayer, 
         currentLocation: currentGame.currentPlayerLocation(),
         moveOptions: currentGame.getMoveOptions()});
-
 
 }
 
@@ -109,8 +109,13 @@ function playerMakeGuess(data){
     }else{
         guessString=" made a suggestion";
     }
+    io.sockets.in(currentGame.gameID).emit('displayGame',{
+        log: currentGame.currentPlayer.name + guessString +": It was " +data.suspect+ " in the " +data.room+" with the "+data.weapon,
+        game: currentGame,
+        currentPlayer: currentGame.currentPlayer, 
+        currentLocation: currentGame.currentPlayerLocation(),
+        moveOptions: []});
 
-    io.sockets.in(currentGame.gameID).emit('updateLog',{log:currentGame.currentPlayer.name + guessString +": It was " +data.suspect+ " in the " +data.room+" with the "+data.weapon,});
     guess = {
         room:data.room,
         suspect:data.suspect,

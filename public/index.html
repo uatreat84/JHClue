@@ -13,13 +13,45 @@
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="style/game.css">
+      <style>
+
+          boards {
+              float: left;
+              margin-left: 0px;
+              border-left: 1px solid gray;
+              padding: 1em;
+              overflow: hidden;
+          }
+
+          logs {
+          		 position: absolute;
+               	 left: 0px;
+                 bottom: 0px;
+          }
+        
+          notepad {
+          		position: absolute;
+          		width: 10%;
+          		padding: 1em;
+          }
+
+      </style>
   </head>
   <body>
-
+<!-- TODO - in certain positions the game log gets in the way of adjusting things on the notepad. this needs to be fixed -->  
     <div id="gameArea">
         <!-- This is where the templates defined below will be used -->
    </div>
-
+         <logs>
+             <div id="gameLogContainer">
+                 <div id=gameLogTitle>Game Log</div>
+                 <div id="scrollBox">
+                     <div id="gameLogContent">
+                     </div>
+                 </div>
+                 <p><span id="gameLogStatus"></span></p>
+             </div>
+         </logs>
 
         <!-- This screen appears when a user clicks "Start" on the Join Screen -->
     <script id="wait-game-template" type="text/template">
@@ -83,104 +115,153 @@
     </script>
 -->
      <script id="play-game-template" type="text/template">
-        <div class="playingingGameWrapper">
-            <div id="title">
-                <img id="JHClueLogo" src="images/JHClueLogo.png">
-                Clue-Less
-            </div>
-            <div id="playerStatus"></div>
-            <div id="currentPlayer">
-                <!-- This wrapper needs to be moved into the template below and only be loaded for the current player
-                        There is a similar comment in the APP.js file. I couldnt figure it out right so I moved on- Matt -->
-                <!-- 
-                I just put a .hide() and .show() functions for the "currentPlayer" div in the appropriate section in the app.js.  It appears to be working, but not sure if it needed to be put in a template section for another reason - Joe 
-                -->
+         <div class="playingingGameWrapper">
+             <div id="title">
+                 <img id="JHClueLogo" src="images/JHClueLogo.png">
+                 Clue-Less
+             </div>
+             <div id="playerStatus"></div>
+             <div id="currentPlayer">
+                 <!-- This wrapper needs to be moved into the template below and only be loaded for the current player
+                    There is a similar comment in the APP.js file. I couldnt figure it out right so I moved on- Matt -->
+                 <!--
+            I just put a .hide() and .show() functions for the "currentPlayer" div in the appropriate section in the app.js.  It appears to be working, but not sure if it needed to be put in a template section for another reason - Joe
+            -->
 
                  <div id="currentPlayerWrapper">
-                    <div class="info">
-                        <select id="moveOptions"></select>
-                    </div>
-                    <div class="info buttons">
-                        <button id="btnMoveOptionSelect" class="btn left">Select</button>
-                        <button id="btnMoveOptionDone" class="btn right">Done</button>
-                    </div>
-                </div>
-                      <!-- This is where the templates defined below should be used -->
-                <div id="suggestionWrapper">
-                    <div class="info">
-                        <div id="typeOfGuess"></div>
-                        <select id="suspectSuggestion">
-                            <option value="Mr. Green">Mr. Green</option>
-                            <option value="Mrs. White">Mrs. White</option>
-                            <option value="Mrs. Peacock">Mrs. Peacock</option>
-                            <option value="Colonel Mustard">Colonel Mustard</option>
-                            <option value="Professor Plum">Professor Plum</option>
-                            <option value="Miss Scarlett">Miss Scarlett</option>
-                        </select>
+                     <div class="info">
+                         <select id="moveOptions"></select>
+                     </div>
+                     <div class="info buttons">
+                         <button id="btnMoveOptionSelect" class="btn left">Select</button>
+                         <button id="btnMoveOptionDone" class="btn right">Done</button>
+                     </div>
+                 </div>
+                 <!-- This is where the templates defined below should be used -->
+                 <div id="suggestionWrapper">
+                     <div class="info">
+                         <div id="typeOfGuess"></div>
+                         <select id="suspectSuggestion">
+                             <option value="Mr. Green">Mr. Green</option>
+                             <option value="Mrs. White">Mrs. White</option>
+                             <option value="Mrs. Peacock">Mrs. Peacock</option>
+                             <option value="Colonel Mustard">Colonel Mustard</option>
+                             <option value="Professor Plum">Professor Plum</option>
+                             <option value="Miss Scarlett">Miss Scarlett</option>
+                         </select>
 
-                        <select id="weaponSuggestion">
-                            <option value="Knife">Knife</option>
-                            <option value="Rope">Rope</option>
-                            <option value="Gun">Gun</option>
-                            <option value="Candle Stick">Candle Stick</option>
-                            <option value="Lead Pipe">Lead Pipe</option>
-                            <option value="Wrench">Wrench</option>
-                        </select>
-                        <select id="roomSuggestion"></select>
-                    </div>
-                    <div class="info buttons">
-                     <button id="btnMakeSuggestion" class="btn left">Select</button>
-                    </div>
-                    <!-- This is where the templates defined below should be used -->
-                </div>
-            </div>
-            <div id="proveSuggestionWrapper">
-                <h> Current Suggestion</h>
-                <form id = "currentSuggestion">
-                    <input type="radio"  name="suggestion" value="none" checked>none</br> 
-                </form>
-                <button id="btnSuggestionSelect" class="btn left">Select</button>
+                         <select id="weaponSuggestion">
+                             <option value="Knife">Knife</option>
+                             <option value="Rope">Rope</option>
+                             <option value="Gun">Gun</option>
+                             <option value="Candle Stick">Candle Stick</option>
+                             <option value="Lead Pipe">Lead Pipe</option>
+                             <option value="Wrench">Wrench</option>
+                         </select>
+                         <select id="roomSuggestion"></select>
+                     </div>
+                     <div class="info buttons">
+                         <button id="btnMakeSuggestion" class="btn left">Select</button>
+                     </div>
+                     <!-- This is where the templates defined below should be used -->
+                 </div>
+             </div>
+             <div id="proveSuggestionWrapper">
+                 <h> Current Suggestion</h>
+                 <form id="currentSuggestion">
+                     <input type="radio" name="suggestion" value="none" checked>none</br>
+                 </form>
+                 <button id="btnSuggestionSelect" class="btn left">Select</button>
 
-            </div>
-            <card>
-                <div id="cardWrapper">
-                    <h>Your Cards</h>
-                    <div id="gameCards">
-                    </div>
-                </div>
-            </card>
-            <boards>
-                <div class="board" id="board">
-                    <div class="room" id="Study"><div><img class="room" src="images/Study.png"></div><ul id="suspects"></ul></div>
-                    <div class="room" id="Hall"><div><img class="room" src="images/Hall.png"></div><ul id="suspects"></ul></div>
-                    <div class="room" id="Lounge"><div><img class="room" src="images/Lounge.png"></div><ul id="suspects"></ul></div>
-                    <div class="room" id="Library"><div><img class="room" src="images/Library.png"></div><ul id="suspects"></ul></div>
-                    <div class="room" id="Billiard"><div><img class="room" src="images/Billard.png"></div><ul id="suspects"></ul></div>
-                    <div class="room" id="Dining"><div><img class="room" src="images/Dining.png"></div><ul id="suspects"></ul></div>
-                    <div class="room" id="Conservatory"><div><img class="room" src="images/Conservatory.png"></div><ul id="suspects"></ul></div>
-                    <div class="room" id="Ball"><div><img class="room" src="images/Ball.png"></div><ul id="suspects"></ul></div>
-                    <div class="room" id="Kitchen"><div><img class="room" src="images/Kitchen.png"></div><ul id="suspects"></ul></div>
-                    <div class="hallway" id="StudyToHall"><div><img class="hall" src="images/HallwayHor.png"></div><ul id="suspects"></ul></div>
-                    <div class="hallway" id="StudyToLibrary"><div><img class="hall" src="images/HallwayVer.png"></div><ul id="suspects"></ul></div>
-                    <div class="hallway" id="HallToLounge"><div><img class="hall" src="images/HallwayHor.png"></div><ul id="suspects"></ul></div>
-                    <div class="hallway" id="HallToBilliard"><div><img class="hall" src="images/HallwayVer.png"></div><ul id="suspects"></ul></div>
-                    <div class="hallway" id="LoungeToDining"><div><img class="hall" src="images/HallwayVer.png"></div><ul id="suspects"></ul></div>
-                    <div class="hallway" id="LibraryToBilliard"><div><img class="hall" src="images/HallwayHor.png"></div><ul id="suspects"></ul></div>
-                    <div class="hallway" id="LibraryToConservatory"><div><img class="hall" src="images/HallwayVer.png"></div><ul id="suspects"></ul></div>
-                    <div class="hallway" id="BilliardToDining"><div><img class="hall" src="images/HallwayHor.png"></div><ul id="suspects"></ul></div>
-                    <div class="hallway" id="BilliardToBall"><div><img class="hall" src="images/HallwayVer.png"></div><ul id="suspects"></ul></div>
-                    <div class="hallway" id="DiningToKitchen"><div><img class="hall" src="images/HallwayVer.png"></div><ul id="suspects"></ul></div>
-                    <div class="hallway" id="ConservatoryToBall"><div><img class="hall" src="images/HallwayHor.png"></div><ul id="suspects"></ul></div>
-                    <div class="hallway" id="BallToKitchen"><div><img class="hall" src="images/HallwayHor.png"></div><ul id="suspects"></ul></div>
-                    <div class="startside" id="Plum"><ul id="suspects"></ul></div>
-                    <div class="startside" id="Peacock"><ul id="suspects"></ul></div>
-                    <div class="starttop" id="Scarlett"><ul id="suspects"></ul></div>
-                    <div class="starttop" id="Green"><ul id="suspects"></ul></div>
-                    <div class="starttop" id="White"><ul id="suspects"></ul></div>
-                    <div class="startside" id="Mustard"><ul id="suspects"></ul></div>
-                </div>
-            </boards>
-        </div>
+             </div>
+             <card>
+                 <div id="cardWrapper">
+                     <h>Your Cards</h>
+                     <div id="gameCards">
+                     </div>
+                 </div>
+             </card>
+             <boards>
+                 <div class="board" id="board">
+                     <div class="room" id="Study"><div><img class="room" src="images/Study.png"></div><ul id="suspects"></ul></div>
+                     <div class="room" id="Hall"><div><img class="room" src="images/Hall.png"></div><ul id="suspects"></ul></div>
+                     <div class="room" id="Lounge"><div><img class="room" src="images/Lounge.png"></div><ul id="suspects"></ul></div>
+                     <div class="room" id="Library"><div><img class="room" src="images/Library.png"></div><ul id="suspects"></ul></div>
+                     <div class="room" id="Billiard"><div><img class="room" src="images/Billard.png"></div><ul id="suspects"></ul></div>
+                     <div class="room" id="Dining"><div><img class="room" src="images/Dining.png"></div><ul id="suspects"></ul></div>
+                     <div class="room" id="Conservatory"><div><img class="room" src="images/Conservatory.png"></div><ul id="suspects"></ul></div>
+                     <div class="room" id="Ball"><div><img class="room" src="images/Ball.png"></div><ul id="suspects"></ul></div>
+                     <div class="room" id="Kitchen"><div><img class="room" src="images/Kitchen.png"></div><ul id="suspects"></ul></div>
+                     <div class="hallway" id="StudyToHall"><div><img class="hall" src="images/HallwayHor.png"></div><ul id="suspects"></ul></div>
+                     <div class="hallway" id="StudyToLibrary"><div><img class="hall" src="images/HallwayVer.png"></div><ul id="suspects"></ul></div>
+                     <div class="hallway" id="HallToLounge"><div><img class="hall" src="images/HallwayHor.png"></div><ul id="suspects"></ul></div>
+                     <div class="hallway" id="HallToBilliard"><div><img class="hall" src="images/HallwayVer.png"></div><ul id="suspects"></ul></div>
+                     <div class="hallway" id="LoungeToDining"><div><img class="hall" src="images/HallwayVer.png"></div><ul id="suspects"></ul></div>
+                     <div class="hallway" id="LibraryToBilliard"><div><img class="hall" src="images/HallwayHor.png"></div><ul id="suspects"></ul></div>
+                     <div class="hallway" id="LibraryToConservatory"><div><img class="hall" src="images/HallwayVer.png"></div><ul id="suspects"></ul></div>
+                     <div class="hallway" id="BilliardToDining"><div><img class="hall" src="images/HallwayHor.png"></div><ul id="suspects"></ul></div>
+                     <div class="hallway" id="BilliardToBall"><div><img class="hall" src="images/HallwayVer.png"></div><ul id="suspects"></ul></div>
+                     <div class="hallway" id="DiningToKitchen"><div><img class="hall" src="images/HallwayVer.png"></div><ul id="suspects"></ul></div>
+                     <div class="hallway" id="ConservatoryToBall"><div><img class="hall" src="images/HallwayHor.png"></div><ul id="suspects"></ul></div>
+                     <div class="hallway" id="BallToKitchen"><div><img class="hall" src="images/HallwayHor.png"></div><ul id="suspects"></ul></div>
+                     <div class="startside" id="Plum"><ul id="suspects"></ul></div>
+                     <div class="startside" id="Peacock"><ul id="suspects"></ul></div>
+                     <div class="starttop" id="Scarlett"><ul id="suspects"></ul></div>
+                     <div class="starttop" id="Green"><ul id="suspects"></ul></div>
+                     <div class="starttop" id="White"><ul id="suspects"></ul></div>
+                     <div class="startside" id="Mustard"><ul id="suspects"></ul></div>
+                 </div>
+             </boards>
+             <!-- TODO make notepad no longer reset when page reloads -->
+             <notepad>
+                 <div id="notepadTitle"><h4>Notepad</h4></div>
+                 <div id="notepadContainer">
+                     <div class="notepadSubsection">
+                         <table>
+                             <tr><div id="suspectsTitle"><h5><b>&nbsp;&nbsp;Suspects</b></h5></div>
+                             <tr>
+                             <tr><th>&nbsp;&nbsp;Col. Mustard</th><td><select id="colMustard"><option> </option><option>&#10004</option><option>&#10008</option><option>&#10068</option></select></td></tr>
+                             <tr><th>&nbsp;&nbsp;Prof. Plum</th><td><select id="profPlum"><option> </option><option>&#10004</option><option>&#10008</option><option>&#10068</option></select></td></tr>
+                             <tr><th>&nbsp;&nbsp;Mr. Green</th><td><select id="mrGreen"><option> </option><option>&#10004</option><option>&#10008</option><option>&#10068</option></select></td></tr>
+                             <tr><th>&nbsp;&nbsp;Mrs. Peacock</th><td><select id="mrsPeacock"><option> </option><option>&#10004</option><option>&#10008</option><option>&#10068</option></select></td></tr>
+                             <tr><th>&nbsp;&nbsp;Miss Scarlett</th><td><select id="missScarlett"><option> </option><option>&#10004</option><option>&#10008</option><option>&#10068</option></select></td></tr>
+                             <tr><th>&nbsp;&nbsp;Mrs. White</th><td><select id="mrsWhite"><option> </option><option>&#10004</option><option>&#10008</option><option>&#10068</option></select></td></tr>
+                         </table>
+                         </div>
+                         <br>
+                         <div class="notepadSubsection">
+                             <table>
+                                 <tr><div id="weaponsTitle"><h5><b>&nbsp;&nbsp;Weapons</b></h5></div>
+                                 <tr>
+                                 <tr><th>&nbsp;&nbsp;Knife</th><td><select id="knife"><option> </option><option>&#10004</option><option>&#10008</option><option>&#10068</option></select></td></tr>
+                                 <tr><th>&nbsp;&nbsp;Candlestick</th><td><select id="candlestick"><option> </option><option>&#10004</option><option>&#10008</option><option>&#10068</option></select></td></tr>
+                                 <tr><th>&nbsp;&nbsp;Revolver</th><td><select id="revolver"><option> </option><option>&#10004</option><option>&#10008</option><option>&#10068</option></select></td></tr>
+                                 <tr><th>&nbsp;&nbsp;Rope</th><td><select id="rope"><option> </option><option>&#10004</option><option>&#10008</option><option>&#10068</option></select></td></tr>
+                                 <tr><th>&nbsp;&nbsp;Lead Pipe</th><td><select id="leadPipe"><option> </option><option>&#10004</option><option>&#10008</option><option>&#10068</option></select></td></tr>
+                                 <tr><th>&nbsp;&nbsp;Wrench</th><td><select id="wrench"><option> </option><option>&#10004</option><option>&#10008</option><option>&#10068</option></select></td></tr>
+                             </table>
+                             </div>
+                             <br>
+                             <div class="notepadSubsection">
+                                 <table>
+                                     <tr><div id="roomsTitle"><h5><b>&nbsp;&nbsp;Rooms</b></h5></div>
+                                     <tr>
+                                     <tr><th>&nbsp;&nbsp;Hall</th><td><select id="hall"><option> </option><option>&#10004</option><option>&#10008</option><option>&#10068</option></select></td></tr>
+                                     <tr><th>&nbsp;&nbsp;Lounge</th><td><select id="lounge"><option> </option><option>&#10004</option><option>&#10008</option><option>&#10068</option></select></td></tr>
+                                     <tr><th>&nbsp;&nbsp;Dining Room</th><td><select id="diningRoom"><option> </option><option>&#10004</option><option>&#10008</option><option>&#10068</option></select></td></tr>
+                                     <tr><th>&nbsp;&nbsp;Kitchen</th><td><select id="kitchen"><option> </option><option>&#10004</option><option>&#10008</option><option>&#10068</option></select></td></tr>
+                                     <tr><th>&nbsp;&nbsp;Ball</th><td><select id="ball"><option> </option><option>&#10004</option><option>&#10008</option><option>&#10068</option></select></td></tr>
+                                     <tr><th>&nbsp;&nbsp;Conservatory</th><td><select id="conservatory"><option> </option><option>&#10004</option><option>&#10008</option><option>&#10068</option></select></td></tr>
+                                     <tr><th>&nbsp;&nbsp;Billiard</th><td><select id="billiard"><option> </option><option>&#10004</option><option>&#10008</option><option>&#10068</option></select></td></tr>
+                                     <tr><th>&nbsp;&nbsp;Library</th><td><select id="library"><option> </option><option>&#10004</option><option>&#10008</option><option>&#10068</option></select></td></tr>
+                                     <tr><th>&nbsp;&nbsp;Study</th><td><select id="study"><option> </option><option>&#10004</option><option>&#10008</option><option>&#10068</option></select></td></tr>
+                                 </table>
+                                 </div>
+                                 <br>
+                             </div>
+             </notepad>
+         </div>
+
     </script>
 
 

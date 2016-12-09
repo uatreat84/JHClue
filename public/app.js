@@ -110,6 +110,8 @@ jQuery(function($){
         "Mr. Green": "green"
     };
 
+	var numPlayers = 0;
+
 var App = {
 
         /**
@@ -191,6 +193,7 @@ var App = {
             paragraph.textContent = data;   
             document.getElementById("gameLogContent").append(paragraph);
             $('#scrollBox').scrollTop($('#scrollBox')[0].scrollHeight);
+
         },
 
 
@@ -240,7 +243,8 @@ var App = {
  
             selectSuspect: function(data) {
                 App.$gameArea.html(App.$templateSelectSuspect);
-                $('#gameLogContainer').hide();
+                //$('#gameLogContainer').hide();
+                $('#gameLogContent p').remove();
                 var suspects = data.suspectList;
                 for(var i = 0; i < suspects.length; i++){
                         // Update host screen
@@ -263,12 +267,12 @@ var App = {
                 $('#gameLogContainer').show();
                 console.log('Player selected suspect number ' + data.selectedSuspect);
                 App.$gameArea.html(App.$templateWaitGame);
-                IO.socket.emit('playerSelectSuspect',data); 
-
+                numPlayers +=1;
+                IO.socket.emit('playerSelectSuspect',data);
             }, 
 
             onStartGameClick : function (){
-                console.log('Starting game');
+            	console.log('Starting game');
                 App.$gameArea.html(App.$templatePlayGame);
                 IO.socket.emit('startGame');
             },
@@ -332,6 +336,7 @@ var App = {
 
             updateGameBoard : function(data){         
                 var rooms = data.gameBoard.rooms;
+                               
                 App.$gameArea.html(App.$templatePlayGame);
                 var players = data.players;
                 console.log("Players: "+ players);
@@ -432,7 +437,8 @@ var App = {
                 console.log("Weapon: "+weaponSelection);
                 console.log("Suspect: "+suspectSelection);
                 var type = $('#typeOfGuess').text();              
-                $('#suggestionWrapper').hide();
+                //$('#suggestionWrapper').hide();
+
 
                 IO.socket.emit('makeGuess',{
                     type:type,
