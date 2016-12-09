@@ -11,8 +11,8 @@ canvas {
 
 #title{
 	font-size: 30px;
-	width: 100%;
-	margin-left: auto;
+	width: 800px;
+	margin-left 0;
 	margin-right: auto;
 	margin-bottom: 3%;
 	text-align: center;
@@ -27,11 +27,11 @@ canvas {
 #playerStatus{
 	font-size: 20px;
 	color: green;
-	width: 100%;
+	width: 800px;
 	text-align: center;
 }
 #currentPlayer{
-	width: 100%;
+	width: 800px;
 	text-align: center;
 	display: none;
 }
@@ -58,7 +58,7 @@ canvas {
     background-color: black;
 	border: 1px solid black;
 	position: relative;
-	margin: 0 auto
+	margin: 0 0
 }
 
 .room{
@@ -293,27 +293,27 @@ img.card {
 }
 #whitePiece {
 	bottom: 0;
-	right: 0;
+	right: 22px;
 }
 #peacockPiece {
 	bottom: 0;
-	right: 21px;
+	right: 0;
 }
 #plumPiece {
 	bottom: 0;
-	right: 42px;
+	left: 11px;
 }
 #scarlettPiece {
 	bottom: 0;
-	left: 0px;
+	right: 11px;
 }
 #mustardPiece {
 	bottom: 0;
-	left: 21px;
+	left: 0px;
 }
 #greenPiece {
 	bottom: 0;
-	left: 42px;
+	left: 22px;
 }
 /***************************
 ** Styles for the Game Log
@@ -321,7 +321,7 @@ img.card {
 
 #gameLogContainer{   
     width:800px;   
-    margin:0px auto;   
+    margin:0px 20px;   
     padding:40px 0;   
 }
 #gameLogTitle{
@@ -343,7 +343,7 @@ img.card {
 
 card {
 	float: left;
-	max-width: 160px;
+	max-width: 320px;
 	margin: 0;
 	padding: 1em;
 }
