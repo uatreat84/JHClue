@@ -409,7 +409,7 @@ var App = {
              },
 
              makeAccusation : function(data){
-                App.$gameArea.html(App.$templateMakeSuggestion);
+                $('#suggestionWrapper').show();
                 $('#typeOfGuess').text("Accusation");
                 var roomSelect = document.getElementById("roomSuggestion");
                 roomSelect.options.length = 0;

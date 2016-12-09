@@ -109,13 +109,8 @@ function playerMakeGuess(data){
     }else{
         guessString=" made a suggestion";
     }
-    io.sockets.in(currentGame.gameID).emit('displayGame',{
-        log: currentGame.currentPlayer.name + guessString +": It was " +data.suspect+ " in the " +data.room+" with the "+data.weapon,
-        game: currentGame,
-        currentPlayer: currentGame.currentPlayer, 
-        currentLocation: currentGame.currentPlayerLocation(),
-        moveOptions: []});
 
+    io.sockets.in(currentGame.gameID).emit('updateLog',{log:currentGame.currentPlayer.name + guessString +": It was " +data.suspect+ " in the " +data.room+" with the "+data.weapon,});
     guess = {
         room:data.room,
         suspect:data.suspect,
@@ -144,7 +139,13 @@ function playerMakeGuess(data){
     }else if(data.type ==="Suggestion"){
         var nextClientID = currentGame.startProveSuggestion(guess);
         console.log("Next Client ID: "+ nextClientID);
-        io.sockets.in(currentGame.gameID).emit('updateLog',{log:currentGame.getCurrentSuggestionPlayer().name +"'s turn to prove suggestion."});
+        io.sockets.in(currentGame.gameID).emit('displayGame',{
+            log: currentGame.getCurrentSuggestionPlayer().name +"'s turn to prove suggestion.",
+            game: currentGame,
+            currentPlayer: currentGame.currentPlayer, 
+            currentLocation: currentGame.currentPlayerLocation(),
+            moveOptions: []});
+        
         io.sockets.to(nextClientID).emit("proveSuggestion",{
             guess:currentGame.currentSuggestion,
             currentCards:currentGame.currentSuggestionCards()});
