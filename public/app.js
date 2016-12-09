@@ -466,15 +466,25 @@ var App = {
                 }
 */              var count = 0;
                 if(playerCards.indexOf(guess.suspect) > -1 ){
-                    $('#currentSuggestion').append('<input type="radio" name="suggestion" value="'+guess.suspect+'">' + guess.suspect + '</br>');
+                    $('#currentSuggestion').append('<input type="radio" name="suggestion" value="'+guess.suspect+'" checked>' + guess.suspect + '</br>');
                     count+=1;
                 }
                 if(playerCards.indexOf(guess.weapon) > -1){
-                    $('#currentSuggestion').append('<input type="radio" name="suggestion" value="'+guess.weapon+'">' + guess.weapon + '</br>');
+                    if(count === 0){
+                        $('#currentSuggestion').append('<input type="radio" name="suggestion" value="'+guess.weapon+'" checked>' + guess.weapon + '</br>');
+                    } else {
+                        $('#currentSuggestion').append('<input type="radio" name="suggestion" value="'+guess.weapon+'">' + guess.weapon + '</br>');
+                    } 
                     count +=1;
+
                 }
                 if(playerCards.indexOf(guess.room) > -1){
-                    $('#currentSuggestion').append('<input type="radio" name="suggestion" value="'+guess.roonm+'">' + guess.room + '</br>');
+                    if(count === 0){
+                        $('#currentSuggestion').append('<input type="radio" name="suggestion" value="'+guess.room+'" checked>' + guess.room + '</br>');
+                    } else {
+                        $('#currentSuggestion').append('<input type="radio" name="suggestion" value="'+guess.room+'">' + guess.room + '</br>');
+                    }
+                    count+=1;
                 }
                 if(count === 0){
                     $('#currentSuggestion').append('<input type="radio"  name="suggestion" value="none" checked>none</br>');
@@ -484,7 +494,7 @@ var App = {
              onProveSuggestionClick : function(){
 
                 console.log("Selected: "+ selection);
-                var selection = $('input:radio[name="suggestion"]:checked').val()
+                var selection = $('#currentSuggestion input:radio[name=suggestion]:checked').val()
                 //need error checking - make sure that selection is one of their cards
                 console.log("Selected: "+ selection);
                 $('#proveSuggestionWrapper').hide();
