@@ -7,5 +7,6 @@ module.exports = {
         this.suspect = "";
         this.cards = [];
         this.clientID = clientID;
+        this.active = true;
     }
 };

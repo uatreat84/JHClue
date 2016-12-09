@@ -207,6 +207,9 @@ var App = {
                 $('#gameLogContent p').remove();
                 var players = data.game.players;
                 console.log('players: '+ players);
+                if(players.length >= 3){
+                    $('#btnPlayClue').show();
+                }
                 for(var i = 0; i < players.length; i++){
                     // Update host screen
                     var logHTML = 'Player ' + players[i].name + ' is in the game as '+players[i].suspect.name+'. (socket ID: '+players[i].clientID+')';
@@ -448,17 +451,28 @@ var App = {
                 var guess = data.guess;
                 var playerCards = data.currentCards;
                 $('#proveSuggestionWrapper').show();
+
 /*
                 for(var k = 0; k< playerCards.length; k++){
                     var paragraph = document.createElement('p');
                     paragraph.textContent = playerCards[k];
                     document.getElementById("gameCards").append(paragraph);
                 }
-*/
-                $('#currentSuggestion').append('<input type="radio" name="suggestion" value="'+guess.suspect+'">' + guess.suspect + '</br>');
-                $('#currentSuggestion').append('<input type="radio" name="suggestion" value="'+guess.weapon+'">' + guess.weapon + '</br>');
-                $('#currentSuggestion').append('<input type="radio" name="suggestion" value="'+guess.roonm+'">' + guess.room + '</br>');
-
+*/              var count = 0;
+                if(playerCards.indexOf(guess.suspect) > -1 ){
+                    $('#currentSuggestion').append('<input type="radio" name="suggestion" value="'+guess.suspect+'">' + guess.suspect + '</br>');
+                    count+=1;
+                }
+                if(playerCards.indexOf(guess.weapon) > -1){
+                    $('#currentSuggestion').append('<input type="radio" name="suggestion" value="'+guess.weapon+'">' + guess.weapon + '</br>');
+                    count +=1;
+                }
+                if(playerCards.indexOf(guess.room) > -1){
+                    $('#currentSuggestion').append('<input type="radio" name="suggestion" value="'+guess.roonm+'">' + guess.room + '</br>');
+                }
+                if(count === 0){
+                    $('#currentSuggestion').append('<input type="radio"  name="suggestion" value="none" checked>none</br>');
+                }
              },
 
              onProveSuggestionClick : function(){
