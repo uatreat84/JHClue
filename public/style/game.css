@@ -422,6 +422,7 @@ notepad {
 	width: 10%;
 	padding: 1em;
 	margin-bottom: -150px;
+	display: none;
 }
 
 

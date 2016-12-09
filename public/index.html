@@ -19,6 +19,55 @@
     <div id="gameArea">
         <!-- This is where the templates defined below will be used -->
    </div>
+             <!-- TODO make notepad no longer reset when page reloads -->
+             <notepad>
+                 <div id="notepadTitle"><h4>Notepad</h4></div>
+                 <div id="notepadContainer">
+                     <div class="notepadSubsection">
+                         <table>
+                             <tr><div id="suspectsTitle"><h5><b>&nbsp;&nbsp;Suspects</b></h5></div>
+                             <tr>
+                             <tr><th>&nbsp;&nbsp;Col. Mustard</th><td><select id="colMustard"><option> </option><option>&#10004</option><option>&#10008</option><option>&#10068</option></select></td></tr>
+                             <tr><th>&nbsp;&nbsp;Prof. Plum</th><td><select id="profPlum"><option> </option><option>&#10004</option><option>&#10008</option><option>&#10068</option></select></td></tr>
+                             <tr><th>&nbsp;&nbsp;Mr. Green</th><td><select id="mrGreen"><option> </option><option>&#10004</option><option>&#10008</option><option>&#10068</option></select></td></tr>
+                             <tr><th>&nbsp;&nbsp;Mrs. Peacock</th><td><select id="mrsPeacock"><option> </option><option>&#10004</option><option>&#10008</option><option>&#10068</option></select></td></tr>
+                             <tr><th>&nbsp;&nbsp;Miss Scarlett</th><td><select id="missScarlett"><option> </option><option>&#10004</option><option>&#10008</option><option>&#10068</option></select></td></tr>
+                             <tr><th>&nbsp;&nbsp;Mrs. White</th><td><select id="mrsWhite"><option> </option><option>&#10004</option><option>&#10008</option><option>&#10068</option></select></td></tr>
+                         </table>
+                         </div>
+                         <br>
+                         <div class="notepadSubsection">
+                             <table>
+                                 <tr><div id="weaponsTitle"><h5><b>&nbsp;&nbsp;Weapons</b></h5></div>
+                                 <tr>
+                                 <tr><th>&nbsp;&nbsp;Knife</th><td><select id="knife"><option> </option><option>&#10004</option><option>&#10008</option><option>&#10068</option></select></td></tr>
+                                 <tr><th>&nbsp;&nbsp;Candlestick</th><td><select id="candlestick"><option> </option><option>&#10004</option><option>&#10008</option><option>&#10068</option></select></td></tr>
+                                 <tr><th>&nbsp;&nbsp;Revolver</th><td><select id="revolver"><option> </option><option>&#10004</option><option>&#10008</option><option>&#10068</option></select></td></tr>
+                                 <tr><th>&nbsp;&nbsp;Rope</th><td><select id="rope"><option> </option><option>&#10004</option><option>&#10008</option><option>&#10068</option></select></td></tr>
+                                 <tr><th>&nbsp;&nbsp;Lead Pipe</th><td><select id="leadPipe"><option> </option><option>&#10004</option><option>&#10008</option><option>&#10068</option></select></td></tr>
+                                 <tr><th>&nbsp;&nbsp;Wrench</th><td><select id="wrench"><option> </option><option>&#10004</option><option>&#10008</option><option>&#10068</option></select></td></tr>
+                             </table>
+                             </div>
+                             <br>
+                             <div class="notepadSubsection">
+                                 <table>
+                                     <tr><div id="roomsTitle"><h5><b>&nbsp;&nbsp;Rooms</b></h5></div>
+                                     <tr>
+                                     <tr><th>&nbsp;&nbsp;Hall</th><td><select id="hall"><option> </option><option>&#10004</option><option>&#10008</option><option>&#10068</option></select></td></tr>
+                                     <tr><th>&nbsp;&nbsp;Lounge</th><td><select id="lounge"><option> </option><option>&#10004</option><option>&#10008</option><option>&#10068</option></select></td></tr>
+                                     <tr><th>&nbsp;&nbsp;Dining Room</th><td><select id="diningRoom"><option> </option><option>&#10004</option><option>&#10008</option><option>&#10068</option></select></td></tr>
+                                     <tr><th>&nbsp;&nbsp;Kitchen</th><td><select id="kitchen"><option> </option><option>&#10004</option><option>&#10008</option><option>&#10068</option></select></td></tr>
+                                     <tr><th>&nbsp;&nbsp;Ball</th><td><select id="ball"><option> </option><option>&#10004</option><option>&#10008</option><option>&#10068</option></select></td></tr>
+                                     <tr><th>&nbsp;&nbsp;Conservatory</th><td><select id="conservatory"><option> </option><option>&#10004</option><option>&#10008</option><option>&#10068</option></select></td></tr>
+                                     <tr><th>&nbsp;&nbsp;Billiard</th><td><select id="billiard"><option> </option><option>&#10004</option><option>&#10008</option><option>&#10068</option></select></td></tr>
+                                     <tr><th>&nbsp;&nbsp;Library</th><td><select id="library"><option> </option><option>&#10004</option><option>&#10008</option><option>&#10068</option></select></td></tr>
+                                     <tr><th>&nbsp;&nbsp;Study</th><td><select id="study"><option> </option><option>&#10004</option><option>&#10008</option><option>&#10068</option></select></td></tr>
+                                 </table>
+                                 </div>
+                                 <br>
+                             </div>
+             </notepad>
+
          <logs>
              <div id="gameLogContainer">
                  <div id=gameLogTitle>Game Log</div>
@@ -29,7 +78,6 @@
                  <p><span id="gameLogStatus"></span></p>
              </div>
          </logs>
-
         <!-- This screen appears when a user clicks "Start" on the Join Screen -->
     <script id="wait-game-template" type="text/template">
         <div class="waitingGameWrapper">
@@ -154,54 +202,6 @@
                      <div class="startside" id="Mustard"><ul id="suspects"></ul></div>
                  </div>
              </boards>
-             <!-- TODO make notepad no longer reset when page reloads -->
-             <notepad>
-                 <div id="notepadTitle"><h4>Notepad</h4></div>
-                 <div id="notepadContainer">
-                     <div class="notepadSubsection">
-                         <table>
-                             <tr><div id="suspectsTitle"><h5><b>&nbsp;&nbsp;Suspects</b></h5></div>
-                             <tr>
-                             <tr><th>&nbsp;&nbsp;Col. Mustard</th><td><select id="colMustard"><option> </option><option>&#10004</option><option>&#10008</option><option>&#10068</option></select></td></tr>
-                             <tr><th>&nbsp;&nbsp;Prof. Plum</th><td><select id="profPlum"><option> </option><option>&#10004</option><option>&#10008</option><option>&#10068</option></select></td></tr>
-                             <tr><th>&nbsp;&nbsp;Mr. Green</th><td><select id="mrGreen"><option> </option><option>&#10004</option><option>&#10008</option><option>&#10068</option></select></td></tr>
-                             <tr><th>&nbsp;&nbsp;Mrs. Peacock</th><td><select id="mrsPeacock"><option> </option><option>&#10004</option><option>&#10008</option><option>&#10068</option></select></td></tr>
-                             <tr><th>&nbsp;&nbsp;Miss Scarlett</th><td><select id="missScarlett"><option> </option><option>&#10004</option><option>&#10008</option><option>&#10068</option></select></td></tr>
-                             <tr><th>&nbsp;&nbsp;Mrs. White</th><td><select id="mrsWhite"><option> </option><option>&#10004</option><option>&#10008</option><option>&#10068</option></select></td></tr>
-                         </table>
-                         </div>
-                         <br>
-                         <div class="notepadSubsection">
-                             <table>
-                                 <tr><div id="weaponsTitle"><h5><b>&nbsp;&nbsp;Weapons</b></h5></div>
-                                 <tr>
-                                 <tr><th>&nbsp;&nbsp;Knife</th><td><select id="knife"><option> </option><option>&#10004</option><option>&#10008</option><option>&#10068</option></select></td></tr>
-                                 <tr><th>&nbsp;&nbsp;Candlestick</th><td><select id="candlestick"><option> </option><option>&#10004</option><option>&#10008</option><option>&#10068</option></select></td></tr>
-                                 <tr><th>&nbsp;&nbsp;Revolver</th><td><select id="revolver"><option> </option><option>&#10004</option><option>&#10008</option><option>&#10068</option></select></td></tr>
-                                 <tr><th>&nbsp;&nbsp;Rope</th><td><select id="rope"><option> </option><option>&#10004</option><option>&#10008</option><option>&#10068</option></select></td></tr>
-                                 <tr><th>&nbsp;&nbsp;Lead Pipe</th><td><select id="leadPipe"><option> </option><option>&#10004</option><option>&#10008</option><option>&#10068</option></select></td></tr>
-                                 <tr><th>&nbsp;&nbsp;Wrench</th><td><select id="wrench"><option> </option><option>&#10004</option><option>&#10008</option><option>&#10068</option></select></td></tr>
-                             </table>
-                             </div>
-                             <br>
-                             <div class="notepadSubsection">
-                                 <table>
-                                     <tr><div id="roomsTitle"><h5><b>&nbsp;&nbsp;Rooms</b></h5></div>
-                                     <tr>
-                                     <tr><th>&nbsp;&nbsp;Hall</th><td><select id="hall"><option> </option><option>&#10004</option><option>&#10008</option><option>&#10068</option></select></td></tr>
-                                     <tr><th>&nbsp;&nbsp;Lounge</th><td><select id="lounge"><option> </option><option>&#10004</option><option>&#10008</option><option>&#10068</option></select></td></tr>
-                                     <tr><th>&nbsp;&nbsp;Dining Room</th><td><select id="diningRoom"><option> </option><option>&#10004</option><option>&#10008</option><option>&#10068</option></select></td></tr>
-                                     <tr><th>&nbsp;&nbsp;Kitchen</th><td><select id="kitchen"><option> </option><option>&#10004</option><option>&#10008</option><option>&#10068</option></select></td></tr>
-                                     <tr><th>&nbsp;&nbsp;Ball</th><td><select id="ball"><option> </option><option>&#10004</option><option>&#10008</option><option>&#10068</option></select></td></tr>
-                                     <tr><th>&nbsp;&nbsp;Conservatory</th><td><select id="conservatory"><option> </option><option>&#10004</option><option>&#10008</option><option>&#10068</option></select></td></tr>
-                                     <tr><th>&nbsp;&nbsp;Billiard</th><td><select id="billiard"><option> </option><option>&#10004</option><option>&#10008</option><option>&#10068</option></select></td></tr>
-                                     <tr><th>&nbsp;&nbsp;Library</th><td><select id="library"><option> </option><option>&#10004</option><option>&#10008</option><option>&#10068</option></select></td></tr>
-                                     <tr><th>&nbsp;&nbsp;Study</th><td><select id="study"><option> </option><option>&#10004</option><option>&#10008</option><option>&#10068</option></select></td></tr>
-                                 </table>
-                                 </div>
-                                 <br>
-                             </div>
-             </notepad>
          </div>
 
     </script>
@@ -210,7 +210,7 @@
     <script id="current-player-template" type="text/template">
     </script>
 
-
+<!--
     <logs>
         <div id="gameLogContainer">
             <div id=gameLogTitle>Game Log</div>
@@ -221,7 +221,7 @@
             <p><span id="gameLogStatus"></span></p>
         </div>
     </logs>
-
+-->
     <script src="/socket.io/socket.io.js"></script>
     <script src="app.js"></script>
     </body>

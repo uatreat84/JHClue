@@ -284,6 +284,7 @@ var App = {
                 if(data.log != undefined){
                     App.addToLog(data.log);   
                 }
+                $('notepad').show();
                 App.Player.updateGameBoard(data.game);
                 App.currentPlayerSocket = data.currentPlayer.clientID;
                 App.currentPlayerLocation=data.currentLocation;
