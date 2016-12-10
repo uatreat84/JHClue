@@ -168,9 +168,9 @@ function playerMakeGuess(data){
 
 function suggestionAnswer(data){
     var selection = data.reply;
-    var lastClientId = currentGame.getCurrentSuggestionClient();
+    var lastClient = currentGame.getCurrentSuggestionPlayer();
     //Return person who just tried to prove suggestion to game board
-    io.sockets.to(lastClientId).emit('displayGame',{
+    io.sockets.to(lastClient.clientID).emit('displayGame',{
         game: currentGame, 
         currentPlayer: currentGame.currentPlayer, 
         currentLocation: currentGame.currentPlayerLocation(),
@@ -178,14 +178,25 @@ function suggestionAnswer(data){
     if(selection === "none"){
         if(currentGame.nextSuggestionClient()){
             var nextClientID = currentGame.getCurrentSuggestionClient();
+            io.sockets.emit('displayGame',{
+                log:  lastClient.name + " was unable to prove the last suggestion false",
+                game: currentGame,
+                currentPlayer: currentGame.currentPlayer, 
+                currentLocation: currentGame.currentPlayerLocation(),
+                moveOptions: []});
             console.log("Next Client ID: "+ nextClientID);
             io.sockets.to(nextClientID).emit("proveSuggestion",{
                 guess:currentGame.currentSuggestion,
                 currentCards:currentGame.currentSuggestionCards()});
         }else{
-             
-             io.sockets.to(currentGame.currentPlayer.clientID).emit('displayGame',{
+            io.sockets.emit('displayGame',{
                 log: "No one could prove the last suggestion false",
+                game: currentGame,
+                currentPlayer: currentGame.currentPlayer, 
+                currentLocation: currentGame.currentPlayerLocation(),
+                moveOptions: []});
+
+             io.sockets.to(currentGame.currentPlayer.clientID).emit('displayGame',{
                 game: currentGame, 
                 currentPlayer: currentGame.currentPlayer, 
                 currentLocation: currentGame.currentPlayerLocation(),
@@ -195,8 +206,13 @@ function suggestionAnswer(data){
         }
     }else{
         var proofPlayer = currentGame.getCurrentSuggestionPlayer();
-        io.sockets.to(currentGame.currentPlayer.clientID).emit('displayGame',{
+        io.sockets.emit('displayGame',{
                 log:  proofPlayer.name + " proves that the last suggestion was false",
+                game: currentGame,
+                currentPlayer: currentGame.currentPlayer, 
+                currentLocation: currentGame.currentPlayerLocation(),
+                moveOptions: []});
+        io.sockets.to(currentGame.currentPlayer.clientID).emit('displayGame',{
                 game: currentGame, 
                 currentPlayer: currentGame.currentPlayer, 
                 currentLocation: currentGame.currentPlayerLocation(),
