@@ -510,7 +510,9 @@ var App = {
              },
 
              playerWon: function(data){
-                alert("GAME OVER!");
+                alert("GAME OVER! " + data.name + " is the winner!");
+                $('notepad').hide();
+                $('#gameLogContainer').hide();
                 IO.socket.emit('resetGame');
                 IO.socket.emit('initGame');
              }

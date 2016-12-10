@@ -78,7 +78,7 @@ function playerStartGame(data){
         currentGame.initGame();
     }
 
-    io.sockets.in(currentGame.gameID).emit('displayGame',{
+    io.sockets.emit('displayGame',{
         log: "New Game started!",
         game: currentGame, 
         currentPlayer: currentGame.currentPlayer, 
@@ -89,7 +89,7 @@ function playerStartGame(data){
 
 function nextPlayer(){
     currentGame.goToNextPlayer();
-    io.sockets.in(currentGame.gameID).emit('displayGame',{
+    io.sockets.emit('displayGame',{
         log: "It is now " + currentGame.currentPlayer.name + "'s (" + currentGame.currentPlayer.suspect.name + "'s) turn",
         game: currentGame, 
         currentPlayer: currentGame.currentPlayer, 
@@ -101,7 +101,7 @@ function moveCurrentPlayer(data){
     var destination = data.destination;
     console.log("Current Player wants to move to " + destination);
     var options = currentGame.moveCurrentPlayer(destination);
-    io.sockets.in(currentGame.gameID).emit('displayGame',{
+    io.sockets.emit('displayGame',{
         log: currentGame.currentPlayer.name + " moved to " + destination,
         game: currentGame,
         currentPlayer: currentGame.currentPlayer, 
@@ -117,7 +117,7 @@ function playerMakeGuess(data){
     }else{
         guessString=" made a suggestion";
     }
-    io.sockets.in(currentGame.gameID).emit('displayGame',{
+    io.sockets.emit('displayGame',{
         log: currentGame.currentPlayer.name + guessString +": It was " +data.suspect+ " in the " +data.room+" with the "+data.weapon,
         game: currentGame,
         currentPlayer: currentGame.currentPlayer, 
@@ -134,15 +134,15 @@ function playerMakeGuess(data){
 
         if(currentGame.verifyAccusation(guess)){
             console.log("Player win");
-             io.sockets.in(currentGame.gameID).emit('playerWon',{});
+             io.sockets.emit('playerWon',{name:currentGame.currentPlayer.name});
         }else{
             var name =currentGame.eliminateCurrentPlayer();
             currentGame.goToNextPlayer();
-            io.sockets.in(currentGame.gameID).emit('updateLog',{log: name + " made a wrong accusation. They have been eliminated."});
+            io.sockets.emit('updateLog',{log: name + " made a wrong accusation. They have been eliminated."});
             if(currentGame.isGameOver()){
-                io.sockets.in(currentGame.gameID).emit('playerWon',{});
+                io.sockets.emit('playerWon',{name:currentGame.currentPlayer.name});
             }else{
-                io.sockets.in(currentGame.gameID).emit('displayGame',{
+                io.sockets.emit('displayGame',{
                     log: "It is now " + currentGame.currentPlayer.name + "'s turn",
                     game: currentGame, 
                     currentPlayer: currentGame.currentPlayer, 
@@ -153,7 +153,7 @@ function playerMakeGuess(data){
     }else if(data.type ==="Suggestion"){
         var nextClientID = currentGame.startProveSuggestion(guess);
         console.log("Next Client ID: "+ nextClientID);
-        io.sockets.in(currentGame.gameID).emit('displayGame',{
+        io.sockets.emit('displayGame',{
             log: currentGame.getCurrentSuggestionPlayer().name +"'s turn to prove suggestion.",
             game: currentGame,
             currentPlayer: currentGame.currentPlayer, 
