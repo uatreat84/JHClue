@@ -74,7 +74,7 @@ module.exports = {
                 this.caseFile["Weapon"] = weaponCards[randomWeapon];
                 weaponCards.splice(randomWeapon,1);
                 this.caseFile["Room"] = roomCards[randomRoom];
-                roomCards.splice(roomCards,1);
+                roomCards.splice(randomRoom,1); 
                 console.log("CaseFile Suspect: " +this.caseFile["Suspect"]);
                 console.log("CaseFile Weapon: " +this.caseFile["Weapon"]);
                 console.log("CaseFile Room: " +this.caseFile["Room"]);
