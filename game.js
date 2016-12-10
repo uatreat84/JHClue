@@ -48,7 +48,7 @@ module.exports = {
             var weaponCards = [
                     "Knife",
                     "Rope",
-                    "Gun",
+                    "Revolver",
                     "Candle Stick",
                     "Lead Pipe",
                     "Wrench"];
