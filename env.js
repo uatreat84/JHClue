@@ -138,7 +138,7 @@ function playerMakeGuess(data){
         }else{
             var name =currentGame.eliminateCurrentPlayer();
             currentGame.goToNextPlayer();
-            io.sockets.in(currentGame.gameID).emit('updateLog',{log: name = "made a wrong accusation. They have been eliminated."});
+            io.sockets.in(currentGame.gameID).emit('updateLog',{log: name + " made a wrong accusation. They have been eliminated."});
             if(currentGame.isGameOver()){
                 io.sockets.in(currentGame.gameID).emit('playerWon',{});
             }else{

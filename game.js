@@ -135,10 +135,14 @@ module.exports = {
             var currentPlayerIndex = this.players.indexOf(this.currentPlayer);
             console.log("Current Player Index:" + currentPlayerIndex );
             for(var i = 1; i<this.players.length; i++){
-                currentPlayerIndex =  (currentPlayerIndex + i) % this.players.length;
-                if(this.players[currentPlayerIndex].active ===true){
+                currentPlayerIndex =  (currentPlayerIndex + 1) % this.players.length;
+                console.log("Current Player Index:" + currentPlayerIndex );
+                if(this.players[currentPlayerIndex].active === true){
+                    console.log("Current Player is Active")
                     this.currentPlayer = this.players[currentPlayerIndex];
                     break;
+                }else{
+                    console.log("Current Player is Inactive")
                 }
             }
         }
@@ -187,10 +191,9 @@ module.exports = {
         }
 
         this.eliminateCurrentPlayer = function(){
-                var eliminatedPlayer = this.currentPlayer;
-                eliminatedPlayer.active =false;
+                this.currentPlayer.active =false;
                 this.activePlayers = this.activePlayers - 1;
-                return eliminatedPlayer.name;
+                return this.currentPlayer.name;
         }
 
         this.startProveSuggestion = function(guess){
