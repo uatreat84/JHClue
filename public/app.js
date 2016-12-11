@@ -215,7 +215,7 @@ var App = {
                 }
                 for(var i = 0; i < players.length; i++){
                     // Update host screen
-                    var logHTML = 'Player ' + players[i].name + ' is in the game as '+players[i].suspect.name+'. (socket ID: '+players[i].clientID+')';
+                    var logHTML = 'Player ' + players[i].name + ' is in the game as '+players[i].suspect.name+'. )';
                     App.addToLog(logHTML);
                     //$('#playersWaiting')
                     //    .append('<li>Player ' + players[i].name + ' is in the game as '+players[i].suspect.name+'. (socket ID: '+players[i].clientID+')</li>');
