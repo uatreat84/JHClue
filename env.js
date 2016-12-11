@@ -142,7 +142,10 @@ function playerMakeGuess(data){
             currentGame.goToNextPlayer();
             io.sockets.emit('updateLog',{log: name + " made a wrong accusation. They have been eliminated."});
             if(currentGame.isGameOver()){
-                io.sockets.emit('playerWon',{name:currentGame.currentPlayer.name});
+                io.sockets.emit('playerWon',{
+                    name:currentGame.currentPlayer.name,
+                    murderString: ''
+                });
             }else{
                 io.sockets.emit('displayGame',{
                     log: "It is now " + currentGame.currentPlayer.name + "'s turn",
