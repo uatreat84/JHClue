@@ -242,6 +242,10 @@ module.exports = {
 
 
        }
+       this.getMurderSolutionString = function(){
+            var solutionString = 'It was ' + this.caseFile["Suspect"] + ' in the ' + this.caseFile["Room"] + ' with the ' + this.caseFile["Weapon"] + '.';
+            return solutionString;
+       }
 
     }
 

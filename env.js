@@ -134,7 +134,9 @@ function playerMakeGuess(data){
 
         if(currentGame.verifyAccusation(guess)){
             console.log("Player win");
-             io.sockets.emit('playerWon',{name:currentGame.currentPlayer.name});
+             io.sockets.emit('playerWon',{
+                name: currentGame.currentPlayer.name,
+                murderString: currentGame.getMurderSolutionString()});
         }else{
             var name =currentGame.eliminateCurrentPlayer();
             currentGame.goToNextPlayer();
