@@ -119,6 +119,7 @@ module.exports = {
             }else{
                 if(suspect.wasJustMoved){
                     options.push("Make Suggestion");
+                    suspect.wasJustMoved = false;
                 }
                 for(var i = 0; i< adjRooms.length; i++){
                     if(!this.gameBoard.isOccupiedHallway(adjRooms[i])){
@@ -203,7 +204,7 @@ module.exports = {
             this.gameBoard.moveSuspectByName({suspect:guess.suspect,destination:guess.room});
             //Mark player as "just moved by another player"
             for(var i = 0;i<this.players.length;i++){
-                if(this.players[i].suspect.name === guess.suspect){
+                if(this.players[i].suspect.name === guess.suspect && guess.suspect!== this.currentPlayer.name){
                     this.players[i].suspect.wasJustMoved = true;
                 }
             }
